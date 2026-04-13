@@ -1,10 +1,10 @@
 output/
-data/
 models/
 logs/
-results/
-results_phase2/
 __pycache__/
 *.pyc
 unsloth_compiled_cache/
 unsloth_studio.log
+
+# data/ の大きいファイルだけ除外
+data/corpus.txt
