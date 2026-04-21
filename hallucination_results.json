@@ -1,0 +1,2534 @@
+{
+  "summaries": {
+    "base": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 12
+    },
+    "exp3_aggressive": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 3,
+      "garbled_text": 1,
+      "lab_anomalies": 0,
+      "total_issues": 4,
+      "total_outputs": 12
+    },
+    "r6_r64_5ep_aggressive": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 1,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 1,
+      "total_outputs": 12
+    },
+    "r5_r32_a64": {
+      "drug_hallucinations": 1,
+      "fabricated_terms": 3,
+      "garbled_text": 0,
+      "lab_anomalies": 1,
+      "total_issues": 5,
+      "total_outputs": 12
+    },
+    "exp4_large_stable": {
+      "drug_hallucinations": 1,
+      "fabricated_terms": 3,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 4,
+      "total_outputs": 12
+    },
+    "r4_lr2e4": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 3,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 3,
+      "total_outputs": 12
+    },
+    "r7_r128_lr3e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "r7_r128_lr5e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "r7_r128_lr5e5_7ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "r7_r96_lr5e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 1,
+      "lab_anomalies": 0,
+      "total_issues": 1,
+      "total_outputs": 8
+    },
+    "r8_r128_a192_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "r8_r128_a64_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 1,
+      "lab_anomalies": 0,
+      "total_issues": 1,
+      "total_outputs": 8
+    },
+    "r8_r128_lr4e5_7ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 1,
+      "lab_anomalies": 0,
+      "total_issues": 1,
+      "total_outputs": 8
+    },
+    "r8_r128_lr7e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 1,
+      "total_issues": 1,
+      "total_outputs": 8
+    },
+    "sft_exp3_aggressive": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_exp4_large_stable": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r6_r64_5ep_aggressive": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r7_r128_lr3e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r7_r128_lr5e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r7_r128_lr5e5_7ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r7_r96_lr5e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r8_r128_a192_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r8_r128_a64_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r8_r128_lr4e5_7ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    },
+    "sft_r8_r128_lr7e5_5ep": {
+      "drug_hallucinations": 0,
+      "fabricated_terms": 0,
+      "garbled_text": 0,
+      "lab_anomalies": 0,
+      "total_issues": 0,
+      "total_outputs": 8
+    }
+  },
+  "details": {
+    "base": {
+      "clinical_1": {
+        "text_length": 426,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_2": {
+        "text_length": 525,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_1": {
+        "text_length": 277,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 418,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 339,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_2": {
+        "text_length": 536,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_3": {
+        "text_length": 452,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_1": {
+        "text_length": 90,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 352,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_3": {
+        "text_length": 434,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 148,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 208,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "exp3_aggressive": {
+      "clinical_1": {
+        "text_length": 221,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_2": {
+        "text_length": 437,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_1": {
+        "text_length": 446,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "抗水晶体薬"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "coherence_2": {
+        "text_length": 440,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 458,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_2": {
+        "text_length": 429,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_3": {
+        "text_length": 456,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_1": {
+        "text_length": 447,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "Pankštaj"
+          ],
+          "garbled_text": [
+            "´č´"
+          ],
+          "lab_anomalies": []
+        },
+        "total_issues": 2
+      },
+      "medical_knowledge_2": {
+        "text_length": 447,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_3": {
+        "text_length": 477,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 399,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "CRP-Ag"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "suggest_2": {
+        "text_length": 432,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r6_r64_5ep_aggressive": {
+      "clinical_1": {
+        "text_length": 375,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_2": {
+        "text_length": 457,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_1": {
+        "text_length": 460,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 359,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 461,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "エフォシトキシン"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "guideline_2": {
+        "text_length": 297,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_3": {
+        "text_length": 445,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_1": {
+        "text_length": 388,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 445,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_3": {
+        "text_length": 438,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 393,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 442,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r5_r32_a64": {
+      "clinical_1": {
+        "text_length": 394,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_2": {
+        "text_length": 368,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_1": {
+        "text_length": 508,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 447,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 429,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_2": {
+        "text_length": 491,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_3": {
+        "text_length": 475,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_1": {
+        "text_length": 438,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 487,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_3": {
+        "text_length": 447,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 395,
+        "issues": {
+          "drug_hallucinations": [
+            "アジスフロキサシン"
+          ],
+          "fabricated_terms": [
+            "アジスフロキサシン",
+            "炎性細胞浸潤型AIR",
+            "pMM"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 4
+      },
+      "suggest_2": {
+        "text_length": 429,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": [
+            "カルペリチド用量異常（mg単位、正常はμg/kg/min）"
+          ]
+        },
+        "total_issues": 1
+      }
+    },
+    "exp4_large_stable": {
+      "clinical_1": {
+        "text_length": 383,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_2": {
+        "text_length": 405,
+        "issues": {
+          "drug_hallucinations": [
+            "オドキサバン"
+          ],
+          "fabricated_terms": [
+            "LDPLL",
+            "SPC",
+            "オドキサバン"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 4
+      },
+      "coherence_1": {
+        "text_length": 486,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 252,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 481,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_2": {
+        "text_length": 489,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_3": {
+        "text_length": 426,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_1": {
+        "text_length": 444,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 476,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_3": {
+        "text_length": 444,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 403,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 392,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r4_lr2e4": {
+      "clinical_1": {
+        "text_length": 417,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_2": {
+        "text_length": 393,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_1": {
+        "text_length": 454,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 395,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 482,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_2": {
+        "text_length": 436,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "クローヌスクリーニング"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "guideline_3": {
+        "text_length": 452,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_1": {
+        "text_length": 475,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "ネブライザー様糖尿病"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "medical_knowledge_2": {
+        "text_length": 420,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_3": {
+        "text_length": 363,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 371,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 434,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [
+            "LacRQ"
+          ],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      }
+    },
+    "r7_r128_lr3e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 461,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 413,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 466,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 377,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 371,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 417,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 409,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 407,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r7_r128_lr5e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 433,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 498,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 444,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 417,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 391,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 273,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 454,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 411,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r7_r128_lr5e5_7ep": {
+      "medical_knowledge_1": {
+        "text_length": 412,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 466,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 435,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 412,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 428,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 385,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 324,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 527,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r7_r96_lr5e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 484,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 504,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 455,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 420,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 384,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 437,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [
+            "APACHE"
+          ],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "suggest_2": {
+        "text_length": 417,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 410,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r8_r128_a192_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 337,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 462,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 459,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 400,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 419,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 319,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 317,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 309,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r8_r128_a64_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 441,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 466,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [
+            "DMARDS"
+          ],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "guideline_1": {
+        "text_length": 417,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 380,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 475,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 405,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 454,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 477,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r8_r128_lr4e5_7ep": {
+      "medical_knowledge_1": {
+        "text_length": 423,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 411,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 488,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 390,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 410,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 358,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [
+            "POCIDLA"
+          ],
+          "lab_anomalies": []
+        },
+        "total_issues": 1
+      },
+      "suggest_2": {
+        "text_length": 410,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 493,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "r8_r128_lr7e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 443,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 442,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 444,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 407,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 425,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 408,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": [
+            "EF=4.0 (range: 5-85)"
+          ]
+        },
+        "total_issues": 1
+      },
+      "suggest_2": {
+        "text_length": 450,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 495,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_exp3_aggressive": {
+      "medical_knowledge_1": {
+        "text_length": 424,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 436,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 470,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 417,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 351,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 407,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 435,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 593,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_exp4_large_stable": {
+      "medical_knowledge_1": {
+        "text_length": 430,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 476,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 413,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 373,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 462,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 327,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 458,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 581,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r6_r64_5ep_aggressive": {
+      "medical_knowledge_1": {
+        "text_length": 453,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 414,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 432,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 387,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 429,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 399,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 424,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 523,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r7_r128_lr3e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 405,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 461,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 423,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 373,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 444,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 420,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 438,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 594,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r7_r128_lr5e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 422,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 459,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 426,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 371,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 298,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 382,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 403,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 575,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r7_r128_lr5e5_7ep": {
+      "medical_knowledge_1": {
+        "text_length": 382,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 410,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 442,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 370,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 477,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 339,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 443,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 660,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r7_r96_lr5e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 411,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 480,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 428,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 376,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 431,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 408,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 447,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 596,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r8_r128_a192_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 435,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 427,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 483,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 404,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 426,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 436,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 485,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 384,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r8_r128_a64_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 375,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 478,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 451,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 387,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 414,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 344,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 315,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 551,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r8_r128_lr4e5_7ep": {
+      "medical_knowledge_1": {
+        "text_length": 470,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 477,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 441,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 371,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 428,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 423,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 447,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 585,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    },
+    "sft_r8_r128_lr7e5_5ep": {
+      "medical_knowledge_1": {
+        "text_length": 494,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "medical_knowledge_2": {
+        "text_length": 458,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "guideline_1": {
+        "text_length": 386,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "clinical_1": {
+        "text_length": 403,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "coherence_2": {
+        "text_length": 440,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_1": {
+        "text_length": 427,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "suggest_2": {
+        "text_length": 420,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      },
+      "soap_s": {
+        "text_length": 569,
+        "issues": {
+          "drug_hallucinations": [],
+          "fabricated_terms": [],
+          "garbled_text": [],
+          "lab_anomalies": []
+        },
+        "total_issues": 0
+      }
+    }
+  }
+}

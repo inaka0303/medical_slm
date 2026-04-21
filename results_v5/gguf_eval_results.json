@@ -1,0 +1,779 @@
+{
+  "_00_概要": "Phase 3: GGUF(Q4_K_XL)+LoRA推論テスト（9構成×16問）",
+  "_01_詳細": "llama-completionで4B/9BのGGUF量子化ベース+各LoRAアダプターの推論品質と速度を測定",
+  "_04_結果サマリー": "4B GGUF+soap: 日本語SOAP正常出力、6.4s/問。9B GGUFはthinkingモードが英語で発動する問題あり",
+  "4B_base": {
+    "config": "4B_base",
+    "desc": "4B GGUF Q4_K_XL (アダプターなし)",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "**【S：主観的情報】**\n\n72 歳男性は、慢性心不全・高血圧・2 型糖尿病で通院中である。\n「最近また息が切れる」と訴え、症状は約 1 週間前から開始され、「階段上りがきつい」と述べている。\nさらに、「枕を 2 つ重ねないと寝られなくなる（睡眠時呼吸困難/夜間覚醒）」と報告している。\n下肢のむくみについては、「靴下の跡がつくようになった」と訴えている。\n現在の服用状況は「お薬は飲んでいるが、正月に塩辛いものを食べすぎた可能性がある」と述べている。",
+        "gen_length": 227,
+        "time_sec": 4.1
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation support.\n    *   Task: Extract and record \"S\" (Subjective information/Chief Complaint/History of Present Illness - HPI based on patient's words) from the provided medical interview log.\n    *   Input Data: A short clinical interview log involving a 45-year-old female patient with a history of asthma. Includes questions from the doctor and answers from the patient, vital signs, and lab results (though S specifically refers to patient-reported subjective data).\n\n2.  **Understand \"S\" in Medical Documentation:**\n    *   In the context of Japanese medical records (and SOAP notes), \"S\" stands for \"Subjective\".\n    *   It primarily includes: Chief Complaint (主訴), History of Present Illness (現病歴/主観的情報 - what the patient says/symptoms they feel).\n    *   It should reflect the patient's perspective, symptoms, duration, aggravating/alleviating factors, and a",
+        "gen_length": 1927,
+        "time_sec": 6.8
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Write a \"Subjective Information\" section (S - 主観的情報) based on the provided interview record (問診記録).\n    *   Input Data: A dialogue between a doctor and a patient regarding a 42-year-old female patient with depression history.\n    *   Output Format: Japanese text suitable for an EHR, specifically the \"S\" section.\n\n2.  **Analyze the Input Data (Interview Record):**\n    *   Patient Demographics: Female, 42 years old, currently outpatient treatment for depression (うつ病で通院中).\n    *   Doctor-Patient Dialogue:\n        *   Q: Recent condition? A: Not good at all. (...あまり良くないです)\n        *   Q: Specifics? A: Hard to wake up in the morning... unable to go to work often. (朝起きるのが辛くて…仕事に行けない日が増えました)\n        *   Q: Appetite? A: Less than usual. Weight loss of 2kg. (あまりないです。体重が 2 キロ減りました)\n        *   Q: Sleep? A: Bad sleep onset, wake up around 3 AM. (寝つきが悪くて、3 ",
+        "gen_length": 1760,
+        "time_sec": 6.9
+      },
+      "s_04_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Write a \"Subjective Information\" section (S - 主観的情報) based on the provided consultation record (interview/问诊記録).\n    *   Input Data: A COPD patient (68M, GOLD III, regular outpatient care).\n        *   Doctor's questions & Patient's answers regarding dyspnea, sputum, smoking cessation, inhaler usage.\n        *   Vital signs provided (BP, HR, BT, SpO2).\n    *   Output Format: S section of an EHR note.\n\n2.  **Analyze the Input Data:**\n    *   Patient Profile: 68 years old male, COPD (GOLD III), outpatients.\n    *   Dyspnea Question: \"Is it worse than before?\" -> \"Feels worse than before, especially going up stairs.\"\n    *   Sputum Question: \"Do you have sputum?\" -> \"Yellowish sputum in the morning upon waking.\" (Suggests possible acute exacerbation or infection).\n    *   Smoking Status: \"Did you quit smoking?\" -> \"...still about 5 cigs/day.\" (Smok",
+        "gen_length": 1846,
+        "time_sec": 6.2
+      },
+      "o_05_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation support.\n    *   **Task:** Continue writing the \"O\" (Objective data/Findings) section of a medical chart based on provided intake information (\"S\" - Subjective history).\n    *   **Input Data:**\n        *   Patient: 72-year-old male.\n        *   History: Chronic Heart Failure, Hypertension, Type 2 Diabetes.\n        *   Vitals: BP 148/88, HR 92, BT 36.4°C, SpO2 94%.\n        *   Labs (BNP): 685 pg/mL (prev 180), Cr 1.28, eGFR 42.\n        *   Echo: EF 38%, LVDd 58mm.\n        *   ECG: Atrial Fibrillation, LVH.\n        *   CXR: CTR 58%, small bilateral pleural effusion, pulmonary congestion.\n        *   Physical Exam: Bilateral dependent edema (+), jugular vein distention (JVD) (+), S3 gallop heard.\n        *   History (S): Worsening dyspnea on exertion for 1 week. Orthopnea present. Edema worsening. High salt intake in recent past.\n    *   **Output",
+        "gen_length": 1740,
+        "time_sec": 6.4
+      },
+      "a_07_chf": {
+        "generated": "A: 心不全発作（心機能 III 級とみなす）。急性左室拡張期心不全による肺うっ血および両側胸水、右心房拡張による頸静脈怒張・肝静脈逆流（III 音）、腎血流減少をきたした腎機能の低下（eGFR 42 mL/min/1.73m²）を確認される。急性増悪期にあり、利尿剤適正化および急性期対応が必要と判断する。",
+        "gen_length": 154,
+        "time_sec": 4.5
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the medical record based on provided information, specifically focusing on section \"A\" (Assessment/Conclusion).\n    *   Input Data:\n        *   S (Subjective): No symptoms. Good medication adherence. Pre-breakfast blood glucose 130 mg/dL. Daily 30-minute walk.\n        *   O (Objective): BP 128/78 mmHg, HR 68 bpm. HbA1c 6.8% (Previous 7.0%, Improved). Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n        *   Context: Likely a Diabetes Mellitus follow-up visit (given glucose, HbA1c, medication, exercise).\n    *   Output Requirement: Write the \"A\" section (Assessment/Apsement) in Japanese medical record style.\n\n2.  **Evaluate the Clinical Data:**\n    *   **Diagnosis:** Diabetes Mellitus (Type 1 or Type 2 not specified, but Type 2 is more common with this context). HbA1c control target is usually <7% for most patients unless complications e",
+        "gen_length": 1780,
+        "time_sec": 7.3
+      },
+      "p_09_chf": {
+        "generated": "P: 1) 利尿剤治療の開始と調整：ロフekoペン10mg（朝）、スピノラゴン4.5mg（夜）を投与し、尿量増加を確認する。2 日後に体重変化および浮腫改善を評価し、必要に応じて用量を微調する。3) 心臓 rhythm の管理：心房細動に対して抗凝固薬（DOAC または Warfarin）の開始を検討（CHA2DS2-VASc スコアに基づく）。4) 血圧コントロール：ACEI/ARB（エプラゾールまたはワルサタンなど）を加え、腎機能と電解質をモニタリングする。5) 低ナトリウム血症および高カリウム血症の防止に留意し、経口補水液や食塩制限を指導する。6) 患者教育：塩分摂取制限（1g/日）、体重管理、限界症状の自己観察を行うよう説明する。7) 2 週間後に再診を行い、BNP、電解質、尿量、体重変化に基づき治療方針を見直す。",
+        "gen_length": 366,
+        "time_sec": 4.4
+      },
+      "p_10_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Suggest the continuation of the medical record based on provided interview information (SOAP format). Specifically, generate the \"P\" (Plan) section.\n    *   Input Context (SOP):\n        *   **S (Subjective):** Dyspnea worsening with exertion, yellow sputum, continuing smoking 5 cigarettes/day, partial adherence to inhaled medication.\n        *   **O (Objective):** BP 132/78, HR 78, SpO2 93%, wheezes in both lung fields, Chest X-ray: Hyperinflation, no infiltrates.\n        *   **A (Assessment):** Suspected COPD exacerbation. Smoking + poor inhaler adherence as exacerbating factors. Possible infection superimposed.\n    *   Output Requirement: \"P\" (Plan) section in Japanese EHR style.\n\n2.  **Evaluate the Clinical Scenario:**\n    *   Diagnosis: COPD Exacerbation (likely acute).\n    *   Key Findings: Yellow sputum suggests possible bacterial infectio",
+        "gen_length": 2023,
+        "time_sec": 6.3
+      },
+      "continue_11_s_mid": {
+        "generated": "ご提示いただいた問診情報（72 歳男性、慢性心不全通院中、BNP 上昇、軽度低酸素血症、労作時息切れ増悪）に基づき、電子カルテとして自然で専門的な流れになる S（主観的情報）の続きを提案します。\n\nBp が 148/88 mmHg とやや高め、かつ BNP が 685 pg/mL で上昇傾向にある場合、「静臥位では改善するか」「下肢浮腫の有無」「尿量の変化」などを問うのが標準的です。また、「階段 1 階分」という表現は少し短すぎるため、その後の経過（どの程度で止まるか、呼吸苦の性質など）を補完する文脈が適切です。\n\n以下に、3 パターンのパターンご提案します。用途に合わせて調整してください。\n\n---\n\n### パターン A：標準的・包括的な構成（推奨）\nBNP 値と血圧を考慮し、浮腫の有無と静臥位への改善状況を網羅した自然な文脈です。\n\n> …階段 1 階分でも息切れを強く感じ、30 秒程度で止まってしまうため歩行が制限されるようになり、日常生活動作（ADL）にも支障が生じています。\n>\n> **静臥位**では呼吸苦は改善しますが、夜間に間歇性の咳や浮腫感があるかどうか確認しました。下肢の浮腫はなく、尿量も前日と同じ程度（約 800 mL）でした。\n>\n> **服药歴**：現在、エナプラール 5mg、ワラニプリル 10mg、スロバフェラン 20mg、スピロノラクトン 25mg を服用中と告知し、薬物療法は継続していることを確認しました。\n\n---\n\n### パターン B：症状の詳細を深掘りする構成\n「階段 1 階分」の具体的な苦痛レベルや、静臥位での改善度をより詳しく記述するパターンです。（特に BNP が上昇している場合、静臥位への反応を確認することが重要です）\n\n> …階段 1 階分だけでも息切れが激しく、胸の圧迫感のような感覚を伴うことがあります。\n>\n> **安静時**では呼吸苦は軽減されますが、寝た",
+        "gen_length": 819,
+        "time_sec": 6.4
+      },
+      "continue_12_o_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Suggest the continuation of the \"O\" (Objective data) section based on provided interview/assessment information.\n    *   Input Data:\n        *   Patient: 45-year-old female.\n        *   History: Asthma + Infection.\n        *   Vitals: BP 118/72, HR 92, BT (Temperature) 37.8°C, SpO2 96%.\n        *   Blood Test: WBC 11,200, CRP 4.8.\n        *   Chest X-ray: Consolidation shadow in the right lower lung field (右下肺野浸潤影あり).\n        *   Symptoms (S): Cough worsened for 3 days, fever 38°C, decreased appetite, shortness of breath.\n        *   Current Status (O - partially filled): Vitals and Labs are listed. Chest X-ray is the last item to be completed in the prompt's structure, but looking closely at the input:\n            *   Input says \"胸部X線：右下肺野浸潤影あり\" under the interview record summary section.\n            *   The user wants me to contin",
+        "gen_length": 1807,
+        "time_sec": 5.9
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the medical record based on provided intake information (S: Symptoms, O: Observations/Signs/Labs) and a preliminary Assessment (A: #1).\n    *   Input Data:\n        *   S (Symptoms): Worsening shortness of breath for 1 week, orthopnea/sitting-to-standing dyspnea (起座呼吸), lower extremity edema, salt intake excess.\n        *   O (Observations/Labs): BP 148/88, HR 92 (Atrial Fibrillation), SpO2 94%, EF 38% (Reduced Ejection Fraction), BNP 685, Cr 1.28.\n        *   A (Assessment #1): Acute exacerbation of chronic heart failure (HFrEF) with significant BNP elevation and congestion findings.\n    *   Output: Continue the \"A\" (Assessment/Plan/Diagnosis) section to make it a complete medical record entry, specifically focusing on the diagnosis and plan (D).\n\n2.  **Evaluate the Clinical Picture:**\n    *   Diagnosis: Heart Failure with Reduc",
+        "gen_length": 1917,
+        "time_sec": 6.3
+      },
+      "continue_17_p_mid": {
+        "generated": "ご提示いただいた問診情報に基づき、医療AI アシスタントとしての役割を果たし、**P（Plan・計画）**の欄に追加すべき項目を提案します。\n\n患者様の抗生物質（フロセミド）増量および塩分制限の指導は、感染症の重症化防止や治療効果の最大化、かつ耐性菌対策のための重要な介入です。これらを適切に評価し、フォローアップ策として以下のような記述を補完すると、医療的根拠と臨床的な妥当性が担保されます。\n\n---\n\n### 提案する P（計画）の続き\n\n**P:**\n- フロセミド増量（20mg→40mg）、塩分制限の再指導\n  - **治療目標**: 抗生物質感受性の維持・感染の早期抑制、耐性菌発生防止\n  - **副作用モニタリング**: 聴力低下（耳鳴り、難聴）、腎機能障害（尿量減少や血圧変動）に関する経過観察を徹底\n  - **フォローアップ**: 増量後 2〜4 週間で効果確認のため、再診および聴力検査のScheduled appointment を設定\n  - **患者教育**: 塩分制限の具体例（加工食品・調味料の摂取回避など）を視覚的資料を用いて理解度確認し、生活習慣改善への合意形成\n\n---\n\n### 補足ポイント（なぜこれらの項目が必要か）\n\n1.  **治療目標の明確化**:\n    *   フロセミドは耳毒性や腎毒性を持つ薬剤であるため、「抗生物質効果」だけでなく「耐性菌対策」という予防医学的視点も P に明記すると、QOL（Quality of Life）と医療経済的負担を考慮した包括的な計画となります。\n\n2.  **副作用モニタリング（安全確保）**:\n    *   フロセミド増量に伴うリスクとして「聴力障害」や「腎機能低下」が最も懸念されます。「経過観察を徹底」という記述に加え、「Scheduled appointment（予定の受診）」を具体的に示すことで、医療チームと患者間のコミュニケーションループが確立されることを示せます。\n\n3.  **患者教育と合意形成**:\n    *   塩分制限は患者の生活習慣に直結するため、単なる指示だけでなく「理解度確認」や「具体例",
+        "gen_length": 911,
+        "time_sec": 6.0
+      },
+      "soap_14_dm_routine": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Convert a provided consultation record into SOAP format medical chart entries.\n    *   Input Data:\n        *   Patient: 58-year-old female.\n        *   History: Type 2 Diabetes, Hypertension (on regular follow-up).\n        *   Doctor-Patient Dialogue (Consultation):\n            *   Doc: \"How are you today?\" -> Pt: \"Nothing much changed, taking meds as prescribed.\"\n            *   Doc: \"Do you self-monitor blood glucose?\" -> Pt: \"Morning is around 130.\"\n            *   Doc: \"What about diet?\" -> Pt: \"Daughter is cooking with good nutritional balance for me.\"\n            *   Doc: \"Exercise?\" -> Pt: \"Walking 30 mins daily.\"\n        *   Vitals & Labs: BP 128/78, HR 68, Temp 36.2 (BT), HbA1c 6.8% (prev 7.0%), Cr 0.72, eGFR 68.\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n\n2.  **Understand SOAP Format:**\n ",
+        "gen_length": 1888,
+        "time_sec": 7.0
+      },
+      "soap_15_ht_adjust": {
+        "generated": "# SOAP 形式医療記録（変換案）\n\n**患者情報**: 55 歳男性\n**来歴**: 高血圧症通院中\n\n### **S (Subjective) 主訴・現病歴**\n*   **主訴**: 頭痛、めまいの出現。\n*   **自覚症状**:\n    *   高血圧症で長期通院中。\n    *   家庭での血圧測定値は「朝夕」150 mmHg 前後（収縮期）。\n    *   朝起きると頭が重いという不快感を訴える。\n*   **既往歴・生活習慣**:\n    *   **服薬**: 現在、高血圧治療薬を服用中。\n    *   **食事**: 塩分制限の意識はあるが、毎食味噌汁を摂取しており、漬物も好む（塩分過剰リスクあり）。\n    *   **運動**: デスクワークでほぼ身体活動がない（運動不足）。\n\n### **O (Objective) 所見・検査データ**\n*   **生命徴候 **(Vitals)\n    *   BP: 156/94 mmHg （高血圧値）\n    *   HR: 76 回/分\n    *   BT: 36.4℃（正常範囲内）\n*   **検査結果**:\n    *   血液生化学: Cr 0.82 mg/dL、eGFR 72 mL/min/1.73m²、K 4.2 mEq/L。\n        *   腎機能は良好（CKD staging: Stage 1-2 範囲）。\n\n### **A (Assessment) 評価・印象**\n*   **診断**: 高血圧症 II 型（軽度〜中等度）、生活習慣病候群の疑い。\n    *   起床時頭重感に伴う脳血管障害リスクの懸念（一過性脳虚血症の可能性も考慮）。\n    *   塩分制限への遵守が不十分である可能性（味噌汁・漬物の頻度が高い）。\n    *   運動不足による代謝異常や血圧上昇の要因。\n*   **経過**: 既往の高血圧症で、現在 BP 156/94 mm",
+        "gen_length": 837,
+        "time_sec": 5.9
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Convert provided interview notes (history taking) into a SOAP format medical record entry.\n    *   Input Data:\n        *   Patient: 82-year-old female.\n        *   History: Hypertension, Type 2 Diabetes, Osteoporosis, Insomnia (outpatient care, currently on 12 medications).\n        *   Family Report (Daughter): Mother is stumbling often, fell at the entrance last week.\n        *   Doctor's Questions & Patient/Child Answers:\n            *   When did dizziness/stumbling start? -> ~1 month ago.\n            *   Did she get injured from the fall? -> No major injuries.\n            *   Sleep situation? -> Can sleep after taking meds, but often groggy in the morning.\n        *   Vitals: BP 118/62, HR 64, Temp 36.0 (Supine). Orthostatic BP: Supine 128/72 → Standing 102/58 (Orthostatic hypotension present).\n        *   Labs: HbA1c 6.2%, Cr 0.92, eGFR 45.\n",
+        "gen_length": 1760,
+        "time_sec": 5.9
+      }
+    }
+  },
+  "4B+soap": {
+    "config": "4B+soap",
+    "desc": "4B GGUF + SOAPアダプター",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "**S（主観的情報）**\n慢性心不全・高血圧・2 型糖尿病にて通院中の 72 歳男性。近日調子が悪化し、1 週間前から気短感を訴える。歩行時や階段昇降時に呼吸が苦しくなる。静臥位での睡眠も困難で、枕を 2 つ重ねないと寝られなくなる（夜間喘鳴）。双下肢むくみあり、靴下の跡が残る程度。現在服用中の薬は正しく飲んでいるが、正月期間中に塩辛いものを過剰に摂取した可能性があるとの回答。",
+        "gen_length": 190,
+        "time_sec": 4.5
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Write the \"S\" (Subjective information/Histroy of Present Illness based on patient's report) section of the medical record based on the provided consultation notes.\n    *   Input Data: Consultation record (Interview/History taking) for a 45-year-old female with a history of asthma. Includes questions and answers from doctor/patient, vital signs, and blood test results.\n    *   Output Required: The \"S\" section content only (based on the provided interview notes).\n\n2.  **Understand \"S\" (Subjective):**\n    *   In medical records (SOAP format), \"S\" stands for Subjective. It consists of information gathered directly from the patient, including their chief complaint, history of present illness (HPI), relevant past medical history, family history, social history, etc., as reported by the patient or observed without interpretation.\n    *   I",
+        "gen_length": 1890,
+        "time_sec": 7.5
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Suggest continuation of the medical record based on interview information. Specifically, write the \"S\" section (Subjective) of the chart note.\n    *   Input Data: Interview record (问诊记录) for a 42-year-old female patient with a history of depression (うつ病).\n        *   Doctor asks about mood -> Patient says not well.\n        *   Doctor asks specifics -> Patient struggles to wake up, increasing days unable to work.\n        *   Doctor asks appetite -> Patient lost interest, weight loss of 2kg.\n        *   Doctor asks sleep -> Difficulty falling asleep, wakes up at 3 AM.\n        *   Doctor asks medication -> Taking it but doesn't feel effective.\n        *   Vitals: BP 112/68, HR 64, BT 36.1 (Temperature seems slightly elevated or normal? 36.1 is normal, maybe typo for something else? No, keep as given).\n    *   Output Requirement: Write the \"S\" (Subj",
+        "gen_length": 2057,
+        "time_sec": 6.9
+      },
+      "s_04_copd": {
+        "generated": "**S：COPD 通院中。気短感増悪あり（坂道行走時顕著）。黄色い痰が朝起きている際に排出される。**\n**喫煙歴未放棄（現行 5 本/日）。吸入薬のアドヒアランス低め（2 回製剤は使用可能だが、1 回製剤は頻繁に漏過する）。**",
+        "gen_length": 115,
+        "time_sec": 4.1
+      },
+      "o_05_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Medical AI Assistant for Electronic Health Record (EHR) documentation.\n    *   Task: Continue the EHR entry based on the provided interview record (S: Subjective information) and existing data. Specifically, generate the \"O\" (Objective Information) section.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   Chronic Conditions: Heart Failure (CHF), Hypertension (HTN), Type 2 Diabetes Mellitus (T2DM).\n        *   Vitals: BP 148/88, HR 92, BT 36.4°C, SpO2 94%.\n        *   Labs: BNP 685 pg/mL (prev 180), Cr 1.28, eGFR 42.\n        *   Echo: EF 38%, LVDd 58mm.\n        *   ECG: Atrial Fibrillation (AFib), Left Ventricular Hypertrophy (LVH).\n        *   Chest X-ray: CTR 58%, bilateral small pleural effusions, pulmonary congestion.\n        *   Physical Exam: Bilateral pitting edema (+), jugular venous distension (JVD) (+), S3 gallop heard.\n        *   History (S): Worsening dyspnea on exertion for 1 week,",
+        "gen_length": 1875,
+        "time_sec": 7.1
+      },
+      "a_07_chf": {
+        "generated": "**A**: 急性心不全発作（CHF-AC）。\n労作時息切れ増悪、起座呼吸、頸静脈怒張、III 音、両側胸水、肺うっ血を認め、BNP が著明上昇しており、左室機能低下（EF 38%）に伴う急性心不全の診断が確定する。\n高血圧性心疾患と推定され、塩分過多による体液過剰も重篤な要因と考える。\n腎機能軽度低下（eGFR 42 mL/min/1.73m²）を認め、利尿剤の選択に注意が必要であり、現時点では塩素イオン濃度を考慮した低ナトリウム含有液体制限下での利尿療法の強化が急務である。\n心不全発作に伴う血液循環不全による脳虚血リスクも鑑み、神経症状の有無を確認する必要がある。",
+        "gen_length": 287,
+        "time_sec": 4.7
+      },
+      "a_08_dm": {
+        "generated": "**A:** 糖尿病（2 型）の経過観察。糖質管理が改善しており HbA1c は目標値付近で良好なコントロールが可能である。運動療法（30 分散歩）を継続し、日常生活での食事管理も適切に行われている。腎機能は正常域にある。\n**診断:** 糖尿病（2 型）、軽度高血圧（考慮が必要だが現状では収支平衡または低リスクと見られる）。",
+        "gen_length": 164,
+        "time_sec": 4.3
+      },
+      "p_09_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue the medical record by proposing a 'P' (Plan) section based on the provided S (Subjective), O (Objective), and A (Assessment).\n    *   Input Data:\n        *   S: Worsening dyspnea for 1 week, orthopnea, lower limb edema, high salt intake.\n        *   O: BP 148/88, HR 92 (AF), SpO2 94%, EF 38%, BNP 685, Cr 1.28, eGFR 42.\n        *   A: #1 Acute exacerbation of chronic heart failure (HFrEF, NYHA III). #2 Hypertension. #3 CKD G3b.\n\n2.  **Evaluate the Clinical Picture:**\n    *   **Diagnosis:** Heart Failure with reduced Ejection Fraction (HFrEF), acute decompensated HF.\n    *   **Comorbidities:** Hypertension, Atrial Fibrillation (AF), Chronic Kidney Disease (CKD).\n    *   **Key Findings:** Elevated BP, HR 92 (fast due to AF + stress?), SpO2 slightly low (94%), EF 38% (severe reduction), BNP elevated (685), Cr 1.28/eGFR 42 (kidn",
+        "gen_length": 1674,
+        "time_sec": 7.1
+      },
+      "p_10_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) writing support.\n    *   Task: Continue writing the \"Plan\" (P) section based on the provided Subjective (S), Objective (O), and Assessment (A) sections.\n    *   Input Data:\n        *   S: Dyspnea worsened with exertion, yellow sputum, smoking 5 cigarettes/day continued, missed some inhaler doses.\n        *   O: BP 132/78, HR 78, SpO2 93%, wheezes in both lung fields. CXR: hyperinflation, no infiltrates.\n        *   A: Suspected COPD exacerbation. Factors: smoking + poor inhaler adherence. Possibility of infection co-morbidity.\n\n2.  **Evaluate the Clinical Situation (COPD Exacerbation):**\n    *   Diagnosis: Acute exacerbation of COPD (AECOPD).\n    *   Severity: SpO2 is slightly low (93%), wheezes present, yellow sputum suggests possible infection or inflammation. HR and BP are stable but slightly elevated HR (78) might reflect compensatory mechanism or anxiety/p",
+        "gen_length": 1942,
+        "time_sec": 7.0
+      },
+      "continue_11_s_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) entry support.\n    *   Task: Continue writing the \"S\" (Subjective history) section of a medical chart based on the provided consultation record and vital signs data.\n    *   Input Data:\n        *   Patient: 72-year-old male, chronic heart failure outpatient.\n        *   Vitals: BP 148/88, HR 92, SpO2 94%.\n        *   BNP: 685 pg/mL (elevated).\n        *   Existing S text: \"1週間前から労作時息切れ増悪。階段1階分で\" (Worsening dyspnea on exertion for the past week. After climbing one flight of stairs...)\n    *   Goal: Complete the sentence/paragraph starting with \"階段1階分で\".\n\n2.  **Determine Clinical Context:**\n    *   Diagnosis: Chronic Heart Failure (CHF).\n    *   Current Status: Worsening dyspnea on exertion (NYHA class likely increased, possibly III or IV depending on detail).\n    *   Vitals/Tests: BP is slightly high for CHF (compensation? HTN?), HR 92 (tachycardia), SpO2 94% (m",
+        "gen_length": 1810,
+        "time_sec": 7.4
+      },
+      "continue_12_o_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Medical AI Assistant for Electronic Health Record (EHR) documentation support.\n    *   Task: Continue the EHR documentation based on the provided intake information. Specifically, propose the continuation of the \"O\" (Objective Data) section after the Chest X-ray result description is already started or implied as the last item. Wait, looking at the input:\n        *   Input includes S (Subjective), O (Objective).\n        *   Under O, BP, HR, BT, SpO2 are listed.\n        *   Lab results (WBC, CRP) are listed.\n        *   Chest X-ray result is listed but seems incomplete in the input (`胸部 X 線：` followed by nothing specific, just \"右下肺野浸潤影あり\" in the initial summary). Actually, looking closely at the prompt: `【途中まで記載済み】O（客観的情報）の続きを提案してください。`\n        *   The provided text under O is: `BP 118/72, HR 92, BT 37.8, SpO2 96%` then `採血：WBC 11200, CRP 4.8` then `胸部 X 線：`.\n        *   Wait, the initial summary says `胸部 X 線：右下肺野浸潤影",
+        "gen_length": 1801,
+        "time_sec": 6.9
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue the \"Assessment\" (A) section based on the provided Subjective (S), Objective (O), and initial Assessment (A#1).\n    *   Input Data:\n        *   S (Subjective): Worsening shortness of breath for 1 week, orthopnea (起座呼吸 - sitting up to breathe due to dyspnea on lying down), lower extremity edema, high salt intake.\n        *   O (Objective): BP 148/88, HR 92 (Atrial Fibrillation), SpO2 94%, EF 38% (reduced ejection fraction), BNP 685 (elevated), Cr 1.28.\n        *   A#1: Acute decompensation of chronic heart failure (HFrEF) due to marked BNP elevation and congestion signs.\n    *   Goal: Propose the continuation/summary of the Assessment section (A).\n\n2.  **Evaluate Current Status:**\n    *   Diagnosis is clear: Acute Decompensated Heart Failure (ADHF), HFrEF.\n    *   Precipitating factors: High salt intake, AFib (likely contrib",
+        "gen_length": 1863,
+        "time_sec": 7.1
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Suggest continuing the \"P\" (Plan) section of a medical record based on provided information.\n    *   Input Data: Previous notes include P (Plan) content so far, but the user specifically asks to continue from where it left off.\n        *   Current P (Plan):\n            *   フロセミド増量（20mg→40mg）(Furosemide dose increase 20mg -> 40mg)\n            *   塩分制限の再指導 (Re-education on salt restriction)\n    *   Goal: Suggest additional items for the Plan section.\n\n2.  **Clinical Context Inference:**\n    *   The patient is being treated with Furosemide (a loop diuretic), suggesting edema, heart failure, or renal issues.\n    *   The dose was increased from 20mg to 40mg. This implies the previous dose wasn't sufficient for symptom control (e.g., fluid retention, weight gain, dyspnea).\n    *   Salt restriction re-education indicates dietary management",
+        "gen_length": 1997,
+        "time_sec": 7.5
+      },
+      "soap_14_dm_routine": {
+        "generated": "**S (Subjective)**\n58 歳女性。2 型糖尿病、高血圧で通院中。自覚症状なし。「特に変わりないです」と述べる。服薬状況は良好（処方された薬を正しく服用している）。血糖値の自己測定を行っているが、朝空腹時血糖は概ね 130 mg/dL 前後。食事については娘が栄養バランスを意識して調理しており、食生活は規則正しいとされる。運動習慣あり、毎日約 30 分散歩している。\n\n**O (Objective)**\nバイタルサイン：BP 128/78 mmHg, HR 68 拍/分, BT 36.2℃。\n検査所見：HbA1c 6.8%（前回 7.0%、改善傾向）。Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m²。\n\n**A (Assessment)**\n高血圧・2 型糖尿病の継続管理中。HbA1c が前回の 7.0% から 6.8% と改善しており、現在の治療方針と生活習慣（運動、食事、服薬）が適切に反映されていると判断される。高血圧コントロールも良好（BP 128/78）。腎機能は低下しなかった（Cr 0.72, eGFR 68）。\n\n**P (Plan)**\n1. 継続治療（処方済み薬剤を維持する）。\n2. 生活習慣指導の継続（運動、食事管理の確認）。\n3. 2 週間後に再診予定。\n4. 必要に応じて血糖値変動が認められた場合や高血圧で BP が上昇した場合の再評価を指示する。",
+        "gen_length": 614,
+        "time_sec": 5.9
+      },
+      "soap_15_ht_adjust": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Medical Record (EMR) documentation.\n    *   Task: Convert the provided consultation history (問診記録) into a SOAP format medical record (SOAP形式のカルテ).\n    *   Input Data: A 55-year-old male, hypertensive outpatient. Consultation details include blood pressure readings at home and in clinic, symptoms (headache/vertigo), medication adherence, diet (misosoup, pickles), exercise habits, vital signs, and lab results (blood tests).\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n\n2.  **Analyze the Input Data:**\n    *   Patient: Male, 55 years old.\n    *   History: Hypertension outpatient (通院中).\n    *   Subjective (問診):\n        *   BP at home: ~150 in the morning.\n        *   Symptoms: Head feels heavy upon waking up (headache/vertigo negative, but \"heavy head\" noted as a symptom). No explicit mention of severe headache or vertigo, just \"morning heaviness\".\n    ",
+        "gen_length": 1870,
+        "time_sec": 6.9
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "S:\n82 歳女性、高血圧（HTN）、2 型糖尿病（T2DM）、骨粗鬆症、不眠症にて通院中（処方薬 12 剤）。\n主訴：ふらつきで来院。先週玄関での転倒を伴うため。\n現病歴：娘より「母がよくふらつく」と訴え、先週も転倒した。医師の問診では患者自身は「よく覚えていない」と答える（進行性病変や記憶障害の可能性あり）。約 1 ヶ月前から始まったとされる。\n既往・通院状況：上記疾患で長年通院中。処方薬多剤併用（12 剤）の状況。\n問診結果：転倒時に大きな怪我はないという。夜間睡眠については「お薬飲んだら眠れる」と述べるが、娘より「朝ボーッとしていることが多い」と訴える。\n\nA:\n82 歳の高齢女性で、多疾患・多剤併用（12 剤）の状況にある。\nふらつきは約 1 ヶ月前から開始し、転倒を伴っている。患者自身は症状の認識が不十分（自己報告と家族報告の不一致）。朝のボーッとする訴えは、認知機能低下や薬物性脳症の可能性がある。\n立位血圧測定で起立性低血圧（臥位 128/72 mmHg → 立位 102/58 mmHg）を確認。転倒の原因の一つと疑われる。\nHbA1c は 6.2% でコントロールは良好。Cr 0.92 mg/dL, eGFR 45 mL/min/1.73m²で CKD Stage 3B に相当（腎機能低下）。\n不眠症に対するエチゾラムおよび ゾルピデムを併用しており、多剤併用のリスクが高い。\n\nP:\n転倒の再発予防と症状の原因究明が最優先。\n起立性低血圧の原因として、アムロジピン・テルミサルタンの組み合わせ、エチゾラム・ゾルピデムの鎮静作用、アルファカルシドールによる血漿カリウム低下（低カリ血症は筋力低下やふらつきを誘発",
+        "gen_length": 722,
+        "time_sec": 6.9
+      }
+    }
+  },
+  "4B+suggest": {
+    "config": "4B+suggest",
+    "desc": "4B GGUF + suggestアダプター",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "**【S：主観的情報】**\n患者は「最近また息が切れる（呼吸困難）」と自覚しており、1 週間前から症状が悪化したことを報告している。特に階段の上る際に激しい気短を訴え、安静時でも顕著である。「枕を 2 つ重ねないと寝られなくなっている」（端坐位好適）という重篤な労作性呼吸不全および静臥時の呼吸困難（夜間悪化型心不全）を認める。\nまた、「靴下の跡がつくようになった」と報告があり、左右対称性の浮腫（下肢浮腫）を自覚している。\n薬剤摂取については「飲んでいますが」であり、服用自体には問題がないようだが、正月の機会に塩辛いものを大量に摂取した可能性を自覚しており、これが症状悪化の一因ではないかと考えているという。\n\n---\n**【AI 補足】**\nこの S 情報に基づき、次いで記載すべきは「O（客観的情報）」やそれらから導かれる「P（判断・計画）」のステップが考えられます。\n*   **S の要約ポイント**: 1 週間の急性増悪、重度の労作性および静臥時呼吸不全（端坐位好適）、浮腫出現、食塩摂取過剰の自己認識がある。\n*   **次のアクションのヒント**: BNP の上昇と臨床所見は一致しており、心不全の急性増悪を疑う。食塩制限の指導強化、利尿薬の調整（あるいは経口からの経管または点滴利尿剤への切り替え検討）、抗凝固療法が必要かどうかの評価などが次につながります。",
+        "gen_length": 589,
+        "time_sec": 6.2
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Medical Record (EMR) documentation.\n    *   Task: Based on the provided interview record (history taking), write the \"S\" (Subjective information) section of the medical record.\n    *   Input Data:\n        *   Patient: 45-year-old female, regular outpatient for bronchial asthma.\n        *   Doctor-Patient Dialogue:\n            *   Q: How are you today? A: Coughing severe for 3 days ago, fever appeared...\n            *   Q: What's the temperature? A: 38 degrees last night.\n            *   Q: Appetite? A: Not eating well lately (anorexia).\n            *   Q: Are you using asthma inhalers? A: Can't inhale properly due to severe coughing.\n        *   Vitals & Labs (Objective data, not needed for 'S' section but good for context): BP 118/72, HR 92, BT 37.8, SpO2 96%, WBC 11200, CRP 4.8mg/dL.\n    *   Target: Write the \"Subjective\" (S - 主観的情報) section in Japanese EMR style.\n\n2.  **Underst",
+        "gen_length": 1803,
+        "time_sec": 7.0
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Propose the continuation of the medical record based on interview information (intake notes).\n    *   Specific Input: Interview records (問診記録) of a 42-year-old female patient with depression, including questions and answers from the doctor and patient. Vital signs are also provided.\n    *   Output Requirement: Document the Subjective Information (S - Symptom/主観的情報) based on the provided interview record.\n\n2.  **Analyze the Input Data:**\n    *   Patient: Female, 42 years old, currently under treatment for depression (うつ病で通院中).\n    *   Doctor's Questions & Patient's Answers:\n        *   Q: \"How have you been feeling lately?\" -> A: \"...not very good.\" (…あまり良くないです)\n        *   Q: \"Specifically what does it feel like?\" -> A: \"Waking up in the morning is painful... I can't go to work more days.\" (朝起きるのが辛くて…仕事に行けない日が増えました)\n        *   Q: \"",
+        "gen_length": 1746,
+        "time_sec": 7.4
+      },
+      "s_04_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Suggest continuation of the medical record based on interview information (questioning/medical history).\n    *   Input: Interview records (問診記録) for a 68-year-old male patient with COPD (GOLD III).\n    *   Specific Output Requirement: Write the \"S\" section (Subjective Information) of the EHR.\n    *   Language: Japanese.\n\n2.  **Analyze the Input Data:**\n    *   Patient: 68 years old, Male.\n    *   Diagnosis: COPD (GOLD III), currently on outpatient treatment.\n    *   Doctor's Questions & Patient's Answers:\n        *   Dyspnea (Breathlessness): \"Feels worse than before.\" \"Hard to climb slopes.\" -> Indicates worsening dyspnea.\n        *   Sputum: \"Has yellow sputum in the morning when waking up.\" -> Indicates possible exacerbation or infection/inflammation, not just chronic mucus.\n        *   Smoking Status: \"...still smoking about 5 cigarettes a d",
+        "gen_length": 1954,
+        "time_sec": 6.9
+      },
+      "o_05_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the EHR based on the provided consultation record (history of present illness, symptoms) and existing data. Specifically, write the \"O\" (Objective Data) section to follow the current draft.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   History: Heart Failure, Hypertension, Type 2 Diabetes.\n        *   Vitals: BP 148/88, HR 92, BT 36.4°C, SpO2 94%.\n        *   Labs: BNP 685 pg/mL (prev 180), Cr 1.28, eGFR 42.\n        *   Echo: EF 38%, LVDd 58mm.\n        *   ECG: AFib, LVH.\n        *   CXR: CTR 58%, small bilateral pleural effusions, pulmonary congestion.\n        *   Physical Exam: Pitting edema in both lower legs (+), JVP distension (+), S3 heart sound heard.\n        *   History (S): Worsening dyspnea on exertion for 1 week. Orthopnea present. Lower limb edema worsened. Salt intake excessive.\n    *   Goal",
+        "gen_length": 1796,
+        "time_sec": 7.0
+      },
+      "a_07_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Medical AI Assistant for Electronic Health Records (EHR).\n    *   Task: Continue the medical record by writing \"A\" (Assessment/Conclusion) based on the provided history and physical exam findings (S, O).\n    *   Input Data:\n        *   S (Chief Complaint/Hist): Worsening dyspnea with exertion for 1 week. Orthopnea. Bilateral lower extremity edema. Salt overload. Medication continuation.\n        *   O (Objective): BP 148/88, HR 92 (AF), SpO2 94%. JVP distended (+), III sound (+) (S3 gallop). Bilateral lower edema (+). CTR 58%, bilateral pleural effusion, pulmonary congestion. EF 38% (reduced ejection fraction). BNP 685 (prev 180) - increased. Cr 1.28, eGFR 42.\n    *   Output Requirement: \"A\" section (Assessment/Conclusion) in Japanese medical terminology suitable for an EHR.\n\n2.  **Evaluate the Clinical Picture:**\n    *   **Diagnosis:** Heart Failure with Reduced Ejection Fraction (HFrEF). EF is 38%, BNP is elevated ",
+        "gen_length": 1819,
+        "time_sec": 7.0
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Medical Record (EMR) entry support.\n    *   Task: Continue the EMR entry based on provided information, specifically proposing an \"Assessment\" (A - アセスメント) section.\n    *   Input Data:\n        *   S (Subjective): No self-reported symptoms, good medication adherence, pre-breakfast blood glucose 130 mg/dL, daily 30-min brisk walk.\n        *   O (Objective): BP 128/78 mmHg, HR 68 bpm, HbA1c 6.8% (previous 7.0%, improved), Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n    *   Output Requirement: \"A\" section (Assessment) in Japanese EMR format.\n\n2.  **Evaluate the Clinical Data:**\n    *   **Diagnosis:** Type 2 Diabetes Mellitus (implied by HbA1c, medication, blood glucose monitoring). The user didn't explicitly state the diagnosis code, but it's clear from context (medication, BP/glucose management). I should assume T2DM is the primary focus.\n    *   **HbA1c:** 6.8% (Target usually <7.0% for m",
+        "gen_length": 1673,
+        "time_sec": 7.0
+      },
+      "p_09_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue the medical record based on provided intake information (S, O, A). Specifically, draft the \"P\" (Plan/Prescription) section.\n    *   Input Data:\n        *   S (Chief Complaint/History): Worsening dyspnea for 1 week, orthopnea, lower limb edema, high salt intake.\n        *   O (Objective): BP 148/88, HR 92 (AF), SpO2 94%, EF 38% (HFrEF), BNP 685, Cr 1.28, eGFR 42 (CKD G3b).\n        *   A (Assessment/Diagnosis): #1 Acute exacerbation of chronic heart failure (HFrEF, NYHA III). #2 Hypertension. #3 CKD G3b.\n\n2.  **Determine the Clinical Needs:**\n    *   **Heart Failure Exacerbation:** Need to address fluid overload and acute decompensation.\n        *   Diuretics (loop diuretic) is priority for edema/dyspnea/volume overload.\n        *   Rate control for AFib (HR 92). Beta-blockers or non-DHP calcium channel blockers might be cons",
+        "gen_length": 1763,
+        "time_sec": 6.9
+      },
+      "p_10_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue the medical record by proposing a \"P\" (Plan) section based on the provided S (Subjective), O (Objective), and A (Assessment).\n    *   Input Data:\n        *   S (Symptoms): Dyspnea worsening with exertion, yellow sputum. Smoking 5 cigarettes/day continues. Inhaled medication partially forgotten.\n        *   O (Objective): BP 132/78, HR 78, SpO2 93%. Bilateral wheezing in lung fields. Chest X-ray: hyperinflation, no infiltrates.\n        *   A (Assessment): Suspected COPD exacerbation. Smoking + poor inhaler adherence are exacerbating factors. Possibility of infection superimposed.\n    *   Output Requirement: Propose the \"P\" section suitable for a Japanese EHR context.\n\n2.  **Evaluate the Clinical Situation:**\n    *   Diagnosis: COPD exacerbation (acute).\n    *   Severity: SpO2 93% is slightly low but acceptable depending on g",
+        "gen_length": 2035,
+        "time_sec": 6.8
+      },
+      "continue_11_s_mid": {
+        "generated": "S：1 週間前から労作時息切れが著しく増悪しており、特に階段を 1 分ほど上がった時点で激しい呼吸困難を感じ、座って落ち着くまで数分必要になりました。夜間の寝苦しみ（パレステル）は現時点ではありませんが、就寝前に咳が出ることがあります。\n\n【追加提案】\n- 「座って落ち着くまで数分必要」という記述を「座位での休息で改善し、横床にするとさらに息苦しさを伴う」など、症状の動態を加えるとより具体的な病態描写になります。\n- BNP が 685 pg/mL で労作時の息切れ増悪があるため、「体重増加（1 週間〜2 週間で〇kg 増）」や「浮腫の有無（足背・回腸など）」を問診に追加すると、心不全の重症度評価や治療方針（利尿薬調整など）の決定に役立ちます。\n\n上記 S の記述をカルテに追加し、必要に応じて身体所見や既往歴との関連性を考察して続きを提案できますよ。",
+        "gen_length": 380,
+        "time_sec": 4.7
+      },
+      "continue_12_o_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Medical Record (EMR) documentation.\n    *   Task: Propose the continuation of the \"O\" (Objective) section based on provided intake information.\n    *   Input Data:\n        *   Patient: 45-year-old female, history of Asthma + Infection.\n        *   Vitals: BP 118/72, HR 92, BT 37.8°C (fever), SpO2 96%.\n        *   Labs: WBC 11,200, CRP 4.8.\n        *   CXR: Right lower lung field infiltrate shadow present (右下肺野浸潤影あり).\n        *   History/Symptoms (S): Cough worsening for 3 days, fever 38°C, decreased appetite, dyspnea.\n    *   Current State: The \"O\" section has started with Vitals and Labs/CXR headers but is incomplete in the prompt's example (\"胸部X線:\\n\\nO（客観的情報）の続きを提案してください。\"). Actually, looking closely at the provided text:\n        ```\n        O: BP 118/72, HR 92, BT 37.8, SpO2 96%\n        採血：WBC 11200, CRP 4.8\n        胸部X線:\n        ```\n        The user wants me to complete the \"O",
+        "gen_length": 1667,
+        "time_sec": 6.9
+      },
+      "continue_13_a_mid": {
+        "generated": "#2 心房細動（AF）：発作性または持続性で、心室率制御薬未使用、抗凝固療法の適否を検討中\n#3 急性腎機能低下リスク/慢性腎臓病（CKD）: Cr1.28g/dL を考慮し、尿量と電解質（特にカリウム値）を精査が必要。塩分過多が要因である可能性大。\n\n**提案理由:**\n*   **AF の追加:** 心拍数 92 かつ不整脈として「(AF)」が記載されており、心不全の悪化に寄与する因子と見なされます。治療方針（制御薬の開始や調整、抗凝固療法の検討）が次のステップで必要です。\n*   **腎機能・電解質:** クレアチニン 1.28g/dL は高値であり、心不全の悪化による急性腎障害の可能性があります。また、問診で「塩分過多」が指摘されており、カリウム値や尿量の確認が刻一刻と緊急性を帯びています。\n*   **診断の統合:** 上記の要素を統合し、治療計画（利尿剤投与、抗凝固療法の開始/中止判断など）につなぐための論理的なステップです。\n\n**次回の A（アセスメント）または P（介入・計画）への接続例:**\n「#1〜#3 に鑑み、まず利尿を優先しうっ血を改善しつつ、電解質と抗凝固療法の適否を確認する。」",
+        "gen_length": 511,
+        "time_sec": 5.9
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue writing the \"P\" (Plan) section of a medical note based on provided information.\n    *   Provided Info:\n        *   S/O/A omitted (Subjective/Objective/Assessment not fully detailed or omitted in input).\n        *   P (Past): Actually, the user labeled the existing text as \"P:\", but in SOAP format, the second letter is usually Subjective. However, looking at the content (\"フロセミド増量\", \"塩分制限の再指導\"), these sound like a plan or follow-up instructions based on an assessment. Wait, standard SOAP is S (Subjective), O (Objective), A (Assessment), P (Plan).\n        *   The input shows:\n            ```\n            【ここまでの記載】\n            S/O/A 省略\n            P:\n            - フロセミド増量（20mg→40mg）\n            - 塩分制限の再指導\n            ```\n            It says \"S/O/A 省略\" (Omitted), so the input text *is* just the \"P:\" section already. The user want",
+        "gen_length": 2023,
+        "time_sec": 7.5
+      },
+      "soap_14_dm_routine": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Convert the provided interview record (問診記録) into a SOAP format medical record.\n    *   Input Data:\n        *   Patient: 58-year-old female, history of Type 2 Diabetes & Hypertension (regular outpatient).\n        *   Doctor's Questions & Patient's Answers (Interview content):\n            *   Greeting/Current status -> No changes, meds taken as prescribed.\n            *   Self-monitoring of blood glucose -> Yes, morning ~130 mg/dL.\n            *   Diet -> Daughter prepares balanced meals.\n            *   Exercise -> Daily 30-min walk.\n        *   Vitals: BP 128/78, HR 68, BT 36.2°C.\n        *   Lab Results: HbA1c 6.8% (prev 7.0%), Cr 0.72, eGFR 68.\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n\n2.  **Determine SOAP Structure:**\n    *   **S (Subjective):** Patient's subjective complaints, history of pre",
+        "gen_length": 1775,
+        "time_sec": 6.9
+      },
+      "soap_15_ht_adjust": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   **Task:** Convert the provided interview record (问诊記録) into a SOAP format medical record.\n    *   **Input Data:**\n        *   Patient: 55-year-old male, hypertensive outpatient.\n        *   Interview/History (問診):\n            *   BP at home: ~150 in the morning.\n            *   Symptoms: Head heavy upon waking up (morning).\n            *   Meds: Taking them (but name not specified).\n            *   Diet: High sodium (miso soup every meal, pickles/fermented foods liked).\n            *   Exercise: Sedentary desk job, hardly any exercise.\n        *   Vitals (バイタル): BP 156/94, HR 76, BT 36.4.\n        *   Lab Results (採血): Cr 0.82, eGFR 72, K 4.2.\n    *   **Output Format:** SOAP (Subjective, Objective, Assessment, Plan).\n\n2.  **Determine the Content for Each Section:**\n\n    *   **S (Subjective):** Focus on patient's complaints and history ",
+        "gen_length": 1923,
+        "time_sec": 6.9
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "**【S：主訴・現病歴】**\n高齢患者（82 歳女性）によるふらつきと転倒について来院。娘より「玄関で転び、大きな怪我はなかった」と報告。ふらつきの発症は 1 ヶ月前からであり、患者自身では記憶にない状態である。\n\n**【O：所見】**\n*   **バイタルサイン**: BP 118/62 mmHg, HR 64 回/分, BT 36.0℃（安静時）。起立性低血圧を認める（臥位 128/72 → 立位 102/58 mmHg，収縮期低下 26 mmHg）。\n*   **認知・精神状態**: 「朝ボーッとしている」と娘が指摘する。患者の自覚症状は不顕著（「よく覚えてない」）。エチゾラム服用により眠れるようであるが、夜間の睡眠質については詳細な評価が必要。\n*   **既往歴・通院状況**: 高血圧、2 型糖尿病、骨粗鬆症、不眠症を合併し、現在処方薬は 12 剤と多剤併用している。\n*   **検査結果**: HbA1c 6.2%（コントロール良好）、Cr 0.92 mg/dL, eGFR 45 mL/min/1.73m²（CKD 3a 範囲）。\n*   **処方薬一覧**:\n    *   血圧: アムロジピン 5mg、テルミサルタン 40mg\n    *   糖尿病: フロセミド 20mg, メトホルミン 500mg\n    *   不眠症: エチゾラム 0.5mg, ゾルピデム 5mg\n    *   骨粗鬆症・骨折予防: アレンドロネート 35mg/週、カルシウム・ビタミン D（αカルシドール 0.5μg）、酸化マグネシウム 990mg\n    *   胃腸管疾患: ランソプラゾール 15mg\n    *   疼痛管理: ロキソプロフェン 60mg（頓用）",
+        "gen_length": 742,
+        "time_sec": 6.8
+      }
+    }
+  },
+  "4B+nocpt_A": {
+    "config": "4B+nocpt_A",
+    "desc": "4B GGUF + sft_4b_nocpt_A",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) entry support.\n    *   Task: Write the \"S\" (Subjective) section of the medical record based on the provided history taking (interview/consultation notes).\n    *   Input Data: Patient info (72yo male, chronic heart failure, hypertension, type 2 diabetes), physician-patient dialogue, vital signs, lab results (BNP increased, Cr elevated, etc.).\n    *   Output Requirement: The \"S\" section of the medical record.\n\n2.  **Understand Medical Record Structure:**\n    *   Standard SOAP note structure: Subjective (S), Objective (O), Assessment (A), Plan (P).\n    *   \"S\" (Subjective) typically includes: Chief Complaint, History of Present Illness (HPI), Past Medical History (PMH - though often separate or in notes), Social History (SH), Review of Systems (ROS - sometimes combined with S). It should reflect the patient's own words and observations.\n    *   In Japanese medical",
+        "gen_length": 1763,
+        "time_sec": 8.1
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Extract and format \"Subjective Information\" (S - 主観的情報) from the provided interview record (問診記録).\n    *   Input Data: Interview record of a 45-year-old female with asthma, including questions/answers about symptoms, temperature, appetite, inhaler usage, and vital signs/labs.\n    *   Output Requirement: Only the \"S\" section based on the provided text.\n\n2.  **Analyze the Input Data:**\n    *   Patient: 45yo Female (45 歳女性), Asthma history (気管支喘息で通院中).\n    *   Chief Complaint/Onset: Coughing worsened 3 days ago (3 日前から咳がひどくて) accompanied by fever (熱も出てきて).\n    *   Temperature: 38°C last night (昨日の夜は 38 度ありました).\n    *   Appetite: Poor appetite/Not eating much (あまり食べられていません).\n    *   Asthma Medication: Inhaler usage difficult due to severe coughing (咳がひどくてうまく吸えません).\n    *   Vital Signs: BP 118/72, HR 92, BT 37.8, SpO2 96% (Note: BT is Ob",
+        "gen_length": 1770,
+        "time_sec": 7.0
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Provide suggestions for continuing the chart based on interview information (SOAP format, specifically focusing on 'S' - Subjective).\n    *   Input Data: An interview record (問診記録) of a 42-year-old female patient with a history of depression.\n    *   Target Output: The 'S' (Subjective) section of the medical chart based on the provided interview notes.\n\n2.  **Analyze the Input Data:**\n    *   Patient Demographics: Female, 42 years old.\n    *   Diagnosis: Depression (depression in remission/exacerbation? ongoing treatment).\n    *   Doctor-Patient Dialogue:\n        *   Q1: \"How have you been lately?\" A: \"...not very good.\" (Negative mood)\n        *   Q2: \"What does that feel like specifically?\" A: \"Hard to wake up in the morning... unable to go to work more days.\" (Early morning awakening, anhedonia/functional impairment).\n        *   Q3: \"How is ",
+        "gen_length": 1919,
+        "time_sec": 7.0
+      },
+      "s_04_copd": {
+        "generated": "### S（主観的情報）\n「息切れが前より悪くなったと自覚しており、坂道の上り下りが困難になっている。」\n「朝起床時などに黄色い痰が出ている。」\n「禁煙は完了していない。現在も1 日約5 本程度吸っている。」\n「吸入薬の服薬は不規則であり、2 回/日を記載されている薬剤のうち、1 剤のみを毎日使用している他、もう 1 剤は頻繁に漏らしている。」",
+        "gen_length": 173,
+        "time_sec": 3.6
+      },
+      "o_05_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the medical record, specifically the \"O\" (Objective) section based on the provided \"S\" (Subjective) and existing clinical data.\n    *   Input Data: Patient profile (72M, Chronic Heart Failure, Hypertension, Type 2 Diabetes), Vitals (BP 148/88, HR 92, BT 36.4, SpO2 94%), Labs (BNP up to 685 from 180, Cr 1.28, eGFR 42), Echo (EF 38%, LVDd 58mm), ECG (AF, LVH), CXR (CTR 58%, small bilateral pleural effusion, pulmonary congestion), Physical Exam (pitting edema + in lower limbs, jugular venous distention +, S3 heard).\n    *   Existing \"S\": Worsening dyspnea on exertion for 1 week. Orthopnea present. Lower limb edema worsening. Excessive salt intake.\n    *   Task: Write the \"O\" (Objective) section to follow \"S\".\n\n2.  **Review the Input Data & Structure:**\n    *   The user has provided a comprehensive set of clinical data already in th",
+        "gen_length": 1594,
+        "time_sec": 6.9
+      },
+      "a_07_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant for Japanese Electronic Medical Record (EMR) documentation.\n    *   **Task:** Continue the EMR entry based on the provided history (S, O). Specifically, provide the \"A\" (Assessment/Conclusion) section.\n    *   **Input Data:**\n        *   S (Subjective): Worsening dyspnea on exertion for 1 week, orthopnea, bilateral lower limb edema, high salt intake, currently taking oral medications.\n        *   O (Objective): BP 148/88, HR 92 (AF), SpO2 94%. Jugular vein distension (+), S3 gallop (+), bilateral lower limb edema (+). CTR 58%, bilateral pleural effusion, pulmonary congestion. EF 38% (reduced). BNP 685 (prev 180 -> significant increase). Cr 1.28, eGFR 42.\n    *   **Goal:** Write a professional Japanese medical assessment section (\"A\") that synthesizes the S and O information to form a diagnosis and treatment plan summary.\n\n2.  **Evaluate the Patient's Condition (Clinical Reasoning):**\n    *   **Diagno",
+        "gen_length": 1838,
+        "time_sec": 6.8
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the medical record based on provided intake information (Subjective & Objective data). Specifically, write the \"A\" section (Assessment/Conclusion).\n    *   Input Data:\n        *   S (Subjective): No self-reported symptoms. Good medication adherence. Fasting blood glucose 130 mg/dL. Daily 30-minute walk.\n        *   O (Objective): BP 128/78 mmHg, HR 68 bpm. HbA1c 6.8% (previous 7.0%, improved). Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n        *   Context: Diabetes management (implied by blood glucose, HbA1c, Cr, eGFR) + Hypertension (BP measurement).\n\n2.  **Evaluate the Data:**\n    *   **Diabetes Control:** Fasting BG is 130 mg/dL (Target usually <140 or individualized), HbA1c dropped from 7.0% to 6.8% (Good improvement, within target range typically <7%). This indicates effective management.\n    *   **Blood Pressure:** 128/78 mmHg ",
+        "gen_length": 1752,
+        "time_sec": 6.9
+      },
+      "p_09_chf": {
+        "generated": "**P:**\n#1 慢性心不全の急性増悪に対する治療:\n- **利尿薬**: フロセミド 20mg PO/IV (経口不能や重症時は IV 開始) を投与し、尿量増加と体重減少を評価する。必要に応じて追加。\n- **血圧・心拍数の管理**: BP 148/88, HR 92(AF) のため、抗心律失常薬（例：アミオダロン等）を検討しつつ、低電解質血症を回避する。電気心臓復律（CABF）の適格性を評価する。\n- **エントランスケア**: 低ナトリウム血症や低カリウム血症を予防する電解質管理に留意し、経食状態が改善した段階で栄養サポートを検討する。\n\n#2 高血圧・心房細動に対する治療:\n- BP 制御: カルシウム拮抗薬（例：アミノジピン系）またはARB/ACEI に加えて利尿効果のある薬剤を調整し、BP 140/90未満を目指す。\n- AF 管理: 心室率コントロール（β阻害薬、カネサール等）と血栓予防（抗凝固療法の適格性を評価後、DOAC やワーファリンを検討）。\n\n#3 CKD G3bに対する治療:\n- eGFR 42 mL/min/1.73m²を考慮し、腎毒性のある薬剤の使用に注意（例：ACEI/ARB の起始量調整や投与間隔変更、造影剤使用制限）。\n- 経食開始後、尿量変化とナトリウム排泄状況を追跡し、必要に応じて透析療法への適応評価を行う。\n\n**総合的な目標**: 急性増悪の安定化、AF の心室率コントロール、腎機能への負荷軽減を同時に達成する。",
+        "gen_length": 640,
+        "time_sec": 6.0
+      },
+      "p_10_copd": {
+        "generated": "P: COPD 増悪の管理および急性期治療を開始する。\n1. 吸入薬の適正化：現在使用している吸入薬の種類・回数を確認し、ガイドラインに基づいた吸入療法（LAMA/LABA）への変更または併用を検討。吸入器の使用技術指導を実施し、アドヒアランス向上を図る。\n2. 急性増悪治療：ステロイド（プレドニゾロン 40mg/日×5 日）、長作用β2 受容体作動薬の追加使用、および痰が粘稠な場合は mukolytics を検討。必要に応じて抗生物質（呼吸管感染合併を考慮）を投与する。\n3. 酸素療法の適応評価：安静時 SpO2 が 93% であれば現時点では補給は不要とするが、増悪中および退院後の維持管理については再評価する。\n4. 健康指導：禁煙支援への積極的介入（処方薬の提供やカウンセリングへ誘導）、呼吸リハビリテーションの提案。\n5. 経過観察：症状改善情况及び吸入アドヒアランスの実施状況を確認するため、2 週間後に再受診を予定する。",
+        "gen_length": 420,
+        "time_sec": 4.8
+      },
+      "continue_11_s_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue the medical record (specifically the Subjective section \"S\") based on provided consultation information.\n    *   Input Data:\n        *   Patient: 72-year-old male, chronic heart failure (on outpatient treatment).\n        *   Vitals: BP 148/88 mmHg, HR 92 bpm, SpO2 94%.\n        *   BNP: 685 pg/mL.\n        *   Partial Record (S): \"1週間前から労作時息切れ増悪。階段1階分で\" (Worsening dyspnea on exertion for 1 week. Short of breath after climbing one flight of stairs).\n    *   Goal: Complete the sentence/paragraph starting with \"階段1階分で\".\n\n2.  **Evaluate Clinical Context:**\n    *   Condition: Chronic Heart Failure (CHF), likely NYHA Class III or IV given the worsening symptoms despite treatment, though on outpatient basis.\n    *   Vitals: BP is slightly elevated (148/88), HR is normal-high (92). SpO2 is 94% (slightly low-normal, could indicate mild hypoxia or ",
+        "gen_length": 1868,
+        "time_sec": 7.4
+      },
+      "continue_12_o_mid": {
+        "generated": "右下肺野浸潤影あり",
+        "gen_length": 9,
+        "time_sec": 2.9
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Medical Records (EMR).\n    *   Task: Continue writing the \"Assessment\" (A) section based on the provided intake (S, O) and previous assessment (#1).\n    *   Input Data:\n        *   S (Subjective): Worsening shortness of breath for 1 week, orthopnea, lower limb edema, salty food intake.\n        *   O (Objective): BP 148/88, HR 92 (AFib), SpO2 94%, EF 38% (HFrEF), BNP 685 (elevated), Cr 1.28.\n        *   Previous A: #1 Chronic Heart Failure Acute Exacerbation (HFrEF) with marked elevation of BNP and signs of congestion.\n    *   Goal: Provide a continuation for the Assessment section, likely including differential diagnosis, treatment plan, or discharge instructions if appropriate (though usually \"Assessment\" focuses on diagnosis and reasoning). However, in Japanese EMRs, sometimes A includes multiple points like Differential Diagnosis (Differential) or Plan/Next Steps. Given the pro",
+        "gen_length": 2041,
+        "time_sec": 6.8
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Suggest continuation of the \"P\" (Plan/計画) section based on previous information.\n    *   Input Data: Previous P section content is omitted (\"S/O/A 省略\"), but specific items are listed under P:\n        *   Florsemide dosage increase (20mg -> 40mg).\n        *   Re-education on salt restriction.\n    *   Context: The user wants me to continue the \"P\" section based on this input.\n    *   Language: Japanese.\n\n2.  **Evaluate the Current Input:**\n    *   The provided text is already a list of items under P (Plan).\n    *   Wait, looking closely at the prompt: `【ここまでの記載】` (So far recorded) shows `S/O/A省略` (Subjective/Objective/Assessment omitted), then `P:` followed by two bullet points.\n    *   The user asks for \"P（計画）の続きを提案してください\" (Please propose the continuation of P (Plan)).\n    *   This implies I need to expand or complete the Plan sectio",
+        "gen_length": 2017,
+        "time_sec": 6.9
+      },
+      "soap_14_dm_routine": {
+        "generated": "**S (Subjective)**\n58 歳女性で、2 型糖尿病・高血圧にて通院中。\n自覚症状なし、「特に変わりない」とのこと。服薬は正しく継続していると報告。\n血糖値の自己測定を実施しており、朝空腹時血糖は「130 前後」と回答。\n食事については娘による栄養バランスを考慮した調理で摂取している。\n運動習慣あり、毎日約 30 分散歩している。\n\n**O (Objective)**\nバイタルサイン：BP 128/78 mmHg, HR 68 回/分, BT 36.2℃。\n検査所見：HbA1c 6.8%（前回比：7.0%↓）、血中クレアチニン Cr 0.72 mg/dL、eGFR 68 mL/min/1.73m²。\n\n**A (Assessment)**\n糖尿病予後良好（HbA1c の改善傾向あり）。高血圧もコントロールされ良好。\n腎機能は軽度低下域（CKD Stage 3a）に該当するが、現状安定している。\n生活習慣面では食事管理と運動習慣を維持しており、患者さんのコンプライアンスが高い。\n合併症の予防・管理継続を要す。\n\n**P (Plan)**\n1. 現行薬物療法を継続し、次の定期通院を見込む。\n2. HbA1c の目標値（7%未満）および血圧の目標値（130/80 mmHg 未満）に達していることを確認する。\n3. 腎機能低下に対する定期的な経過観察（6 ヶ月以内など）を指示する。\n4. 糖尿病合併症のスクリーニング（眼底、尿微量アロブリン、下肢血管疾患等）の必要性を検討し、次の診察時に実施するかまたは次回の定期検査に含めることを伝える。",
+        "gen_length": 683,
+        "time_sec": 6.3
+      },
+      "soap_15_ht_adjust": {
+        "generated": "**S（主訴・症状）**\n高血圧症通院中。朝起立時や起床時に「頭が重い」という訴えがある。自覚症状として頭痛、めまいは現時点では特になく、主に重み感のみを訴える。\n\n**O（所見）**\n*   **問診：** 55 歳男性。高血圧症通院中。塩分制限については「味噌汁は毎食、漬物は好き」という意識がないと回答。運動習慣なし（デスクワーク）。\n*   **バイタルサイン：** BP 156/94 mmHg, HR 76 拍/分, BT 36.4℃\n*   **検査結果：** Cr 0.82 mg/dL, eGFR 72 mL/min/1.73m², K 4.2 mEq/L\n\n**A（評価）**\n対照的偏高血圧（朝方高血圧）の疑いあり。生活習慣上、塩分制限が不十分である可能性が高い（味噌汁・漬物の頻繁な摂取）。運動不足による血管内皮機能低下も関与していると考えられる。eGFR は正常範囲内だが、長期的高血圧による腎臓への影響を継続的にモニタリングする必要がある。\n\n**P（計画）**\n1.  **投薬指導の強化：** 現在の抗高血圧薬の服用状況を確認し、効果と副作用について再教育を行う。特に朝方高血圧に対する対応について説明する。\n2.  **生活習慣指導：** 「味噌汁は毎食」や「漬物好き」という現状に対し、低塩食への移行を強く促す（出汁の取り方、漬物の量を減らすなど具体的なアドバイス）。\n3.  **運動指導：** デスクワークであることを前提とした軽い有酸素運動（ウォーキング等）を週に 150 分程度の目標を設定し、徐々に実践してもらうよう指示する。\n4.  **モニタリング：** 家庭血圧測定を継続させるよう指導し、特に朝方の値と夜間の変動を確認してもらう。必要に応じて 24 時間血圧記録（ABPM）の検討も行う。\n5.  **再診：** 生活習慣改善と投薬調整を試行後、1 ヶ月後に再評価",
+        "gen_length": 809,
+        "time_sec": 6.8
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "**患者名**：82 歳女性  \n**通歴**：高血圧、2 型糖尿病、骨粗鬆症、不眠症  \n**現在処方**：12 剤  \n\n---\n\n### **S（主訴/問題点）**\n歩行に支障をきたすふらつきが 1 ヶ月程度続いている。先週玄関で転倒した既往あり（軽微な怪我のみ）。朝方ボーッとする症状がある。不眠症の治癒後、薬物依存による反復服用により睡眠が確保できているようであるが、薬物多剤併用下での状態評価が必要。\n\n### **O（診察所見/データ）**\n*   **問診**：ふらつきの発症から 1 ヶ月頃。転倒時に骨折等の重大な怪我はない。不眠は薬服用後に解決し、朝方ボーッとする。記憶障害の自覚あり（「よく覚えてない」）。\n*   **バイタルサイン**：BP 118/62 mmHg, HR 64 回/分, BT 36.0℃。\n*   **起立性低血圧検査**：臥位 BP 128/72 → 立位 BP 102/58（体位変化による血圧低下あり）。\n*   **検査値**：HbA1c 6.2%, Cr 0.92 mg/dL, eGFR 45 mL/min/1.73m²。\n*   **処方状況**：抗高圧薬（アムロジピン 5mg + テルミサルタン 40mg）、降血糖薬（フロセミド 20mg + メトホルミン 500mg）、不眠症治療薬（エチゾラム 0.5mg + ゾルピデム 5mg）、骨粗鬆症療法剤（アレンドロネート 35mg/週、カルシウム・ビタミン D）、胃腸管症状対策（酸化マグネシウム 990mg, ランソプラゾール 15mg）、疼痛管理（ロキソプロフェン 60mg 頓用、センノシド 12mg）。\n\n### **A（評価/分析）**",
+        "gen_length": 729,
+        "time_sec": 6.9
+      }
+    }
+  },
+  "4B+final_F": {
+    "config": "4B+final_F",
+    "desc": "4B GGUF + finalマルチタスク",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "**S：主観的情報**\n72 歳男性で、慢性心不全・高血圧・2 型糖尿病にて通院中。\n「最近また息が切れる」（1 週間前より出現）、「階段上りがきつい（活動制限あり）」と訴える。\n「寝ているときに息苦しくなる」で、枕を 2 つ重ねないと寝られなくなる（体位性呼吸困難/肺水腫疑う）。\n「足のむくみが出た」（靴下の跡がつく程度）と訴える。\nお薬は飲んでいるが、「正月に塩辛いもの食べすぎたかも」と食事内容の悪化を認める。",
+        "gen_length": 209,
+        "time_sec": 4.1
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Electronic Medical Record (EMR) AI Assistant.\n    *   Task: Suggest continuation of the medical record based on the provided interview information.\n    *   Specific Input: Interview record (history taking) for a 45-year-old female patient with asthma under treatment.\n    *   Specific Output Required: \"S\" (Subjective information/Historical data) section of the EMR.\n\n2.  **Analyze the Input Data:**\n    *   Patient: 45 years old, Female.\n    *   Medical History: Asthma (under regular outpatient care).\n    *   Chief Complaint/History:\n        *   Doctor: \"How are you today?\"\n        *   Patient: \"Cough has been severe for the past 3 days, also had a fever...\"\n        *   Doctor: \"What is your fever temperature?\"\n        *   Patient: \"Yesterday evening it was 38°C.\" (Implies current or recent high fever).\n        *   Doctor: \"How is appetite?\"\n        *   Patient: \"Not eating much.\"\n        *   Doctor: \"Are you using you",
+        "gen_length": 1819,
+        "time_sec": 6.9
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Medical AI Assistant for Electronic Health Record (EHR) documentation.\n    *   Task: Generate \"S\" (Subjective) information from the provided interview record.\n    *   Input: Interview record of a 42-year-old female patient with depression, including questions and answers about mood, work attendance, appetite/weight, sleep, and medication efficacy. Vitals are also provided (but usually part of OB or O, not S).\n    *   Output Format: S (Subjective) section for an EHR chart.\n\n2.  **Understand \"S\" in EHR:**\n    *   \"S\" stands for Subjective data, primarily consisting of the patient's own history and symptoms as reported by them (history of present illness).\n    *   It should reflect the patient's perspective, using their words where appropriate, but often summarized or paraphrased for medical documentation.\n    *   Key elements to include: Chief complaint (implied), specific symptoms (mood, sleep, appetite/weight, funct",
+        "gen_length": 1938,
+        "time_sec": 7.6
+      },
+      "s_04_copd": {
+        "generated": "### S（主観的情報）\n「息切れが前より悪くなったと訴える。特に坂道上昇時に困難を覚えている。朝起きた際に黄色い痰を咳出している。「禁煙済」だが、現在も 1 日約 5 本吸っている。吸入薬の服用については、「1 日 2 回投与される薬剤は使用しているが、もう 1 つの薬剤（おそらく長期作用型 LAMA/LABA または ICS/LABA）は頻繁に忘れている」と回答する。」",
+        "gen_length": 188,
+        "time_sec": 4.2
+      },
+      "o_05_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue writing the EHR, specifically focusing on \"O\" (Objective data) based on the provided interview/subjective history (\"S\") and patient information.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   History: Chronic Heart Failure (CHF), Hypertension (HTN), Type 2 Diabetes Mellitus (T2DM).\n        *   Vitals: BP 148/88, HR 92, BT 36.4°C, SpO2 94%.\n        *   Labs: BNP 685 pg/mL (prev 180), Cr 1.28, eGFR 42.\n        *   Echo: EF 38%, LVDd 58mm.\n        *   ECG: Atrial Fibrillation (AF), Left Ventricular Hypertrophy (LVH).\n        *   CXR: CTR 58% (Cardiothoracic Ratio), small bilateral pleural effusions, pulmonary congestion.\n        *   Physical Exam: Bilateral pitting edema (+) in lower legs, jugular venous distention (+), S3 sound heard.\n        *   Subjective History (S): Worsening dyspnea on exertion fo",
+        "gen_length": 1724,
+        "time_sec": 7.4
+      },
+      "a_07_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the medical record based on provided intake history (Sx/Ox) and suggest an Assessment (A) section.\n    *   Input Data:\n        *   S (Symptoms/Subjective): Worsening dyspnea on exertion for 1 week, orthopnea, bilateral lower limb edema, high salt intake, currently taking medications.\n        *   O (Objective): BP 148/88, HR 92 (Atrial Fibrillation), SpO2 94%. JVD (+), S3 heart sound (+). Bilateral leg edema (+). CTR 58%, bilateral pleural effusion, pulmonary congestion. EF 38% (reduced ejection fraction). BNP 685 (previous 180). Cr 1.28, eGFR 42.\n    *   Output Needed: Assessment/A (評価・アセスメント) section.\n\n2.  **Evaluate the Patient's Condition:**\n    *   **Diagnosis:** The clinical picture strongly suggests acute decompensated heart failure (ADHF).\n        *   Signs: Dyspnea, orthopnea, JVD, pulmonary congestion, pleural effusion,",
+        "gen_length": 1708,
+        "time_sec": 7.2
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue the medical record based on provided interview/assessment information. Specifically, write the \"A\" section (Assessment/Diagnosis) following the given \"S\" (Subjective) and \"O\" (Objective) sections.\n    *   Input Data:\n        *   S: No self-reported symptoms. Good medication adherence. Pre-breakfast blood glucose 130 mg/dL. Daily 30 minutes brisk walk.\n        *   O: BP 128/78, HR 68. HbA1c 6.8% (previous 7.0%, improved). Cr 0.72, eGFR 68.\n    *   Output Requirement: Write the \"A\" section (Assessment) in Japanese medical record style.\n\n2.  **Evaluate the Patient's Status:**\n    *   Diabetes Management: HbA1c dropped from 7.0% to 6.8%. This is a slight improvement towards the target (usually <7.0%). The pre-breakfast glucose of 130 mg/dL is within a reasonable range (FPG goal often <130 or <140 depending on guidelines, e.g., JGD).\n    *  ",
+        "gen_length": 1820,
+        "time_sec": 7.6
+      },
+      "p_09_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   **Task:** Continue the medical record by providing a \"P\" (Plan/計画) section based on the provided Subjective (S), Objective (O), and Assessment (A).\n    *   **Input Data:**\n        *   S: Worsening shortness of breath for 1 week, orthopnea, lower limb edema, high salt intake.\n        *   O: BP 148/88, HR 92 (AF), SpO2 94%, EF 38%, BNP 685, Cr 1.28, eGFR 42.\n        *   A: #1 Acute exacerbation of chronic heart failure (HFrEF, NYHA III). #2 Hypertension. #3 CKD G3b.\n    *   **Output:** P (Plan) section suitable for Japanese EHR.\n\n2.  **Evaluate the Clinical Situation:**\n    *   **Diagnosis:** Acute Decompensated Heart Failure (ADHF) due to HFrEF, superimposed with Atrial Fibrillation (AF), Hypertension, and Chronic Kidney Disease (CKD).\n    *   **Key Issues:** Volume overload (edema, orthopnea, high salt intake), Arrhythmia (AF), Heart ",
+        "gen_length": 1764,
+        "time_sec": 7.4
+      },
+      "p_10_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the P (Plan) section based on the provided S (Subjective), O (Objective), and A (Assessment) sections of a medical record.\n    *   Input Data:\n        *   S: Dyspnea worsening with exertion, yellow sputum, continued smoking 5 cigs/day, partial inhaler non-adherence.\n        *   O: BP 132/78, HR 78, SpO2 93%, wheeze in both lung fields, CXR shows hyperinflation, no infiltrates.\n        *   A: Suspected COPD exacerbation (smoking + inhaler non-adherence as exacerbating factors), possible infection superimposed.\n    *   Output Requirement: Write the P (Plan) section suitable for a Japanese EHR context.\n\n2.  **Evaluate the Clinical Situation:**\n    *   Diagnosis: COPD Exacerbation (suspected).\n    *   Severity: SpO2 93% (mild hypoxemia), HR normal, BP stable. Not immediately life-threatening but needs management.\n    *   Key Issues:",
+        "gen_length": 2016,
+        "time_sec": 6.8
+      },
+      "continue_11_s_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the \"S\" (Subjective) section of the medical record based on the provided interview information.\n    *   Input Data:\n        *   Patient: 72-year-old male, chronic heart failure (HF) outpatient patient.\n        *   Vitals: BP 148/88, HR 92, SpO2 94%.\n        *   BNP: 685 pg/mL (elevated).\n        *   Current S (started): \"1週間前から労作時息切れ増悪。階段1階分で\" (For the past week, worsening dyspnea on exertion. Climbing one flight of stairs...)\n    *   Goal: Complete the sentence/paragraph for \"S\" logically and clinically appropriate for HF exacerbation.\n\n2.  **Clinical Reasoning:**\n    *   The patient has chronic heart failure with a recent worsening (1 week).\n    *   Dyspnea on exertion is the primary symptom mentioned, starting at one flight of stairs.\n    *   Vitals show mild tachycardia (HR 92) and slightly elevated BP (148/88), plus borderl",
+        "gen_length": 1845,
+        "time_sec": 6.8
+      },
+      "continue_12_o_mid": {
+        "generated": "右下肺野浸潤影あり。呼吸音減弱、湿性雑音聴取可。指先紅斑否。\n\n---\n\n**提案のポイント：**\n*   **胸部 X 線結果**: 「右下肺野浸潤影あり」と記述済みです。\n*   **聴診結果**: 肺炎（浸潤影）に対して、呼吸音減弱と湿性雑音を記載するのが一般的で、感染の程度を客観的に評価します。「聴取不可」などではなく、可能な限り詳細に記載する方が推奨されます。\n*   **所見の追加**: 皮疹の有無（指先紅斑など）を確認し、「否」と記述することで、より客観的情報が充実しています。",
+        "gen_length": 248,
+        "time_sec": 4.2
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Japanese Electronic Medical Record (EMR) Support AI Assistant.\n    *   **Task:** Continue writing the \"Assessment\" (A) section of a medical chart based on provided \"Subjective\" (S), \"Objective\" (O), and partial \"Assessment\" (A).\n    *   **Input Data:**\n        *   S: Worsening shortness of breath for 1 week, orthopnea, lower extremity edema, high salt intake.\n        *   O: BP 148/88, HR 92 (AFib), SpO2 94%, EF 38%, BNP 685, Cr 1.28.\n        *   A (Partial): #1 Chronic Heart Failure Exacerbation (HFrEF) with marked BNP elevation and congestion signs.\n    *   **Goal:** Provide a continuation/proposal for the Assessment section that logically follows the provided partial text, ensuring medical accuracy, completeness, and appropriate formatting for Japanese EMR.\n\n2.  **Evaluate the Current State:**\n    *   Diagnosis: Chronic Heart Failure Exacerbation (HFrEF). This is correct based on symptoms (dyspnea, edema), signs (ortho",
+        "gen_length": 1860,
+        "time_sec": 7.0
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Medical AI Assistant for Electronic Health Record (EHR) documentation.\n    *   Task: Continue the \"P\" (Plan) section of a SOAP note based on provided information.\n    *   Provided Content: \"S/O/A omitted\", \"P:\" followed by two items: \"- フロセミド増量（20mg→40mg）\" (Furosemide dose increase 20mg->40mg), \"- 塩分制限の再指導\" (Re-education on salt restriction).\n    *   Goal: Suggest the continuation of the \"P\" section.\n\n2.  **Evaluate the Context:**\n    *   The doctor is managing a patient with fluid overload/heart failure (implied by Furosemide increase and salt restriction).\n    *   Current plan involves medication adjustment (diuretic) and lifestyle modification (diet).\n    *   To make the \"P\" section complete and professional, it needs to include:\n        *   Follow-up instructions (when to return, what symptoms to watch for).\n        *   Monitoring parameters (weight, BP, electrolytes, renal function).\n        *   Other potential",
+        "gen_length": 1918,
+        "time_sec": 6.9
+      },
+      "soap_14_dm_routine": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Convert a given clinical interview record (history taking) into SOAP format medical notes.\n    *   Input Data:\n        *   Patient: 58-year-old female.\n        *   History: Type 2 Diabetes, Hypertension (regular outpatient).\n        *   Doctor-Patient Dialogue:\n            *   Greeting/Chief Complaint: \"No changes,\" \"Taking meds as prescribed.\"\n            *   Self-monitoring: Morning blood glucose ~130 mg/dL.\n            *   Diet: Daughter prepares balanced meals.\n            *   Exercise: 30 min walking daily.\n        *   Vitals (Biomarkers): BP 128/78, HR 68, BT 36.2°C.\n        *   Lab Results: HbA1c 6.8% (prev 7.0%), Cr 0.72, eGFR 68 mL/min/1.73m².\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n\n2.  **Determine the Content for Each Section:**\n\n    *   **S (Subjective):** Summarize what the patient ",
+        "gen_length": 1671,
+        "time_sec": 6.9
+      },
+      "soap_15_ht_adjust": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Charting (電子カルテ記載支援).\n    *   Task: Convert the provided interview record (問診記録) into a SOAP format medical chart entry (SOAP形式のカルテ).\n    *   Input Data: Interview record of a 55-year-old male, hypertensive outpatient. Includes questions/answers about blood pressure, symptoms (headache/dizziness), medication, diet (salt/miso soup/pickles), exercise, and vital signs/labs.\n    *   Output Format: SOAP (Subjective, Objective, Assessment, Plan).\n\n2.  **Analyze the Input Data:**\n    *   Patient: Male, 55 years old.\n    *   History: Hypertension outpatient.\n    *   Subjective (S):\n        *   BP home: ~150 in the morning.\n        *   Symptoms: Head feels heavy upon waking up in the morning. No specific mention of headache/dizziness, but \"heavy head\" is noted.\n        *   Meds: Taking them.\n        *   Diet: Eating miso soup daily, likes pickles (high sodium).\n        *   Exercise: Sedent",
+        "gen_length": 1808,
+        "time_sec": 6.9
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   **Task:** Convert the provided interview record (questioning notes) into a SOAP format medical record.\n    *   **Input Data:**\n        *   Patient: 82-year-old female.\n        *   History: Hypertension, Type 2 Diabetes, Osteoporosis, Insomnia (on medication for 12 drugs).\n        *   Reason for Visit (Chief Complaint): Dizziness/falls by daughter (\"Mom stumbles often. Fell at the entrance last week\").\n        *   Interview Details: Onset of dizziness (~1 month ago), minor injury from fall, sleep issues (sleeps after meds), morning grogginess.\n        *   Vitals: BP 118/62, HR 64, BT 36.0. Orthostatic hypotension present (Supine 128/72 -> Standing 102/58).\n        *   Labs: HbA1c 6.2%, Cr 0.92, eGFR 45.\n        *   Prescriptions: 12 drugs listed (Amlodipine 5mg, Telmisartan 40mg, Furosemide 20mg, Metformin 500mg, Ezetimibe? No, Etilozam? Wait, let'",
+        "gen_length": 1502,
+        "time_sec": 7.0
+      }
+    }
+  },
+  "9B_base": {
+    "config": "9B_base",
+    "desc": "9B GGUF Q4_K_XL (アダプターなし)",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Generate the \"S\" (Subjective information) section of a medical note based on the provided interview record.\n    *   Input Data: Interview record with a 72-year-old male patient (history of chronic heart failure, hypertension, type 2 diabetes). Dialogue between doctor and patient regarding dyspnea, orthopnea, edema, medication adherence, diet, plus vital signs and test results (though these are usually Objective \"O\" or other sections, the prompt asks for S based on the interview record).\n    *   Target: Output only the \"S\" section content suitable for a medical EMR.\n\n2.  **Extract Subjective Information (S):**\n    *   Patient's History/Complaints: Dyspnea worsening recently (1 week), difficulty climbing stairs, orthopnea (needs 2 pillows), ankle edema (sock marks visible).\n    *   Medication Adherence: Taking medications but ",
+        "gen_length": 2028,
+        "time_sec": 12.4
+      },
+      "s_02_pneumonia": {
+        "generated": "ご提示いただいた問診記録に基づき、SOAP 形式における **S**（Subjective：主観的情報）部分を整理しました。\n\n臨床現場でそのまま記載できるよう、論理的な流れ（症状の開始→発熱・食事→既往症対応）を意識してまとめました。\n\n***\n\n**S: 45 歳女性。気管支喘息通院中。**\n「3 日前から咳がひどくなり、昨日の夜に高熱（38.0℃）が出たと訴える。食欲も低下しており、十分に食べていない。」\n「既往の気管支喘息に対して用いている吸入薬を使用しているが、現在激しい咳のためにうまく使用できない状態である。」\n\n***\n\n**【作成のポイント】**\n*   **時系列の明確化**: 「3 日前から」「昨日の夜」といった時間軸を明記し、病勢の増悪経過を示しています。\n*   **数値の正確な転記**: 患者が口頭で話した「38 度」は、医療文書では「38.0℃」と小数点まで明確に記載するのが適切です。\n*   **因果関係の提示**: 「咳がひどくてうまく吸えません」という部分において、症状（咳）が治療行動（吸入薬使用）への支障となっていることを簡潔に記述しています。",
+        "gen_length": 497,
+        "time_sec": 5.3
+      },
+      "s_03_depression": {
+        "generated": "ご提示いただいた問診記録に基づき、電子カルテのSOAP形式における**S（Subjective：主訴・主観的情報）**部分を整理して提案します。\n\n臨床現場では、患者の自覚症状を体系的に記述することが重要ですので、以下のように構成するのが一般的です。\n\n### 提案：S（主観的情報）\n\n> **うつ病で通院中の女性（42 歳）。**\n> **現在の状態：**「あまり良くない」と訴える。\n> **具体的な自覚症状：**\n> *   **抑うつ気分・無気力感：** 朝起きるのが辛い（早朝覚醒の傾向あり）、出勤困難日が増加している。\n> *   **食欲変化：** 減食傾向があり、体重が 2 kg 減少したことを認める。\n> *   **睡眠障害：** 入眠困難および中途覚醒（3 時頃に目覚めて戻れない）を訴える。\n> *   **治療反応性：** 現在処方されている抗うつ薬は服用しているものの、「あまり効いている気がしない」と主観的に評価している。\n\n---\n\n### 記載のポイント解説\n*   **客観的事実と主観的評価の区別**: 「体重が 2 kg 減った」こと自体も数値ですが、患者自身が「食欲がない」「体重が減った」と認識している事実として S に含めます（A で再確認し、客観測定値を記録します）。\n*   **機能障害の明記**: 「仕事に行けない日が増えた」という社会機能への影響は、重症度判断において重要です。\n*   **治療反応性の報告**: 現在服用中の薬剤に対する効果の評価（効いている気がしない）は、次のステップ（A: Assessment や P: Plan）における治療方針変更の根拠となります。",
+        "gen_length": 719,
+        "time_sec": 6.1
+      },
+      "s_04_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Generate the \"S\" (Subjective information/History of Present Illness/Symptoms) section of a medical record based on the provided consultation notes.\n    *   Input Data: Consultation history with a 68-year-old male patient with COPD (GOLD III). Includes questions and answers about dyspnea, sputum, smoking status, inhaler usage, plus vital signs.\n    *   Output Requirement: Only the \"S\" section content suitable for an EHR.\n\n2.  **Analyze the Input Data:**\n    *   Patient: 68-year-old male.\n    *   Diagnosis/History: COPD (GOLD III), outpatient.\n    *   Symptom 1 (Dyspnea): \"Feeling worse than before,\" \"Difficulty on slopes.\" -> Indicates worsening dyspnea, functional limitation.\n    *   Symptom 2 (Sputum): \"Yellow sputum in the morning.\" -> Suggests possible infection or exacerbation. Color: Yellow. Timing: Morning.\n    *   Soci",
+        "gen_length": 1984,
+        "time_sec": 6.8
+      },
+      "o_05_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue writing the EMR based on provided interview data (anamnesis/interview). Specifically, write the \"O\" section (Objective findings/Physical exam/Lab results/etc.) following the \"S\" (Subjective complaints) already written.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   Diagnoses: Chronic heart failure, Hypertension, Type 2 Diabetes.\n        *   Vitals: BP 148/88, HR 92, BT 36.4, SpO2 94%.\n        *   Labs: BNP 685 (prev 180), Cr 1.28, eGFR 42.\n        *   Echo: EF 38%, LVDd 58mm.\n        *   ECG: Atrial fibrillation, Left ventricular hypertrophy.\n        *   CXR: CTR 58%, small bilateral pleural effusion, pulmonary congestion.\n        *   Physical Exam: Pitting edema (+) in both lower limbs, JVD (+), S3 gallop present.\n        *   Current \"S\" section: Dyspnea on exertion worsening for 1 week, ort",
+        "gen_length": 1801,
+        "time_sec": 7.3
+      },
+      "a_07_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue the medical record based on provided interview information (S, O sections) and propose the next section: A (Assessment/Analysis).\n    *   Input Data:\n        *   S (Subjective): Dyspnea on exertion worsening for 1 week. Orthopnea. Bilateral leg edema. High salt intake. Continuing medication.\n        *   O (Objective): BP 148/88 mmHg, HR 92 bpm (Atrial Fibrillation), SpO2 94%. JVD (+). S3 gallop (+). Bilateral leg edema (+). CTR (Cardiothoracic Ratio) 58% (enlarged heart). Pleural effusion bilaterally. Pulmonary congestion. EF 38% (reduced). BNP 685 pg/mL (elevated, previous was 180). Cr 1.28 mg/dL, eGFR 42 mL/min/1.73m² (CKD stage G3b).\n    *   Output Requirement: Write the 'A' section (Assessment/Diagnosis) in Japanese medical terminology suitable for an EHR.\n\n2.  **Synthesize and Interpret Findings:**\n    *   **Cardiovascular System:*",
+        "gen_length": 1636,
+        "time_sec": 7.0
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue the EMR entry based on provided consultation information (Subjective, Objective).\n    *   Input Data:\n        *   S (Subjective): No subjective symptoms. Good medication adherence. Fasting blood glucose 130mg/dL. Daily 30-minute walking.\n        *   O (Objective): BP 128/78 mmHg, HR 68 bpm. HbA1c 6.8% (down from previous 7.0%, improved). Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n    *   Output Needed: A (Assessment/Applied Diagnosis) section in Japanese medical record style.\n\n2.  **Evaluate the Patient Status:**\n    *   **Diabetes Control:** HbA1c is 6.8% (target usually < 7.0%, often stricter depending on individual, but improvement noted). Fasting glucose 130mg/dL is slightly above ideal (usually < 126 for non-pregnant adults without complications), but overall trend is improving.\n    *   **Blood Pressure:** 128/78 mm",
+        "gen_length": 1771,
+        "time_sec": 7.1
+      },
+      "p_09_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic health record (EHR) documentation.\n    *   Task: Continue writing the \"P\" (Plan/Treatment Plan) section of a medical chart based on provided S (Subjective), O (Objective), and A (Assessment).\n    *   Input Data:\n        *   **S:** Dyspnea worsening for 1 week, orthopnea, lower extremity edema, excessive salt intake.\n        *   **O:** BP 148/88, HR 92 (AF), SpO2 94%, EF 38%, BNP 685, Cr 1.28, eGFR 42.\n        *   **A:** #1 Acute exacerbation of chronic heart failure (HFrEF, NYHA III). #2 Hypertension. #3 CKD G3b.\n    *   Goal: Generate the \"P\" section in Japanese medical terminology suitable for an EHR.\n\n2.  **Evaluate Clinical Status:**\n    *   Diagnosis: Acute exacerbation of Heart Failure (HFrEF), AF, HTN, CKD G3b.\n    *   Key Issues: Volume overload (edema, orthopnea, elevated BNP), Hemodynamic stability (BP slightly high but not hypertensive crisis, HR 92 with AF), Ren",
+        "gen_length": 1799,
+        "time_sec": 6.9
+      },
+      "p_10_copd": {
+        "generated": "**P:**\n1. **抗感染療法**: 黄色痰および臨床所見より肺炎または COPD 増悪に伴う二次感染の疑いがあるため、抗菌薬投与開始を検討する（例：アモキシシリンクラビラタンなど）。\n2. **COPD 増悪管理**:\n   - 吸入ステロイド/ランタニド（ICS/LABA）および長期間作用型抗コリン薬（LAMA）の強化または併用調整。\n   - 吸入アドヒアランス改善のため、患者への用法指導およびインスプレーター点検を行う。\n3. **酸素療法**: SpO2 93% を考慮し、安静時酸素飽和度維持目標（例：88-92%）を満たすよう鼻カニューレ酸素投与を検討する（必要に応じて PFT や血ガス検査を後日追加）。\n4. **生活指導・追跡**:\n   - 禁煙勧告の徹底。\n   - 痰性状、呼吸状態、発熱の有無を翌日まで観察し、症状改善まで通院または外来調整を継続する。\n   - 急性増悪で改善しない場合や酸素依存が持続する場合は入院加療の可否を再評価する。",
+        "gen_length": 439,
+        "time_sec": 5.8
+      },
+      "continue_11_s_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Propose the continuation of the \"S\" (Subjective information/History of Present Illness) section based on the provided consultation record.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   Condition: Chronic heart failure (under outpatient care).\n        *   Vitals: BP 148/88 mmHg, HR 92 bpm, SpO2 94%.\n        *   Lab: BNP 685 pg/mL (Elevated, indicating worsening heart failure).\n        *   Current EMR Draft: \"S: Dyspnea on exertion has worsened for 1 week. Stair climbing up to the first floor...\" (Incomplete sentence/needs continuation).\n    *   Goal: Complete the \"S\" section in a professional medical documentation style (Japanese).\n\n2.  **Evaluate the Clinical Context:**\n    *   Patient is elderly (72M) with chronic heart failure.\n    *   BNP is elevated (685 pg/mL), suggesting acute decompensation or",
+        "gen_length": 1923,
+        "time_sec": 6.8
+      },
+      "continue_12_o_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue writing the \"O\" (Objective) section of the patient's chart based on the provided consultation notes.\n    *   Input Data:\n        *   Patient: 45-year-old female.\n        *   Diagnosis/Condition: Asthma + Infection (喘息 + 感染).\n        *   Vitals: BP 118/72, HR 92, BT 37.8, SpO2 96%.\n        *   Lab Tests: WBC 11200, CRP 4.8.\n        *   Imaging: Chest X-ray shows infiltration in the lower right lung field (右下肺野浸潤影あり).\n        *   Current Chart Content: S (Subjective) is already written (cough worsening for 3 days, fever 38°C, decreased appetite, difficulty inhaling). O (Objective) starts with Vitals and Lab results. The Chest X-ray entry is cut off or needs to be completed naturally within the flow of the \"O\" section.\n    *   Goal: Propose a continuation/finish for the \"O\" section that fits medical documentation stand",
+        "gen_length": 1882,
+        "time_sec": 6.6
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic health record (EHR) documentation.\n    *   Task: Continue writing the \"Assessment\" (A - アセスメント) section based on provided Subjective (S), Objective (O), and initial Assessment (A) information.\n    *   Input Data:\n        *   S (Subjective): Dyspnea worsened for 1 week, orthopnea (sitting breathing), lower limb edema, excessive salt intake.\n        *   O (Objective): BP 148/88 mmHg, HR 92 bpm (AFib), SpO2 94%, EF 38%, BNP 685 pg/mL, Cr 1.28 mg/dL.\n        *   A (Initial Assessment): #1 Acute decompensated heart failure (HFrEF) with significantly elevated BNP and signs of congestion.\n    *   Goal: Propose the continuation of the \"A\" section.\n\n2.  **Evaluate the Medical Context:**\n    *   **Diagnosis:** Heart Failure Exacerbation (Acute Decompensated Heart Failure - ADHF).\n    *   **Type:** HFrEF (Heart Failure with reduced Ejection Fraction, EF 38%).\n    *   **Key Symptoms:**",
+        "gen_length": 1783,
+        "time_sec": 6.7
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant for Japanese electronic health records (EHR).\n    *   **Task:** Suggest the continuation of the \"Plan\" (P) section based on the provided consultation information.\n    *   **Input Context:**\n        *   S/O/A (Subjective/Objective/Assessment) omitted (standard format).\n        *   Current P (Plan) content:\n            *   Increase Furosemide dosage (20mg → 40mg).\n            *   Re-education on salt restriction.\n    *   **Goal:** Propose logical next steps/items for the \"P\" section that typically accompany medication changes and lifestyle advice in a cardiology/renal/internal medicine context.\n\n2.  **Analyze the Medical Context:**\n    *   **Medication Change:** Furosemide is a loop diuretic, commonly used for edema (e.g., heart failure, renal issues). Increasing the dose from 20mg to 40mg suggests an attempt to better control fluid status.\n    *   **Lifestyle Advice:** Salt restriction reinforces the ",
+        "gen_length": 2037,
+        "time_sec": 6.6
+      },
+      "soap_14_dm_routine": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Convert the provided consultation record into SOAP format.\n    *   Input Data:\n        *   Patient: 58-year-old female, history of Type 2 Diabetes Mellitus (T2DM) and Hypertension (HTN), currently under treatment.\n        *   Dialogue: Standard check-up conversation (symptoms, medication adherence, blood sugar monitoring, diet, exercise).\n        *   Vitals & Labs: BP 128/78, HR 68, BT 36.2, HbA1c 6.8% (prev 7.0%), Cr 0.72, eGFR 68.\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n    *   Language: Japanese.\n\n2.  **Structure the SOAP Note:**\n\n    *   **S (Subjective):** Patient's report and complaints.\n        *   Symptoms/Complaints: \"特に変わりないです\" (No particular changes).\n        *   Medication Adherence: \"薬もちゃんと飲んでます\" (Taking meds properly).\n        *   Self-monitoring: Morning blood sugar ~130 mg/dL.\n        *   Die",
+        "gen_length": 1593,
+        "time_sec": 7.2
+      },
+      "soap_15_ht_adjust": {
+        "generated": "ご提示いただいた問診情報に基づき、医療現場で利用される標準的な SOAP フォーマット（主訴・客観所見・評価・計画）に整理した電子カルテ記載案を作成しました。\n\n---\n\n### **SOAP カルテ記載案**\n\n**S (Subjective - 主観的所見)**\n*   **高血圧症通院中**。\n*   **自宅血圧**: 朝方で約 150 mmHg 程度。\n*   **自覚症状**: 起床時に頭が重い感じ（頭痛・めまいは特になし）。\n*   **服薬管理**: 処方されているお薬は飲んでいる。\n*   **生活習慣**:\n    *   食塩摂取量：毎食味噌汁を飲み、漬物もよく食べる（塩分過多傾向）。\n    *   運動：デスクワーク中心でほとんど行っていない。\n\n**O (Objective - 客観的所見)**\n*   **バイタルサイン**:\n    *   BP: 156/94 mmHg\n    *   HR: 76 bpm\n    *   BT: 36.4 ℃\n*   **検査データ**:\n    *   Cr (血中尿素窒素・クレアチニン): 0.82 mg/dL\n    *   eGFR: 72 mL/min/1.73m²\n    *   K (血中カリウム): 4.2 mEq/L\n\n**A (Assessment - 評価)**\n*   **診断**: 本態性高血圧症（通院中）。\n*   **現状分析**:\n    *   家庭血圧が治療目標値を上回っており、かつ診察時の血圧もコントロール不十分の状態（156/94 mmHg）である。\n    *   患者は服薬は行っているが、食塩摂取過多（味噌汁・漬物）および身体活動量の不足により、生活習慣要因による高血圧の悪化を招いている可能性が高い。\n    *   腎機能（eGFR 72、K 正常値範囲内）に明らかな異常は見られないため、薬剤性や一次的高血圧性の疑いが強い。\n\n**P (Plan - 計画)**\n1.  **生活指導の",
+        "gen_length": 864,
+        "time_sec": 6.7
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant supporting Japanese Electronic Health Record (EHR) documentation.\n    *   **Task:** Convert the provided consultation record into SOAP format (Subjective, Objective, Assessment/Assessment, Plan).\n    *   **Input Data:** Consultation notes including patient demographics (82yo female), comorbidities (HTN, T2DM, Osteoporosis, Insomnia), medications (12 drugs), daughter's report of instability/falling, physical exam findings (vitals, orthostatic hypotension), lab values, and current prescriptions.\n    *   **Output Language:** Japanese.\n\n2.  **Analyze the Input Data:**\n    *   **Patient:** 82yo Female.\n    *   **History/Comorbidities:** Hypertension (HTN), Type 2 Diabetes Mellitus (T2DM), Osteoporosis, Insomnia.\n    *   **Medication List (12 drugs):** Amlodipine, Telmisartan, Furosemide, Metformin, Etizolam, Zolpidem, Alendronate, Alfacalcidol, Magnesium Oxide, Lansoprazole, Ibuprofen (acute), Sennosides.",
+        "gen_length": 1685,
+        "time_sec": 6.7
+      }
+    }
+  },
+  "9B+ep8": {
+    "config": "9B+ep8",
+    "desc": "9B GGUF + sft_9b_nocpt_ep8",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Propose the continuation of the EMR based on provided consultation notes.\n    *   Specific Input: Consultation records (history taking) for a 72-year-old male with chronic heart failure, hypertension, and type 2 diabetes. Includes doctor-patient dialogue and vital signs/labs/imaging.\n    *   Output Requirement: Document the \"S\" (Subjective data - Patient's symptoms and history as reported by the patient) section of the SOAP note based on the provided consultation notes.\n\n2.  **Analyze the Input Data:**\n    *   **Patient:** 72-year-old male.\n    *   **Background:** Chronic heart failure, hypertension, type 2 diabetes (outpatient).\n    *   **Doctor's Questions & Patient's Answers:**\n        *   Q: How are you? A: Shortness of breath lately again.\n        *   Q: When did it start? A: About a week ago. Stairs are difficult to cl",
+        "gen_length": 1845,
+        "time_sec": 8.1
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Based on the provided interview notes (問診記録), draft the \"S\" (Subjective information) section of a progress note (SOAP format).\n    *   Input Data:\n        *   Patient: 45-year-old female, outpatient for bronchial asthma.\n        *   Dialogue:\n            *   Doctor: How are you today? -> Patient: Coughing heavily since 3 days ago, fever appeared...\n            *   Doctor: How high is the fever? -> Patient: 38 degrees last night.\n            *   Doctor: Appetite? -> Patient: Not eating much.\n            *   Doctor: Using asthma inhaler? -> Patient: Can't inhale well due to severe cough.\n        *   Vitals/Exam (not needed for S, but good context): BP 118/72, HR 92, BT 37.8, SpO2 96%, WBC 11200, CRP 4.8.\n    *   Output Requirement: Write the \"S\" (Subjective) section in Japanese medical record style.\n\n2.  **Understand SOAP Form",
+        "gen_length": 1876,
+        "time_sec": 7.9
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic health record (EHR) documentation.\n    *   Task: Generate the \"S\" (Subjective information) section of a medical chart based on the provided consultation record.\n    *   Input Data: Consultation transcript (42-year-old female, depression outpatient), Vitals (BP, HR, BT).\n    *   Output Requirement: Only the \"S\" section in Japanese, suitable for an EHR.\n\n2.  **Analyze the Input Data:**\n    *   Patient: 42-year-old female.\n    *   Diagnosis: Depression (通院中 - outpatient treatment).\n    *   Doctor's Questions & Patient's Answers:\n        *   \"How are you lately?\" -> \"...not very good.\" (General mood/energy)\n        *   \"Specifically how?\" -> \"Waking up in the morning is hard... days off work increasing due to inability to go.\" (Fatigue, anhedonia/motivation, occupational functioning).\n        *   \"Appetite?\" -> \"Not much.\" -> \"Weight loss 2kg.\" (Anorexia/weight change).\n       ",
+        "gen_length": 1852,
+        "time_sec": 8.0
+      },
+      "s_04_copd": {
+        "generated": "**S（主観的情報）**\nCOPD（GOLD III）通院中。自覚的に息切れが前より悪化しており、坂道歩行で困難がある。朝起きた際に黄色い痰を喀出している。喫煙継続あり、1 日約 5 本。吸入薬は、1 日 2 回の prescribed 薬剤は使用可能だが、もう 1 剤の服用・吸入が頻繁に忘れられている。",
+        "gen_length": 153,
+        "time_sec": 4.2
+      },
+      "o_05_chf": {
+        "generated": "O:\nBP 148/88 mmHg, HR 92 bpm, BT 36.4℃, SpO2 94% (RA)。\nBNP 685 pg/mL（前回の 180 pg/mL より著明上昇）。Cr 1.28 mg/dL, eGFR 42 mL/min/1.73m²。\n心エコー：EF 38%, LVDd 58mm。左室壁肥厚あり。\n心電図：心房細動（頻脈性）、左室肥大所見。\n胸部 X 線：CTR 58%、両側肋膜下少量胸水貯留、肺うっ血所見を認める。\n身体所見：頸静脈怒張 (+)、III 音聴取 (+)。両下肢圧痕性浮腫 (+++)。\n意識清明。呼吸苦あり（RA）。",
+        "gen_length": 280,
+        "time_sec": 5.2
+      },
+      "a_07_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   **Task:** Continue writing the EMR based on provided interview/observation data, specifically focusing on the 'A' section (Assessment/Diagnosis).\n    *   **Input Data:**\n        *   **S (Subjective):** Dyspnea worsened 1 week ago (exertional), orthopnea. Bilateral lower limb edema. High salt intake. Continuing medication.\n        *   **O (Objective):** BP 148/88, HR 92 bpm (AF), SpO2 94%. JVD (+), S3 gallop (+), bilateral LE edema (+). CTR 58%, Bilateral pleural effusion, Pulmonary congestion. EF 38%, BNP 685 (prev 180). Cr 1.28, eGFR 42.\n    *   **Goal:** Draft the 'A' section (Assessment) in Japanese medical terminology suitable for an EMR.\n\n2.  **Evaluate the Clinical Picture:**\n    *   **Condition:** Heart Failure (HF), specifically Exacerbation of Chronic Heart Failure (CHF).\n    *   **Etiology:** Likely Dilated Cardiomyo",
+        "gen_length": 1741,
+        "time_sec": 7.9
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the \"A\" (Assessment/Plan) section based on the provided \"S\" (Subjective) and \"O\" (Objective) sections.\n    *   Input Data:\n        *   S: No subjective symptoms. Good medication adherence. Fasting blood glucose 130 mg/dL. Walking 30 mins/day.\n        *   O: BP 128/78 mmHg, HR 68 bpm. HbA1c 6.8% (improved from previous 7.0%). Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n    *   Context: Diabetes management follow-up (indicated by glucose monitoring, medication adherence mention, HbA1c trend). Kidney function is within acceptable range for a diabetic patient but worth noting (eGFR > 60).\n\n2.  **Evaluate the Clinical Situation:**\n    *   **Diabetes Control:** HbA1c dropped from 7.0% to 6.8%. Fasting glucose is 130 mg/dL (slightly above target <120 or <130 depending on guidelines, but A1c shows overall control). This indicates good glycemi",
+        "gen_length": 1661,
+        "time_sec": 7.9
+      },
+      "p_09_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the \"P\" (Plan) section of the medical record based on provided S (Subjective), O (Objective), and A (Assessment) sections.\n    *   Input Data:\n        *   S (Symptoms): Shortness of breath worsening for 1 week, orthopnea, lower extremity edema, excessive salt intake.\n        *   O (Objective): BP 148/88 mmHg, HR 92 bpm (AF), SpO2 94%, EF 38% (HFrEF), BNP 685 pg/mL, Cr 1.28 mg/dL, eGFR 42 mL/min/1.73m².\n        *   A (Assessment): #1 Acute decompensated heart failure (ADHF) on chronic HF background (HFrEF, NYHA III). #2 Hypertension. #3 CKD G3b.\n    *   Goal: Draft the \"P\" section in Japanese medical terminology suitable for an EHR.\n\n2.  **Evaluate Clinical Status:**\n    *   Patient has acute decompensated heart failure (ADHF) with HFrEF (EF 38%).\n    *   Symptoms: Dyspnea, orthopnea, edema -> need diuresis and symptom management",
+        "gen_length": 1575,
+        "time_sec": 7.8
+      },
+      "p_10_copd": {
+        "generated": "P: COPD 増悪期への急性対応とする。抗生物質（マクロライド系または呼吸器用ペニシリン系など、地域疫学に基づき選択）を 10〜14 日投与開始。気管支拡張作用の強化のため、短時間作用性β2 交感神経刺激薬（SABA）＋抗コリン薬（SAMA）の併用吸入を増量し、必要に応じてステロイド吸入を短期間追加考慮。酸素療法について SpO2 の動向を見守り、安静時が 88%未満なら持続的酸素療法の適応を検討する。喫煙中止指導を徹底し、吸入薬アドヒアランス改善のため用法の再確認と簡易モデルの使用検討を行う。3〜5 日後または症状改善まで再診。",
+        "gen_length": 269,
+        "time_sec": 4.8
+      },
+      "continue_11_s_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese electronic medical records (EMR).\n    *   Task: Continue writing the \"S\" (Subjective) section of a clinical note based on provided consultation information.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   History: Chronic heart failure, outpatient follow-up.\n        *   Vitals: BP 148/88, HR 92, SpO2 94%.\n        *   Lab: BNP 685 pg/mL (elevated).\n        *   Existing S section: \"1 週間前から労作時息切れ増悪。階段 1 階分で\" (Dyspnea on exertion worsening for the past week. At [location/level]...)\n    *   Goal: Complete the \"S\" sentence logically and professionally, fitting the context of heart failure exacerbation.\n\n2.  **Evaluate Existing Text:**\n    *   Current: \"1 週間前から労作時息切れ増悪。階段 1 階分で\" (Dyspnea on exertion worsening for 1 week. At [stair] 1 floor...)\n    *   The sentence is incomplete (\"で\" implies a condition or state needs to follow). It should describe what happens at that level o",
+        "gen_length": 1662,
+        "time_sec": 8.0
+      },
+      "continue_12_o_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the EHR based on provided consultation information.\n    *   Input Data:\n        *   Patient: 45-year-old female.\n        *   Diagnosis/Condition: Asthma + Infection (喘息+感染).\n        *   Vitals: BP 118/72, HR 92, BT 37.8, SpO2 96%.\n        *   Labs: WBC 11200, CRP 4.8.\n        *   Imaging: Chest X-ray shows infiltration in the right lower lung field (右下肺野浸潤影あり).\n    *   Current EHR Status: Subjective (S) is completed (\"3 days ago cough worsening, fever 38℃, poor appetite, difficulty inhaling\"). Objective (O) has started with Vitals and Labs. The Chest X-ray result line is incomplete (\"胸部X線: \").\n    *   Goal: Complete the \"O\" section specifically for the Chest X-ray finding and potentially add any other relevant objective findings implied by the context (though the input only explicitly mentions CXR).\n\n2.  **Evaluate the Current S",
+        "gen_length": 1912,
+        "time_sec": 7.9
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue the \"Assessment\" (A) section of the EMR based on provided interview and observation data (S & O).\n    *   Input Data:\n        *   S (Subjective): Dyspnea worsening for 1 week, orthopnea, lower extremity edema, excessive salt intake.\n        *   O (Objective): BP 148/88 mmHg, HR 92 bpm (Atrial Fibrillation), SpO2 94%, EF 38% (HFrEF), BNP 685 pg/mL, Cr 1.28 mg/dL (slightly elevated).\n        *   Current A: #1 慢性心不全急性増悪（HFrEF）BNP 著明上昇、うっ血所見より (Acute exacerbation of chronic heart failure [HFrEF] with significant BNP elevation and signs of congestion.)\n    *   Goal: Propose the continuation of section A.\n\n2.  **Evaluate Current Data & Diagnosis:**\n    *   Diagnosis: Acute decompensated heart failure (ADHF) on background of HFrEF.\n    *   Key Findings supporting diagnosis: Dyspnea, orthopnea, edema, elevated BNP, reduced ",
+        "gen_length": 1763,
+        "time_sec": 8.0
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the \"Plan\" (P) section of a medical record based on provided interview information (though only the current P section is given, I need to infer typical follow-up actions based on the context).\n    *   Input so far:\n        *   S/O/A omitted.\n        *   P:\n            *   Furosemide dose increase (20mg -> 40mg)\n            *   Re-education on salt restriction\n    *   Task: Propose the continuation of the \"P\" section.\n\n2.  **Contextual Inference:**\n    *   The patient is likely being treated for heart failure (HF) or edema, given the use of Furosemide and salt restriction advice.\n    *   Current action: Increasing loop diuretic dose and reinforcing dietary management.\n    *   Next logical steps in a medical plan usually involve:\n        *   Monitoring parameters (weight, BP, electrolytes, renal function).\n        *   Follow-up sc",
+        "gen_length": 1949,
+        "time_sec": 8.0
+      },
+      "soap_14_dm_routine": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic health record (EHR) documentation.\n    *   Task: Convert the provided consultation notes (問診記録) into a SOAP format medical record entry.\n    *   Input Data:\n        *   Patient: 58-year-old female.\n        *   Conditions: Type 2 Diabetes Mellitus, Hypertension (on treatment).\n        *   Dialogue:\n            *   Doctor asks about complaints -> Patient says no change, taking meds.\n            *   Doctor asks about self-monitoring of blood sugar -> Patient says morning around 130 mg/dL.\n            *   Doctor asks about diet -> Daughter cooks balanced meals.\n            *   Doctor asks about exercise -> Daily 30-min walk.\n        *   Vitals: BP 128/78, HR 68, BT 36.2°C.\n        *   Labs: HbA1c 6.8% (prev 7.0%), Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n\n2.  **Drafting the Content:**\n\n    *   **S (Subje",
+        "gen_length": 1630,
+        "time_sec": 8.0
+      },
+      "soap_15_ht_adjust": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Convert the provided interview record (问诊記録) into a SOAP format chart note (カルテ).\n    *   Input Data:\n        *   Patient: 55-year-old male, hypertensive patient visiting regularly.\n        *   Interview Q&A: BP at home (morning ~150), headache/heaviness in head upon waking, taking meds?, salt intake (misosoup every meal, likes pickles), exercise (desk work, little/no exercise).\n        *   Vitals: BP 156/94, HR 76, BT 36.4.\n        *   Labs: Cr 0.82, eGFR 72, K 4.2.\n    *   Output Format: SOAP (Subjective, Objective, Assessment, Plan).\n    *   Language: Japanese.\n\n2.  **Drafting - Section by Section:**\n\n    *   **S (Subjective):** Summarize the patient's reported symptoms and lifestyle habits from the interview.\n        *   Home BP monitoring: Morning ~150 mmHg.\n        *   Symptoms: Head heaviness upon waking.\n        *   M",
+        "gen_length": 1751,
+        "time_sec": 7.9
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Convert the provided consultation record (interview notes) into a SOAP format medical chart entry.\n    *   Input Data:\n        *   Patient: 82-year-old female.\n        *   Past History: Hypertension, Type 2 Diabetes Mellitus (T2DM), Osteoporosis, Insomnia (currently taking 12 medications).\n        *   Chief Complaint/Reason for Visit: Dizziness/fainting (\"ふらつき\"), recent fall at the entrance last week.\n        *   Interview Details:\n            *   Onset of dizziness: Not well remembered by patient, daughter says about 1 month.\n            *   Injury from fall: No major injuries.\n            *   Sleep: Patient sleeps after meds, but daughter notes morning grogginess (\"朝ボーッとしていることが多いです\").\n        *   Vitals: BP 118/62 (sitting), HR 64, BT 36.0. Orthostatic hypotension present (Lying 128/72 -> Standing 102/58).\n        *   Labs: HbA1c 6.2%, Cr 0.92",
+        "gen_length": 1551,
+        "time_sec": 7.9
+      }
+    }
+  },
+  "9B+nocpt_A": {
+    "config": "9B+nocpt_A",
+    "desc": "9B GGUF + sft_9b_nocpt_A",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Based on the provided patient interview history, draft the \"S\" (Subjective) section of a SOAP note (or similar EMR structure).\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   History: Chronic heart failure, hypertension, type 2 diabetes.\n        *   Interview Questions & Answers:\n            *   \"How are you?\" -> \"Shortness of breath recently.\"\n            *   \"Since when?\" -> \"About a week ago. Hard to climb stairs.\"\n            *   \"Paroxysmal nocturnal dyspnea/Odd sleep position?\" -> \"Need two pillows to sleep.\" (Orthopnea).\n            *   \"Edema?\" -> \"Sock marks appeared.\"\n            *   \"Medication compliance?\" -> \"Taking them, but ate too much salty food during New Year's holidays.\"\n        *   Vitals/Labs (Objective data): BP 148/88, HR 92, BT 36.4, SpO2 94%, BNP 685pg/mL (↑ from 180), Cr 1.28",
+        "gen_length": 1833,
+        "time_sec": 8.1
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Propose the continuation of the EMR based on the provided consultation information.\n    *   Specific Input: Consultation records (Question & Answer) between doctor and patient, plus vital signs and lab results.\n    *   Specific Output Required: **S (Subjective)** section of SOAP notes based on the provided consultation record.\n    *   Patient Profile: 45-year-old female, history of bronchial asthma.\n    *   Current Symptoms: Cough worsening for 3 days, fever (up to 38°C yesterday night), poor appetite, difficulty using inhaler due to severe cough.\n\n2.  **Understand SOAP Format:**\n    *   S (Subjective): Patient's own words or observations reported by the patient (symptoms, history, etc.).\n    *   O (Objective): Vital signs, physical exam findings, lab results.\n    *   A (Assessment): Diagnosis, medical condition evaluation.\n",
+        "gen_length": 1871,
+        "time_sec": 7.9
+      },
+      "s_03_depression": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Based on the provided consultation record (问诊記録), generate the \"S\" (Subjective information/主観的情報) section of the medical chart note.\n    *   Input Data: Consultation record with a 42-year-old female patient diagnosed with depression, plus vital signs (which are objective data, so usually go to O or separate sections, but the prompt specifically asks for \"S\").\n    *   Output Language: Japanese.\n\n2.  **Extract Subjective Information (S):**\n    *   Patient's general mood/state: \"あまり良くないです\" (Not very well).\n    *   Specific symptoms regarding daily life/energy: \"朝起きるのが辛くて…仕事に行けない日が増えました\" (Hard to get up in the morning... days off work increased). -> Indicates fatigue, anhedonia, functional impairment.\n    *   Appetite/Weight: \"あまりないです。体重が 2 キロ減りました\" (Appetite is poor. Weight decreased by 2 kg).\n    *   Sleep: \"寝つきが悪くて、3 時くらいに目が覚",
+        "gen_length": 1818,
+        "time_sec": 7.8
+      },
+      "s_04_copd": {
+        "generated": "S: COPD 通院中。自覚症状として呼吸機能低下感があり、「前より悪くなった」と訴え、坂道の上りなどが困難であるという労作性息切れの増悪を認める。痰性状としては「朝起床時に黄色い粘性痰」を排出している。喫煙については禁煙に失敗しており、現在も 1 日約 5 本程度吸っている。吸入薬管理は不十分で、1 日 2 回の経常用薬は使用できているが、別の吸入薬の服用頻度は低下しており、「よく忘れる」とのこと。",
+        "gen_length": 202,
+        "time_sec": 4.4
+      },
+      "o_05_chf": {
+        "generated": "O: 血圧 148/88 mmHg、脈拍 92 回/分、体温 36.4℃、SpO2 94%（空気中）。\nBNP 685 pg/mL（前診 180）、Cr 1.28 mg/dL、eGFR 42 mL/min/1.73m²。\n心エコー所見：EF 38%、LVDd 58 mm。心電図上心房細動および左室肥大を認める。胸部 X 線にて CTR 58%、両側少量胸水および肺うっ血あり。\n身体所見：頸静脈怒張あり、III 音聴取。両下肢圧痕性浮腫（++）。",
+        "gen_length": 224,
+        "time_sec": 4.8
+      },
+      "a_07_chf": {
+        "generated": "A:\n1. HFrEF（心機能重度低下：EF 38%）の急性増悪発作で，労作時息気迫り増悪・起座呼吸・両下肢浮腫を認める。\n2. BNP の急激な上昇（180→685 pg/mL）より，急性心不全による肺うっ血および両側胸水を有する急性右左の機能不全と判断。\n3. 頸静脈怒張陽性で右心不全も顕著。\n4. Cr 1.28 mg/dL（eGFR 42 mL/min/1.73m²）より腎機能低下を伴う心不全と考え，利尿剤選択・用量に留意が必要。\n5. HR 92 bpm で心房細動あり，頻脈性不整脈が心拍出量低下の要因の一因と疑われる。\n6. 既往歴および自覚症状から塩分過多による体液貯留を主な発作誘因とする。",
+        "gen_length": 306,
+        "time_sec": 5.7
+      },
+      "a_08_dm": {
+        "generated": "A: 糖尿病（2 型）コントロール良好。HbA1c の改善傾向が認められ、現在の生活習慣（食事管理、運動療法、服薬）は有効である。腎機能も安定している。合併症の自覚症状はなく、現時点で追加の検査や治療の変更は不要と判断する。",
+        "gen_length": 112,
+        "time_sec": 3.9
+      },
+      "p_09_chf": {
+        "generated": "P:\n1) **薬物療法の変更**:\n   - ACEI/ARB から ARNI（サキソプリル）へ切り替えを検討し、利尿療法の強化（フロセミド増量またはブプレンデール追加）を行う。\n   - 抗凝固療法は AF のリスク評価（CHA2DS2-VASc スコア）に基づき継続・調整する（現在投与中か否かに応じて記載）。\n   - 高血圧に対してβ遮断薬の用量調整やカルシウム拮抗薬の追加を検討し、目標 BP<140/90 mmHg を目指す。\n\n2) **生活指導**:\n   - 厳格な食塩制限（1日 5g 未満）および水分摂取制限（1.5L/日以下）を指導。\n   - 自宅での体重測定、下肢浮腫の確認方法を教える。\n   - 心不全症状の悪化兆候（息切れ増悪、夜間咳、体重急増など）出现時の受診誘導を伝える。\n\n3) **検査・モニタリング**:\n   - 24～48 時間後に BNP、電解質（特に K, Na）、腎機能（Cr/eGFR）、尿蛋白再測定。\n   - 心エコーの再評価タイミングを決定（数週間後または状態安定後）。\n\n4) **他科連携・フォローアップ**:\n   - 必要に応じて循環器外来、腎臓内科への相談。\n   - 1 週後に再診し、症状改善度と薬物反応を評価する。",
+        "gen_length": 547,
+        "time_sec": 6.4
+      },
+      "p_10_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the 'Plan' (P) section of a clinical note based on provided Subjective (S), Objective (O), and Assessment (A) data.\n    *   Input Data:\n        *   S (Subjective): Dyspnea worsened with exertion, yellow sputum. Smoking continued (5 cigarettes/day). Inhaled medication partially missed/did not take as prescribed.\n        *   O (Objective): BP 132/78, HR 78, SpO2 93%. Bilateral wheezing on lung auscultation. Chest X-ray: Hyperinflation, no infiltrates.\n        *   A (Assessment): Suspected COPD exacerbation. Smoking + poor adherence to inhaled meds are aggravating factors. Possible infection co-occurrence.\n    *   Output Requirement: Write the 'P' (Plan) section in Japanese, suitable for an EHR.\n\n2.  **Evaluate Clinical Situation:**\n    *   Diagnosis: COPD exacerbation (suspected).\n    *   Key Symptoms: Dyspnea, yellow sputum (sugg",
+        "gen_length": 1958,
+        "time_sec": 7.8
+      },
+      "continue_11_s_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Propose the continuation of the \"S\" (Subjective information/History of Present Illness) section based on the provided interview record.\n    *   Input Data:\n        *   Patient: 72-year-old male.\n        *   Condition: Chronic heart failure (CHF), under regular care.\n        *   Vitals: BP 148/88, HR 92, SpO2 94%.\n        *   Lab: BNP 685 pg/mL (elevated).\n        *   Current EHR Draft (S): \"1週間前から労作時息切れ増悪。階段1階分で\" (Worsening dyspnea on exertion for the past week. At one flight of stairs...)\n    *   Goal: Complete the sentence/section logically and professionally in Japanese medical terminology.\n\n2.  **Evaluate the Context:**\n    *   The patient has chronic heart failure with signs of decompensation (worsening dyspnea, elevated BNP, high BP/HR).\n    *   The draft ends mid-sentence: \"階段1階分で\" (at one flight of stairs...).\n    *  ",
+        "gen_length": 1877,
+        "time_sec": 7.8
+      },
+      "continue_12_o_mid": {
+        "generated": "右下肺野浸潤影あり。聴診にて両側呼吸音可、右中葉部に軽度の喘鳴及び痰鳴き音が聞かれる。",
+        "gen_length": 43,
+        "time_sec": 3.5
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Japanese Electronic Medical Record (EMR) Assistant for medical documentation.\n    *   Task: Propose a continuation of the \"A\" (Assessment/Analysis) section based on the provided history (S, O).\n    *   Input Data:\n        *   S (Subjective): Dyspnea worsening since 1 week, orthopnea, lower extremity edema, excessive salt intake.\n        *   O (Objective): BP 148/88, HR 92 bpm (AF), SpO2 94%, EF 38%, BNP 685, Cr 1.28.\n        *   Current A (Assessment): #1 Acute decompensated heart failure (ADHF) with HFrEF. Markedly elevated BNP, signs of congestion.\n    *   Goal: Continue the \"A\" section logically and professionally in Japanese medical terminology suitable for an EMR.\n\n2.  **Evaluate the Clinical Picture:**\n    *   Diagnosis: Heart Failure (HFrEF), Acute Decompensation. Atrial Fibrillation is present. Renal function (Cr 1.28) needs monitoring (possible cardiorenal syndrome). Salt intake exacerbation is a clear trigger.\n    ",
+        "gen_length": 1892,
+        "time_sec": 8.0
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue writing the \"P\" (Plan/Planning) section of a medical chart based on previous entries.\n    *   Input so far:\n        *   S/O/A omitted (Subjective, Objective, Assessment not shown).\n        *   P (Plan) current content:\n            *   フロセミド増量（20mg→40mg）[Furosemide dose increase from 20mg to 40mg]\n            *   塩分制限の再指導 [Reinstruct salt restriction]\n    *   Goal: Propose the continuation of the P section.\n\n2.  **Determine the Context:**\n    *   The patient is likely suffering from heart failure (given Furosemide use and salt restriction).\n    *   A medication adjustment (Furosemide increase) suggests worsening symptoms, fluid overload, or suboptimal response to previous dosage.\n    *   Reinstructing salt restriction indicates lifestyle management is crucial.\n    *   Standard practice in EMR for this scenario would ",
+        "gen_length": 1976,
+        "time_sec": 7.9
+      },
+      "soap_14_dm_routine": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Convert the provided interview notes into a SOAP format medical record continuation.\n    *   Input Data:\n        *   Patient: 58-year-old female.\n        *   Diagnoses: Type 2 Diabetes Mellitus, Hypertension (outpatient).\n        *   Interview: \"No change\", taking meds as prescribed. Morning blood sugar ~130 mg/dL. Diet managed by daughter. Exercise: Daily walking 30 mins.\n        *   Vitals: BP 128/78 mmHg, HR 68 bpm, BT 36.2°C.\n        *   Labs: HbA1c 6.8% (prev 7.0%), Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n    *   Output Format: SOAP format (Subjective, Objective, Assessment, Plan).\n\n2.  **Determine Content for Each Section:**\n\n    *   **S (Subjective):** What did the patient say?\n        *   Chief complaint: None specific (\"特に変わりないです\").\n        *   Medication compliance: \"薬もちゃんと飲んでます\" (Taking meds as prescribed).\n        ",
+        "gen_length": 1642,
+        "time_sec": 8.2
+      },
+      "soap_15_ht_adjust": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Convert the provided interview notes (问诊記録) into a SOAP format chart entry.\n    *   Input Data:\n        *   Patient: 55-year-old male.\n        *   History: Hypertension outpatient follow-up.\n        *   Interview Q&A: BP at home ~150 in morning; headache/heaviness on head upon waking in the morning; taking meds (yes); salt intake (high - miso soup daily, likes pickles); exercise (sedentary desk work).\n        *   Vitals: BP 156/94, HR 76, BT 36.4.\n        *   Labs: Cr 0.82, eGFR 72, K 4.2.\n    *   Output Format: SOAP (Subjective, Objective, Assessment, Plan).\n    *   Language: Japanese.\n\n2.  **Drafting - Section by Section:**\n\n    *   **S (Subjective):** Patient's reported symptoms and history.\n        *   HTN outpatient follow-up.\n        *   Home BP monitoring: Morning ~150 mmHg.\n        *   Symptoms: Head heaviness/headac",
+        "gen_length": 1770,
+        "time_sec": 8.1
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Convert the provided interview notes into a SOAP format progress note.\n    *   Input Data: Patient info (82F, hypertension, T2DM, osteoporosis, insomnia), meds (12 drugs), daughter's report (dizziness, fall last week), patient's report (can't remember onset), vitals (BP 118/62 supine/standing drop = orthostatic hypotension), labs (HbA1c 6.2%, Cr 0.92, eGFR 45), current meds list.\n    *   Output Format: SOAP (Subjective, Objective, Assessment, Plan). Language: Japanese.\n\n2.  **Process the Input Data for Each SOAP Section:**\n\n    *   **S (Subjective):**\n        *   Patient complaints: Dizziness/fainting (\"ふらつき\"), fall last week at entrance (\"玄関で転びました\").\n        *   Duration: About 1 month ago (daughter's report).\n        *   Injury from fall: No major injuries (\"大きな怪我はなかった\").\n        *   Sleep: Takes meds to sleep, but feels g",
+        "gen_length": 1623,
+        "time_sec": 8.4
+      }
+    }
+  },
+  "9B+final_F": {
+    "config": "9B+final_F",
+    "desc": "9B GGUF + finalマルチタスク",
+    "outputs": {
+      "s_01_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Based on the provided interview record, draft the \"S\" (Subjective) section of the SOAP note.\n    *   Input Data: Interview record with a 72-year-old male patient with chronic heart failure, hypertension, and type 2 diabetes. Includes dialogue about shortness of breath, orthopnea, edema, medication adherence, diet history, and vital signs/labs (though vitals usually go to O or S depending on the chart format, strictly speaking, \"S\" is subjective symptoms reported by the patient, while objective data like BP/BNP/Echo goes to O).\n    *   Output Language: Japanese.\n\n2.  **Identify Key Information in the Interview Record:**\n    *   Patient: 72-year-old male.\n    *   History: Chronic heart failure (CHF), Hypertension, Type 2 Diabetes.\n    *   Chief Complaint/Current Symptoms:\n        *   Dyspnea on exertion (DOE): Started ~1 week ago, difficulty climb",
+        "gen_length": 1835,
+        "time_sec": 8.0
+      },
+      "s_02_pneumonia": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical records (EMR).\n    *   Task: Based on the provided consultation record (interview notes), generate the \"S\" (Subjective) section of a SOAP note.\n    *   Input Data: Consultation record with doctor-patient dialogue, vitals, and lab results.\n    *   Target Patient: 45-year-old female, history of bronchial asthma.\n    *   Output Language: Japanese.\n\n2.  **Extract Subjective Information (S):**\n    *   The \"S\" section focuses on what the patient reports (symptoms, history, feelings), not objective data like vitals or lab results (which belong to O - Objective).\n    *   From the dialogue:\n        *   Chief Complaint: Cough has been severe since 3 days ago.\n        *   Associated symptoms: Fever appeared (history of fever).\n        *   Specific fever value: 38°C last night.\n        *   Appetite: Poor (\"eating not well\").\n        *   Asthma medication usage: Unable to use in",
+        "gen_length": 1763,
+        "time_sec": 7.9
+      },
+      "s_03_depression": {
+        "generated": "**S (主観的情報)**\n\n*   **自覚症状**: 全般的不快感（「あまり良くない」）。起床困難で出勤困難日が増加。食欲低下（2 カ月で体重減少約 2 kg）。入眠障害あり、中途覚醒（3 時頃目覚める）。\n*   **服薬状況**: 現在処方されている抗うつ薬を服用中だが、「効果を感じられない」と訴える。\n*   **既往歴**: うつ病通院中。",
+        "gen_length": 177,
+        "time_sec": 4.8
+      },
+      "s_04_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic health record (EHR) documentation.\n    *   Task: Generate the \"S\" (Subjective information) section of a medical chart based on the provided consultation notes.\n    *   Input Data: Consultation records for a 68-year-old male with COPD (GOLD III).\n        *   Doctor: \"How is your shortness of breath?\" -> Patient: \"Worse than before, difficult to climb hills.\"\n        *   Doctor: \"Do you have sputum?\" -> Patient: \"Yellow sputum upon waking up in the morning.\"\n        *   Doctor: \"Did you quit smoking?\" -> Patient: \"...Still smoke about 5 cigarettes.\"\n        *   Doctor: \"Are you using inhalers properly?\" -> Patient: \"Using the twice-daily one. Often forget the other one.\"\n        *   Vitals (Objective, not for S): BP 132/78, HR 78, BT 36.5, SpO2 93%.\n    *   Output Requirement: \"S\" section of the EHR in Japanese.\n\n2.  **Determine the Content of \"S\" (Subjective):**\n    *   The ",
+        "gen_length": 1897,
+        "time_sec": 8.2
+      },
+      "o_05_chf": {
+        "generated": "O: 72 歳男性。慢性心不全・高血圧・2 型糖尿病の既往あり。\nバイタルサイン：BP 148/88 mmHg, HR 92 bpm, BT 36.4℃, SpO2 94%（常時空気）。\n一般状態：起座呼吸を認める。両下肢圧痕性浮腫 (+++)。頸静脈怒張 (＋)。心雑音聴取なし。心尖部 III 音を明瞭に聴取する。\n検査所見：\n・血液：BNP 685 pg/mL（前回 180），Cr 1.28 mg/dL, eGFR 42 mL/min/1.73m²。\n・心エコー：EF 38%, LVDd 58mm, 壁運動異常なし（または所見不足）。\n・心電図：心房細動，左室肥大。\n・胸部 X 線：CTR 58%，両側胸水少量，肺うっ血あり。",
+        "gen_length": 319,
+        "time_sec": 5.4
+      },
+      "a_07_chf": {
+        "generated": "Here's a thinking process that leads to the suggested A (Assessment/Analysis) section:\n\n1.  **Analyze the Request:**\n    *   **Role:** Medical AI Assistant supporting Japanese Electronic Health Record (EHR) documentation.\n    *   **Task:** Continue writing the \"A\" (Assessment/Diagnosis) section based on the provided \"S\" (Subjective) and \"O\" (Objective) data.\n    *   **Input Data:**\n        *   S: Dyspnea on exertion worsened for 1 week, orthopnea (sitting to relieve breathlessness), bilateral lower extremity edema. High salt intake. Continuing medication (implied).\n        *   O: BP 148/88 (slightly elevated), HR 92 (AF - Atrial Fibrillation), SpO2 94% (mild hypoxia). JVP distended (+), S3 gallop (+), bilateral LE edema (+). CTR 58% (cardiomegaly), Bilateral pleural effusion, Pulmonary congestion. EF 38% (severe LV dysfunction), BNP 685 (significant increase from previous 180). Cr 1.28, eGFR 42 (CKD progression/renal impairment).\n    *   **Output:** The \"A\" section in Japanese medical ",
+        "gen_length": 1808,
+        "time_sec": 7.9
+      },
+      "a_08_dm": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue the EMR entry based on provided consultation information (S, O). Specifically, write the 'A' (Assessment/Analysis) section.\n    *   Input Data:\n        *   S (Subjective): No subjective symptoms. Medication adherence is good. Fasting blood glucose 130 mg/dL. Walking 30 minutes daily.\n        *   O (Objective): BP 128/78 mmHg, HR 68 bpm. HbA1c 6.8% (improved from previous 7.0%). Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m².\n    *   Output: 'A' section for the EMR.\n\n2.  **Evaluate the Clinical Status:**\n    *   Patient Type: Likely Type 2 Diabetes Mellitus (T2DM) given HbA1c, fasting glucose, and lifestyle advice context.\n    *   Glycemic Control: Fasting BG 130 mg/dL is slightly elevated but acceptable depending on guidelines (often <140 for many). HbA1c 6.8% is well-controlled (<7.0%), improved from 7.0%.\n    *   Hypertensi",
+        "gen_length": 1735,
+        "time_sec": 7.9
+      },
+      "p_09_chf": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue the medical record based on provided intake information. Specifically, write the \"P\" (Plan) section following the existing \"S\" (Subjective), \"O\" (Objective), and \"A\" (Assessment) sections.\n    *   Input Data:\n        *   S: Dyspnea worsening for 1 week. Orthopnea. Peripheral edema. High salt intake.\n        *   O: BP 148/88, HR 92 (AF), SpO2 94%, EF 38% (HFrEF), BNP 685 (elevated), Cr 1.28, eGFR 42 (CKD).\n        *   A: #1 Acute decompensated heart failure (ADHF) on chronic HF background (HFrEF, NYHA III). #2 Hypertension. #3 Chronic Kidney Disease G3b.\n    *   Goal: Draft the \"P\" (Plan/Management) section in Japanese, appropriate for a clinical setting (EHR style).\n\n2.  **Evaluate Clinical Situation:**\n    *   Diagnosis: Acute decompensated heart failure (ADHF) with HFrEF and AFib, superimposed on CKD G3b.\n    *   Symptoms: Dyspnea, or",
+        "gen_length": 1609,
+        "time_sec": 8.4
+      },
+      "p_10_copd": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Record (EHR) documentation.\n    *   Task: Continue the EHR entry based on provided interview/observation information, specifically generating the \"P\" (Plan) section.\n    *   Input Context:\n        *   S (Subjective): Dyspnea worsening with exertion, yellow sputum, smoking 5 cigarettes/day, missed some inhaler doses.\n        *   O (Objective): BP 132/78, HR 78, SpO2 93%. Bilateral wheezing on lung auscultation. Chest X-ray: Hyperinflation, no infiltrates.\n        *   A (Assessment): Suspected COPD exacerbation. Factors: Smoking + poor inhaler adherence. Possible infection.\n    *   Output Requirement: Write the \"P\" (Plan) section in Japanese, suitable for a medical EHR.\n\n2.  **Evaluate the Clinical Situation:**\n    *   Diagnosis: COPD Exacerbation (AECOPD).\n    *   Severity: SpO2 93% is slightly low but stable enough without immediate mention of NIV/ICU unless worsening. Whee",
+        "gen_length": 1914,
+        "time_sec": 7.8
+      },
+      "continue_11_s_mid": {
+        "generated": "S（主観的情報）：\n1 週間前から労作時息切れが著明に増悪し、現在は階段を 1 階分上がるだけでも呼吸困難を訴える。夜間の半座位就寝が必要となっており、昨夜も起床時動悸を感じた。下肢浮腫は両足脛部に認められ、靴の締め付け感がある。体重は前週比で＋2.0kg増加した。喀痰の有無はなく、発熱や胸部疼痛はない。利尿剤（フロセミド 40mg/日）を通常通り服用しているが、効果を感じられていないため受診に至った。",
+        "gen_length": 203,
+        "time_sec": 4.6
+      },
+      "continue_12_o_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Continue writing the \"O\" (Objective) section of the medical record based on provided consultation information (anamnesis/vitals/labs/imaging).\n    *   Input Data:\n        *   Patient: 45-year-old female.\n        *   Diagnosis/History: Asthma + Infection (suspected pneumonia exacerbation?).\n        *   Vitals: BP 118/72, HR 92, BT 37.8, SpO2 96%.\n        *   Labs: WBC 11200, CRP 4.8.\n        *   Imaging: Chest X-ray shows infiltration in the right lower lung field.\n    *   Current Record State: \"S\" (Subjective) is complete (\"Cough worsened for 3 days, fever 38°C, poor appetite, difficulty using inhaler\"). \"O\" (Objective) is partially written with Vitals, Labs, but Cuts off at \"胸部 X 線:\" (Chest X-ray:).\n    *   Task: Complete the \"O\" section.\n\n2.  **Determine the Content:**\n    *   The current text ends at `胸部 X 線:`. I need to finish this line base",
+        "gen_length": 1944,
+        "time_sec": 7.8
+      },
+      "continue_13_a_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical record (EMR) documentation.\n    *   Task: Continue the \"Assessment\" (A - アセスメント) section based on provided subjective (S), objective (O), and current assessment (A) information.\n    *   Input Data:\n        *   S (Subjective): Dyspnea worsening for 1 week, orthopnea, leg edema, excessive salt intake.\n        *   O (Objective): BP 148/88 mmHg, HR 92 bpm (AF), SpO2 94%, EF 38%, BNP 685 pg/mL, Cr 1.28 mg/dL.\n        *   Current A (Assessment): #1 Acute decompensated heart failure (ADHF) in chronic HF (HFrEF). Significant BNP elevation, signs of congestion.\n    *   Goal: Propose the continuation of the \"A\" section (Diagnoses/Plan considerations), following standard Japanese EMR conventions.\n\n2.  **Evaluate Current Information:**\n    *   Diagnosis is clear: ADHF on top of HFrEF.\n    *   Etiology triggers: Salt intake, possibly AFib contribution (HR 92, AF).\n    *   Organ ",
+        "gen_length": 1805,
+        "time_sec": 7.9
+      },
+      "continue_17_p_mid": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant for Japanese Electronic Health Records (EHR).\n    *   Task: Suggest the continuation of the \"P\" (Plan) section based on provided information.\n    *   Input Context:\n        *   \"S/O/A omitted\" (Subjective, Objective, Assessment are not shown or already finished elsewhere).\n        *   Current P (Plan) items:\n            *   Increase furosemide dosage (20mg → 40mg).\n            *   Re-education on salt restriction.\n    *   Goal: Propose logical next steps/items for the Plan section, maintaining professional medical Japanese suitable for an EHR.\n\n2.  **Determine the Clinical Scenario:**\n    *   The patient is likely being treated for heart failure (HF) or edema/renal issues given the use of furosemide and salt restriction advice.\n    *   Current action: Increasing loop diuretic dose + dietary counseling.\n    *   Missing elements in Plan: Monitoring, follow-up, safety checks, other medications, patient educ",
+        "gen_length": 1956,
+        "time_sec": 7.9
+      },
+      "soap_14_dm_routine": {
+        "generated": "S: 58 歳女性。2 型糖尿病・高血圧通院中。\n「特に変わりない」と訴える。服薬は継続している。\n血糖自己測定（朝値）は約 130 mg/dL。食事管理は娘により栄養バランスを考慮した献立となっていると報告。運動療法として、毎日 30 分間の散歩を実施中。\n\nO:\nバイタルサイン：BP 128/78 mmHg, HR 68 bpm, BT 36.2℃\n検査所見：HbA1c 6.8%（前回 7.0% vs），Cr 0.72 mg/dL, eGFR 68 mL/min/1.73m²\n\nA:\n糖尿病コントロール良好。HbA1c が前回の 7.0% から 6.8% に低下しており、目標値（<7.0%）を達成している。血圧もコントロール範囲内。腎機能（eGFR 68）は安定している。患者の自己管理意識が高く、生活習慣療法が適切に実施されている。\n\nP:\n現在の治療方針を維持する。次回受診時に HbA1c と血圧の確認を行う。",
+        "gen_length": 414,
+        "time_sec": 5.8
+      },
+      "soap_15_ht_adjust": {
+        "generated": "Thinking Process:\n\n1.  **Analyze the Request:**\n    *   Role: Medical AI Assistant supporting Japanese electronic medical records (EMR).\n    *   Task: Convert the provided interview record (问诊記録) into SOAP format clinical notes (カルテ記載).\n    *   Input Data:\n        *   Patient: 55-year-old male, hypertensive outpatient.\n        *   Interview:\n            *   BP at home: Morning ~150.\n            *   Symptoms: Head heavy/heavy feeling upon waking in the morning (headache/dizziness implied).\n            *   Medication: Taking it (\"飲んでいます\").\n            *   Diet/Salt: Doesn't control well (miso soup every meal, likes pickles).\n            *   Exercise: Sedentary desk work, almost none.\n        *   Vitals: BP 156/94, HR 76, BT 36.4.\n        *   Labs: Cr 0.82, eGFR 72, K 4.2.\n    *   Output Format: SOAP (Subjective, Objective, Assessment, Plan).\n    *   Language: Japanese (medical professional style).\n\n2.  **Drafting - Section by Section:**\n\n    *   **S (Subjective):** What did the patient s",
+        "gen_length": 1769,
+        "time_sec": 7.9
+      },
+      "soap_16_elderly_polypharm": {
+        "generated": "# 外来診療記録（SOAP フォーマット）\n\n**【S: 主訴・Subjective】**\n82 歳女性。娘より「最近ふらつきが目立ち、先週玄関で転倒した」との訴えがあり受診。\n患者本人は発症時期を把握していないが、娘によると約 1 ヶ月前から始まるとのこと。転倒時大きな外傷はありませんでしたが、不安感あり。\n不眠症の既往あり。睡眠薬服用後は入眠可能だが、「朝起きるとボーッとしている（脳霧状）」との苦情あり。\n\n**【O: 客観的所見・Objective】**\n*   **バイタルサイン:**\n    *   BP: 118/62 mmHg, HR: 64 bpm, BT: 36.0℃\n    *   **起立性血圧測定:** 臥位 128/72 → 立位 102/58（収縮期降下 26mmHg、拡張期降下 14mmHg）**→ 明らかな起立性低血圧を認める。**\n*   **検査値:**\n    *   HbA1c: 6.2%（良好）\n    *   BUN/Cr: Cr 0.92 mg/dL, eGFR 45 mL/min/1.73m²（軽度腎機能低下）\n*   **内服薬:** 12 剤処方中。降圧薬（ARB+CCB）、利尿薬、糖尿病薬、鎮静催眠薬（エチゾラム＋ゾルピデム）、骨粗鬆症治療薬など多剤併用。\n\n**【A: 評価・Assessment】**\n1.  **起立性低血圧による転倒リスク:**\n    *   臥位〜立位の収縮期血圧差が基準値（20mmHg）を大きく超えており、娘の訴える「ふらつき」および「転倒」と強い関連があると考えられる。\n    *   現在内服中の利尿薬（フロセミド）、降圧薬（アムロジピン＋テルミサルタン）、および高齢者で頻用される軽度作用の精神科薬（エチゾラム）が、血",
+        "gen_length": 764,
+        "time_sec": 7.7
+      }
+    }
+  }
+}

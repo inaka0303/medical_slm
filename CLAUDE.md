@@ -1,42 +1,196 @@
 # 医療特化SLM プロジェクト
 
+> **最終更新: 2026-04-21（v6フェーズ 大改修）**  
+> /clear 後はこの CLAUDE.md と `/home/junkanki/naka/results_v6/` を読めば状況復帰できる。
+> 作業中のサービス稼働状況は下記「現在のサービス」セクション参照。
+
 ## 目的
 日本語電子カルテ向け医療特化SLM（Small Language Model）の開発。
 メイン機能: 患者の問診データを参照し、カルテ記載時のsuggest（文章候補提示）を行う。
 
+---
+
+## 🔥 2026-04-21 v6フェーズ 大改修まとめ（最新）
+
+### アーキテクチャ変更点
+1. **LoRA hot-swap 動作確定**: llama.cppの `--prefill-assistant` デフォルト有効、per-request `lora` フィールドで scale切替可能
+2. **単一llama-server に 4 LoRA ロード**: suggest / 既存admission / admission_v2 / soap_full_v2 → リクエストで id指定
+3. **Assistant Prefill方式採用**: `messages` の末尾を assistant ロールで `S: {ユーザー入力}` とプリフィルし、続きを生成。入力 echo・セクションラベル混入の構造的解消
+4. **4セクション カルテUI**: 問診記録 / お薬手帳 / 診察所見 / 検査結果 の縦スタック。医学ワークフローと情報源で分離
+5. **RAG サーバー独立稼働**: Python FastAPI (port 8082) で Ruri-v3 + ChromaDB を HTTP 化、EMR backend が proxy
+6. **SOAPドラフトDBキャッシュ**: `soap_drafts` テーブルで encounter_id単位キャッシュ、初回9秒 → 2回目以降 0.04秒
+7. **SSE セクション逐次ストリーミング**: S→O→A→P をセクション完了ごとにイベント送出
+
+### 新 LoRA（v2、合成データで追加訓練）
+| 用途 | 既存件数 | v2件数 | 保存先 |
+|---|---|---|---|
+| admission_summary | 30 | **100**（＋70合成） | `gguf_models/sft_admission_v2_lora.gguf` |
+| soap_full | 40 | **125**（＋85合成） | `gguf_models/sft_soap_full_v2_lora.gguf` |
+
+合成データ（Phase 2 完了分）:
+- `/data2/junkanki/naka/data/synth_v1/admission/`  (cardio/resp/neuro/infection/psychiatric、7ファイル)
+- `/data2/junkanki/naka/data/synth_v1/soap_full/`   (gynecology/orthopedic/dermatology/ent/urology/pediatric_general、6ファイル)
+- マージ済み: `/data2/junkanki/naka/data/sft_admission_summary_v2.jsonl` / `sft_soap_full_v2.jsonl`
+
+Phase 3 進行中（2026-04-21）: admission 消化器緊急 / soap 4section循環器 / soap 4section内分泌 / soap 短文メモ問診 を subagent で合成中。
+
+### 3大バグ解消の経緯（実地テスト済み）
+- S「自覚」→「自覚症状自覚症状なし…」重複 ← prefillで解消
+- O「血圧146/92」→「…O: 血糖…」ラベル混入 ← prefillで解消
+- A「高血圧」→「高血圧高血圧…」重複 ← prefillで解消
+- 短文入力時のmeta-commentary「※AIとして…」 ← 後処理で18パターン除去
+
+---
+
+## 現在のサービス（2026-04-21 時点）
+
+| port | サービス | 起動コマンド | VRAM/場所 |
+|---|---|---|---|
+| 5173 | Vite frontend (React) | `cd /home/junkanki/naka/emr/frontend && npm run dev -- --host 0.0.0.0` | /home（node_modules は /data2 シンボリックリンク経由） |
+| 8080 | EMR backend (Go/Echo) | 下記参照 | - |
+| 8081 | **llama-server (4 LoRA)** | 下記参照 | GPU 2, 13GB |
+| 8082 | RAG server (FastAPI, Ruri-v3) | 下記参照 | GPU 1, 2GB |
+
+### 起動コマンド（再起動時の確定版）
+
+```bash
+# 1. llama-server (4 LoRA ロード、hot-swap 対応)
+cd /data2/junkanki/naka
+CUDA_VISIBLE_DEVICES=2 nohup llama.cpp/build/bin/llama-server \
+  -m gguf_models/Qwen3.5-4B-UD-Q4_K_XL.gguf \
+  --lora gguf_models/sft_4b_nocpt_A_lora.gguf \
+  --lora gguf_models/sft_admission_summary_4b_lora.gguf \
+  --lora gguf_models/sft_admission_v2_lora.gguf \
+  --lora gguf_models/sft_soap_full_v2_lora.gguf \
+  --port 8081 -ngl 99 \
+  --chat-template-kwargs '{"enable_thinking":false}' \
+  > /data2/junkanki/naka/logs/llama_server_v2.log 2>&1 &
+
+# 2. RAG server (Python)
+CUDA_VISIBLE_DEVICES=1 HF_HOME=/data2/junkanki/.cache/huggingface \
+  nohup python3.11 /data2/junkanki/naka/rag_server.py --port 8082 --host 127.0.0.1 \
+  > /data2/junkanki/naka/logs/rag_server.log 2>&1 &
+
+# 3. EMR backend (Go)
+cd /home/junkanki/naka/emr/backend
+export PATH=/data2/junkanki/go/bin:$PATH GOROOT=/data2/junkanki/go
+go build -o /tmp/emr-server ./cmd/server/
+SLM_API_URL=http://localhost:8081 \
+  nohup /tmp/emr-server > /data2/junkanki/naka/logs/emr_backend.log 2>&1 &
+
+# 4. Vite frontend
+cd /home/junkanki/naka/emr/frontend
+nohup npm run dev -- --host 0.0.0.0 --port 5173 \
+  > /data2/junkanki/naka/logs/vite_dev.log 2>&1 &
+```
+
+### LoRA ID マッピング（llama-server 内）
+```
+id 0: sft_4b_nocpt_A (suggest)          ← インライン補完、SOAPドラフト(4回呼出)
+id 1: sft_admission_summary_4b (旧)      ← 比較用、本番非使用
+id 2: sft_admission_v2 (新100件訓練)     ← 入院時サマリ 本番候補
+id 3: sft_soap_full_v2 (新125件訓練)     ← SOAP全体 本番候補（suggest 4回と比較中）
+```
+
+### アプリの主要エンドポイント（EMR backend）
+```
+# 問診（4セクション対応、upsert）
+GET  /api/encounters/:id/interviews       → raw_text/medication_list/exam_findings/lab_results
+POST /api/encounters/:id/interviews       → 4フィールド受信、1 encounter = 1 note
+
+# SOAP ドラフト（DB キャッシュ + SSE）
+POST /api/encounters/:id/soap-draft       → キャッシュ優先、force:true で再生成
+POST /api/encounters/:id/soap-draft/stream → SSE、S→O→A→P逐次
+DELETE /api/encounters/:id/soap-draft     → キャッシュ無効化
+
+# 入院時サマリ（DB 永続化）
+GET/POST /api/encounters/:id/admission-summary
+
+# インライン補完（suggest LoRA、prefill方式）
+POST /api/slm/autocomplete                → {text, context, interview_text, prior_sections}
+
+# RAG
+POST /api/rag/search                      → Ruri-v3 で 検索、title + 引用文
+
+# デモ用リセット
+POST /api/test-patient/reset              → MRN-0021 (新規太郎) のみ削除、毎回ブラウザリロードで自動実行
+```
+
+### カルテUIの4セクション構造（2026-04-21 新設計）
+医学ワークフローと情報源で分離:
+- **問診記録**: 患者から聞く（主訴・現病歴・既往・家族歴・社会歴・アレルギー）
+- **お薬手帳**: 持参薬の正確な薬名・用量
+- **診察所見**: 医師の視触聴診
+- **検査結果**: バイタル、採血、画像
+
+バックエンドは 4フィールドを `【問診記録】...【お薬手帳より】...` 形式に結合して SLM に渡す（訓練データ形式と一致）。
+
+---
+
 ## ベースモデル
-- `unsloth/Qwen3.5-0.8B-Base`
+- `unsloth/Qwen3.5-0.8B-Base`, `2B-Base`, `4B-Base`, `9B-Base`
+- 4B/9Bが主力。0.8B/2Bは小モデルの限界検証用
+
+## ベースモデル
+- `unsloth/Qwen3.5-0.8B-Base`, `2B-Base`, `4B-Base`, `9B-Base`
+- 4B/9Bが主力。0.8B/2Bは小モデルの限界検証用
+
+## アーキテクチャ
+```
+ノートPC上の最終構成:
+  Qwen3.5-4B GGUF (Q4_K_XL, 2.8GB) ← 常駐
+    + suggestアダプター (82MB)     ← カルテ記載タスク
+    + RAG (Ruri-v3 + ChromaDB)     ← 知識/ガイドライン検索
+  
+  llama-server (localhost:8081)    ← ローカルAPIサーバー
+    --chat-template-kwargs '{"enable_thinking": false}'
+```
 
 ## 学習パイプライン
 1. **CPT（継続事前学習）**: 医療コーパスでLoRA学習 → `train_unsloth_cpt.py`
-2. **SFT（Instruction Tuning）**: CPT済みモデルにLoRAで指示追従学習 → `train_sft.py`
+2. **SFT（Instruction Tuning）**: LoRAで指示追従学習 → `train_sft.py`
+3. **GGUF変換**: LoRAアダプターをGGUF形式に変換 → llama.cpp `convert_lora_to_gguf.py`
 
 ## ディレクトリ構成
+
+### /home/junkanki/naka/（gitリポジトリ）
 ```
 data/
-  corpus.txt           # CPT用コーパス（ガイドライン2,257件+カルテ6,242件, 240MB）
-  sft_data_2.jsonl     # SFT用データ（messages形式, 3,194件）※本番用
-  sft_data_1.jsonl     # SFT用データ（instruction形式）※参考用
-  sft_soap_stepwise.jsonl  # 段階的SOAPデータ単体（120件）
+  corpus.txt              # CPT用コーパス（ガイドライン+カルテ, 318MB, 2658文書）
+  sft_suggest.jsonl        # suggestタスク特化データ（512件, 8診療科×64シナリオ×8カットポイント）
+  sft_data_2.jsonl         # 汎用SFTデータ（3,194件, ガイドラインQ&A中心）
+  sft_soap_stepwise.jsonl  # 段階的SOAPデータ（120件, 15シナリオ×8パターン）
+  rag_eval_qa.jsonl        # RAG評価用QAデータ（100問, ガイドラインから作成）
+  mix_A_suggest_only.jsonl # データA: suggest512件のみ
+  mix_B_suggest_soap.jsonl # データB: suggest512+stepwise120=632件
 
-output/                # 学習済みモデル（各実験名/merged/ にマージ済みモデル）
-logs/                  # 学習ログ
-results/               # Phase1 推論結果（CPTモデル6つ）
-results_phase2/        # Phase2 推論結果（CPT R7/R8 + SFT全モデル）
+results_v2/    # v2実験結果（24モデル×8問）
+results_v3/    # v3実験結果（22モデル×8問）
+results_v4/    # v4実験結果（33モデル×23問）
+results_v5/    # v5実験結果（RAGグリッドサーチ+SOAP SFT+GGUF+RAG E2E）
+eval_prompts_by_task.json  # suggestタスク評価プロンプト（17問+模範解答）
+```
+
+### /data2/junkanki/naka/（メインワークスペース）
+```
+output/        # 学習済みモデル（各実験名/merged/ と /lora/）
+gguf_models/   # GGUFベース + LoRAアダプター（変換済み）
+rag_db_v2/     # RAGベクトルDB（ChromaDB, Ruri-v3-310m）
+logs/          # 学習・推論ログ
 ```
 
 ## 主要スクリプト
-| ファイル | 用途 |
-|---|---|
-| `train_unsloth_cpt.py` | CPT学習（LoRA） |
-| `train_sft.py` | SFT学習（LoRA、ChatML形式） |
-| `orchestrator.py` | R1用オーケストレーター |
-| `run_r2_r6.py` | R2〜R6 CPT一括実行 |
-| `run_phase1_and_sft.py` | R7/R8 CPT + SFT 11モデル一括実行 |
-| `inference.py` | 単一モデル推論 |
-| `compare_models.py` | 複数モデル一括比較推論 |
-| `generate_stepwise_soap.py` | 段階的SOAPデータ生成 |
-| `analyze_evaluation.py` | 評価シート分析 |
+| ファイル | 用途 | 場所 |
+|---|---|---|
+| `train_unsloth_cpt.py` | CPT学習（LoRA, --model_name で4B/9B対応） | /data2 |
+| `train_sft.py` | SFT学習（LoRA, --sft_data でデータ切替） | /data2 |
+| `infer_v4.py` | タスク別評価推論（--task suggest/knowledge/all） | /data2 |
+| `build_rag_v2.py` | RAG DB構築（Parent-Child + Ruri-v3） | /data2 |
+| `rag_grid_search.py` | RAGパラメータグリッドサーチ | /data2 |
+| `rag_e2e_eval.py` | RAG+SLMエンドツーエンド評価 | /data2 |
+| `gguf_lora_eval.py` | GGUF+LoRA推論テスト | /data2 |
+| `measure_hallucination.py` | ハルシネーション定量計測 | /home |
+| `orchestrator_v2〜v5.py` | 各フェーズの自動実行制御 | /data2 |
 
 ## 実験履歴
 
@@ -69,6 +223,205 @@ SFT設定: r=16, alpha=16, lr=2e-5, 3ep（共通）
 - ガイドライン引用の不正確さ（ハルシネーション）
 - 実用化にはRAG等の事実制約が必要
 
+### suggestアダプター最終結果
+
+4B/9Bのsuggestタスク（途中→続き、S/O/A/P各セクション記載）に特化したLoRAアダプター。
+v2〜v5で70+実験を実施し、以下が現時点のベスト:
+
+| サイズ | ベストアダプター | 設定 | データ | GGUF変換 |
+|--------|-----------------|------|--------|---------|
+| 4B | sft_4b_nocpt_A | r=16, lr=2e-5, 5ep | データA (suggest 512件) | ✅済 |
+| 9B | sft_9b_nocpt_ep8 | r=16, lr=2e-5, 8ep | データA (suggest 512件) | ✅済 |
+
+**確立した知見:**
+- 4B/9BではCPTは不要（noCPTが最安定。控えめCPT r=16,lr=1e-5,2epでも改善なし）
+- データA(suggest512件)で十分。stepwise120件の追加効果はsuggestタスクでは限定的
+- r=16が安定。r=32はloss最低だがSOAP構造を完走しない傾向
+- lr=2e-5が最適。lr=1e-5は学習不足、lr=5e-5は差なし
+- 4Bは5ep、9Bは8epが最適
+- Lossと出力品質は相関しない（CPTと同じ傾向がSFTでも確認）
+- P記載で4Bは架空薬剤名を生成する → RAGで解決済み
+- 9Bは全タスクで実用レベル（P記載も実在薬で出力、ただしGGUFでやや精度低下）
+- SOAP全体生成は別アダプター（別データ）が必要（今後の課題）
+
+### RAG（検索拡張生成）
+
+**構成:** Parent-Child Retriever + Ruri-v3-310m + ChromaDB
+
+```
+コーパス(2658文書) → Parent(1500文字)に分割 → Child(400文字)にさらに分割
+                                                  ↓ Ruri-v3でEmbedding
+クエリ → Ruri-v3 Embedding → Childで類似検索(精度高い)
+                              → ヒットしたChildの親Parent(文脈広い)をLLMに渡す
+```
+
+**最適パラメータ:** (32設定のグリッドサーチで確定)
+| パラメータ | 値 | 備考 |
+|-----------|-----|------|
+| Child chunk size | 400文字 | 検索精度用の小チャンク |
+| Parent chunk size | 1500文字 | LLMに渡す大チャンク |
+| n_parent | 5 | 返却するParent数 |
+| Embedding | Ruri-v3-310m | 日本語特化, 768次元 |
+| Recall@5 | **0.970 (97/100)** | ガイドラインQA100問での検索精度 |
+
+**エンドツーエンド評価結果:**
+
+| モデル | RAGなし正答率 | RAGあり正答率 | 改善幅 |
+|--------|-------------|-------------|--------|
+| **4B** | 75% (75/100) | **92% (92/100)** | **+17pt** |
+| **9B** | 77% (77/100) | **95% (95/100)** | **+18pt** |
+
+カテゴリ別（9B RAGあり）:
+- 治療方針: **100%** (30/30)
+- 薬剤・用量: **100%** (20/20)
+- 診断基準: **100%** (20/20)
+- 疫学・病態: 73%
+- その他: 93%
+
+**P記載のハルシネーション:** RAGあり9Bで実在薬のみ出力（カプトプリル、カンデサルタン、カルベジロール、ダパグリフロジン）
+
+### GGUF量子化 + LoRA推論
+
+**構成:** 公開GGUF (unsloth) + 学習済みLoRA → llama-server (API)
+
+| 項目 | 4B GGUF Q4_K_XL | 9B GGUF Q4_K_XL |
+|------|-----------------|-----------------|
+| ファイルサイズ | 2.8GB | 5.6GB |
+| LoRAサイズ | 82MB | 112MB |
+| 推論速度 (H100) | 1.7s/問 | 2.0s/問 |
+| 推論速度 (API) | 1.2s/問 | 1.1s/問 |
+| S/O/A記載品質 | ◎ 16bitと同等 | ◎ 16bitと同等 |
+| P記載（薬剤名） | △ 架空薬あり→RAG必須 | △ GGUFでやや精度低下→RAG必須 |
+| Thinking問題 | `enable_thinking:false`で解決 | 同左 |
+
+**推論方法:**
+```bash
+# llama-serverでローカルAPIサーバー起動（外部通信なし、完全ローカル）
+llama-server -m Qwen3.5-4B-UD-Q4_K_XL.gguf \
+  --lora sft_4b_nocpt_A_lora.gguf \
+  --port 8081 -ngl 99 \
+  --chat-template-kwargs '{"enable_thinking": false}'
+
+# APIで推論
+curl http://localhost:8081/v1/chat/completions \
+  -d '{"messages":[{"role":"user","content":"..."}]}'
+```
+
+### モデルサイズ別の最終評価
+
+| サイズ | suggestタスク | 知識タスク | CPT効果 | ノートPC速度 | 推奨用途 |
+|--------|-------------|-----------|---------|------------|---------|
+| 0.8B | △ 反復ループ多発 | ✗ | 必要 | 超サクサク | 非推奨 |
+| 2B | ○ CPT+SFTで使える | △ | 効果あり | 超サクサク | タスク特化なら可 |
+| **4B** | **◎ S/O/A実用的** | ○ RAGで補完 | 不要 | **サクサク** | **ノートPC推奨** |
+| **9B** | **◎ 全タスク最高** | ◎ | 不要 | 許容範囲 | 品質最優先時 |
+
+### SOAP全体アダプター + 入院時サマリアダプター（進行中）
+
+suggestアダプター（途中→続き）とは別に、SOAP全体出力と入院時サマリ生成用のアダプターを学習。
+
+| アダプター | データ | 件数 | 4B | 9B |
+|-----------|--------|------|-----|-----|
+| sft_soap_full | 問診→SOAP全文 | 40 | ✅完了 | ✅学習中(GPU0) |
+| sft_admission_summary | 詳細問診→入院時サマリ | 30 | ✅完了+GGUF済 | ✅完了+GGUF済 |
+
+**注意:** データ件数がまだ少ない（40件/30件）。品質確認後、追加生成が必要かもしれない。
+
+### EMRアプリ統合（完了）
+
+EMRアプリ (https://github.com/inaka0303/emr.git) のSLM接続を実装済み。
+
+| API | エンドポイント | 状態 | レスポンス |
+|-----|-------------|------|-----------|
+| autocomplete | POST /api/slm/autocomplete | ✅ SLM接続済み | 500ms |
+| SOAP suggest | POST /api/slm/suggest/soap | ✅ SLM接続済み | ~5秒 |
+| Summary | POST /api/slm/suggest/summary | ✅ SLM接続済み | 450-780ms |
+| Health | GET /api/slm/health | ✅ | - |
+
+実装ファイル:
+- `emr/backend/internal/slm/autocomplete.go` — SLM接続+モック辞書フォールバック
+- `emr/backend/internal/slm/client.go` — OpenAI互換APIクライアント
+- `emr/backend/internal/slm/parser.go` — SOAP/Summary自然文パーサー
+- `emr/backend/internal/slm/client_compat.go` — callChatCompletion互換ラッパー
+
+### 今後の課題
+- **SOAP全体/サマリアダプターの品質評価** — SFT完了済みだが推論品質の確認がまだ
+- **データ拡充** — SOAP全体40件/サマリ30件は少なめ。品質次第で追加生成
+- **ノートPC実測** — 4B GGUF+LoRA+RAGの統合動作確認
+- **RAGの高度化** — リランキング、HyDE等の追加テクニック
+- **アプリのフロントエンドテスト** — ブラウザでの実際の操作確認
+- **評価の拡充** — 医療者による人手評価
+- **論文化** — スケーリング比較、RAG効果、CPT効果のデータが揃っている
+
+## 次のセッションへの引き継ぎ
+
+### 環境の起動方法
+
+```bash
+# 1. llama-server起動（SLMのローカルAPIサーバー）
+cd /data2/junkanki/naka
+CUDA_VISIBLE_DEVICES=2 llama.cpp/build/bin/llama-server \
+  -m gguf_models/Qwen3.5-4B-UD-Q4_K_XL.gguf \
+  --lora gguf_models/sft_4b_nocpt_A_lora.gguf \
+  --port 8081 -ngl 99 \
+  --chat-template-kwargs '{"enable_thinking": false}'
+
+# 2. EMR backend起動
+export PATH=/data2/junkanki/go/bin:$PATH
+export GOROOT=/data2/junkanki/go
+cd /home/junkanki/naka/emr/backend
+SLM_API_URL=http://localhost:8081 go run ./cmd/server/
+
+# 3. SFT学習を走らせる場合
+cd /data2/junkanki/naka
+HF_HOME=/data2/junkanki/.cache/huggingface \
+CUDA_VISIBLE_DEVICES=0 python3.11 train_sft.py \
+  --base_model unsloth/Qwen3.5-4B-Base \
+  --exp_name <実験名> \
+  --sft_data data/<データファイル>.jsonl \
+  --lora_r 16 --lora_alpha 16 --lr 2e-5 --epochs 5 \
+  --batch_size 2 --grad_accum 16
+```
+
+### 作業のコツ
+
+1. **python3.11を使う**（python3はシステムの3.10でunslothが動かない）
+2. **HF_HOME=/data2/junkanki/.cache/huggingface を必ず設定**（/homeが満杯のため）
+3. **ログは /data2/junkanki/naka/logs/ に出す**（/tmpは危険）
+4. **GPU 4枚あるが共用マシン**。全GPU独占は避け、一部を空ける
+5. **gitはSSH経由** — `git@github-inaka:inaka0303/emr.git`（~/.ssh/configで設定済み）
+6. **Go 1.23+が必要** — `/data2/junkanki/go/bin/go` を使う（システムのgoは1.20で古い）
+7. **Qwen3.5はVLM**（ビジョン言語モデル）なので推論時に注意:
+   - unslothでの推論: `tokenizer(None, input_text, ...)` とNoneを渡す
+   - messagesのcontent: `[{"type":"text","text":"..."}]` 形式
+   - GGUFでのthinking: `--chat-template-kwargs '{"enable_thinking":false}'` 必須
+
+### 実験結果の場所
+
+| フォルダ | 内容 |
+|---------|------|
+| `/home/junkanki/naka/results_v2/` | 初回24モデル比較（v2、JSONにメタデータ付き） |
+| `/home/junkanki/naka/results_v3/` | 2B CPT + 控えめCPT + アダプター（JSONにメタデータ付き） |
+| `/home/junkanki/naka/results_v4/` | v4全33モデル × 23問推論（JSONにメタデータ付き） |
+| `/home/junkanki/naka/results_v5/` | RAGグリッドサーチ + GGUF比較 + RAG E2E + SOAP SFT探索 |
+| `/home/junkanki/naka/data/sft_datasets/` | SFT学習データ一覧 |
+| `/home/junkanki/naka/data/eval_data/` | 評価用データ（プロンプト + RAG QA） |
+
+### GGUFアダプター一覧
+
+```
+/data2/junkanki/naka/gguf_models/
+├── Qwen3.5-4B-UD-Q4_K_XL.gguf          (2.8GB) ← 4Bベース
+├── Qwen3.5-9B-UD-Q4_K_XL.gguf          (5.6GB) ← 9Bベース
+├── sft_4b_nocpt_A_lora.gguf             (82MB)  ← 4B suggestベスト★
+├── sft_9b_nocpt_ep8_lora.gguf           (112MB) ← 9B suggestベスト★
+├── adapter_4b_soap_lora.gguf            (82MB)  ← 4B SOAP(データB)
+├── sft_admission_summary_4b_lora.gguf   (82MB)  ← 4B 入院時サマリ
+├── sft_admission_summary_9b_lora.gguf   (112MB) ← 9B 入院時サマリ
+├── sft_soap_full_4b_lora.gguf           (予定)  ← 4B SOAP全体
+└── sft_soap_full_9b_lora.gguf           (予定)  ← 9B SOAP全体
+```
+
 ## 別マシンでのセットアップ
 
 ### 1. クローン
@@ -99,7 +452,62 @@ pip install unsloth transformers datasets trl jinja2>=3.1.0
 CUDA_VISIBLE_DEVICES=0 python3 inference.py --model exp4_large_stable --prompt "糖尿病の治療において"
 ```
 
-## DGXサーバー情報
-- ホスト: junkanki-DGX-Station-A100
-- GPU: NVIDIA A100-SXM4-80GB × 4台（CUDA 0,1,2,4）+ DGX Display（CUDA 3, 使用不可）
-- CUDA index 0,1,2,3 で4台のA100にアクセス可能（GPU3=DGX Displayだがnohup経由では問題なし）
+## サーバー情報
+
+### H100サーバー (gsv-h100) — メイン開発環境
+- ホスト: gsv-h100
+- GPU: NVIDIA H100 NVL × 4台（各95GB VRAM）
+- CUDA: 12.8, PyTorch: 2.10.0
+- Python: 3.11（unsloth用）、3.10（システム）
+- ストレージ:
+  - `/home` (397GB): ほぼ満杯。**大きいファイルを置かない**
+  - `/data2` (3.5TB NVMe): **メインワークスペース** `/data2/junkanki/naka/`
+  - `/` (480GB): `/tmp`を含む。**一時ファイルに注意（後述）**
+- HuggingFaceキャッシュ: `/data2/junkanki/.cache/huggingface`（HF_HOME環境変数で指定）
+- llama.cpp: `/data2/junkanki/naka/llama.cpp/`（CUDA対応ビルド済み）
+- GGUFモデル: `/data2/junkanki/naka/gguf_models/`
+
+### DGXサーバー (junkanki-DGX-Station-A100) — 旧環境
+- GPU: NVIDIA A100-SXM4-80GB × 4台
+- CUDA index 0,1,2,3 で4台のA100にアクセス可能
+
+## ⚠️ 安全ルール（インシデント対策）
+
+### ディスク容量に関するルール
+
+**背景:** llama.cppのテスト時にログファイルが301GBに膨張し、`/`パーティションが満杯になるインシデントが発生した（2026-04-16）。
+
+1. **`/tmp`や`/`配下にログをリダイレクトしない**
+   - `/tmp`は`/`パーティション上にある（480GB共有）
+   - ログ出力先は必ず `/data2/junkanki/naka/logs/` を使う
+   ```bash
+   # ❌ 危険
+   nohup command > /tmp/test.log 2>&1 &
+   # ✅ 安全
+   nohup command > /data2/junkanki/naka/logs/test.log 2>&1 &
+   ```
+
+2. **llama.cppは`llama-completion`を使う（`llama-cli`ではない）**
+   - `llama-cli`はデフォルトで対話モード → 無限生成 → ログ爆発
+   - `llama-completion`はワンショットで終了する
+   ```bash
+   # ❌ 対話モード（無限ループ）
+   llama.cpp/build/bin/llama-cli -m model.gguf ...
+   # ✅ ワンショット
+   llama.cpp/build/bin/llama-completion -m model.gguf -n 128 ...
+   ```
+
+3. **バックグラウンドプロセスは必ず管理する**
+   - 起動時にPIDを記録
+   - テスト完了後は即座にkill
+   - `ps aux | grep python3.11` で残留プロセスを確認
+   - 長時間放置するプロセスには `timeout` コマンドを付ける
+
+4. **ファイル削除後もディスクが空かない場合**
+   - プロセスがファイルを掴んでいる可能性がある
+   - `lsof +L1 | grep deleted` で確認し、該当プロセスをkill
+
+5. **定期的にディスク容量を確認**
+   ```bash
+   df -h / /home /data2
+   ```

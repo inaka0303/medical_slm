@@ -8,3 +8,18 @@ unsloth_studio.log
 
 # data/ の大きいファイルだけ除外
 data/corpus.txt
+data/rag/
+data/suggest_gen/
+data/sft_suggest.jsonl
+
+# /data2 への symlink（2026-04-20 以降）
+gguf_models
+trained_models
+training_logs
+rag_db
+
+# 別リポジトリ (github.com/inaka0303/emr)
+emr/
+
+# GGUF adapter dir（/data2 symlinkを使うため不要）
+gguf_adapters/

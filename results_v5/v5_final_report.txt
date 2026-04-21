@@ -1,0 +1,23 @@
+================================================================================
+v5 最終レポート (2026-04-17 15:17:00)
+================================================================================
+
+--- RAGグリッドサーチ結果 ---
+Best: child=400, parent=1500, n_parent=5, Recall=0.970
+
+--- SOAP SFTハイパラ探索結果 ---
+  ✅ sft_soap_4b_r8_lr2e5_5ep                 loss=1.5212
+  ✅ sft_soap_4b_r32_lr2e5_5ep                loss=1.0304
+  ✅ sft_soap_4b_r16_lr1e5_5ep                loss=1.5060
+  ✅ sft_soap_4b_r16_lr5e5_3ep                loss=1.2616
+  ✅ sft_soap_4b_r16_lr2e5_8ep                loss=1.1328
+  ✅ sft_soap_4b_r16_lr2e5_3ep                loss=1.4867
+  ✅ sft_soap_9b_r16_lr2e5_5ep                loss=1.1961
+  ✅ sft_soap_9b_r32_lr2e5_5ep                loss=0.9487
+  ✅ sft_soap_9b_r16_lr2e5_8ep                loss=0.9901
+
+--- RAG+SLM E2E結果 ---
+  sft_9b_nocpt_ep8 (no_rag): Accuracy=0.770
+  sft_4b_nocpt_A (no_rag): Accuracy=0.750
+  sft_4b_nocpt_A (with_rag): Accuracy=0.920
+  sft_9b_nocpt_ep8 (with_rag): Accuracy=0.950

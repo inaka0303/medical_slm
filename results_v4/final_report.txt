@@ -1,0 +1,141 @@
+================================================================================
+医療SLM v4 最終レポート
+生成日時: 2026-04-16 12:05:57
+評価モデル数: 33
+================================================================================
+
+--- 全モデル Loss一覧 ---
+  adapter_4b_knowledge                          loss=1.8503
+  adapter_4b_soap                               loss=1.3424
+  adapter_4b_suggest                            loss=1.3577
+  adapter_9b_knowledge                          loss=1.7222
+  cpt_2b_r64_lr7e5                              loss=1.3663
+  cpt_4b_r64                                    loss=1.2213
+  cpt_9b_r64                                    loss=1.3671
+  final_08b_F                                   loss=1.8062
+  final_2b_F                                    loss=1.5454
+  final_4b_F                                    loss=1.2846
+  final_9b_F                                    loss=1.1617
+  sft_08b_r16_lr2e5_5ep_D                       loss=1.4658
+  sft_2b_cpt_r128_A                             loss=1.7771
+  sft_2b_cpt_r64_A                              loss=1.8096
+  sft_2b_cpt_r64_D                              loss=1.4072
+  sft_2b_cpt_r64_F                              loss=1.5454
+  sft_2b_nocpt_A                                loss=1.7058
+  sft_2b_nocpt_F                                loss=1.5644
+  sft_4b_cpt_r64_A                              loss=1.4420
+  sft_4b_cpt_r64_D                              loss=1.1442
+  sft_4b_nocpt_A                                loss=1.3582
+  sft_4b_nocpt_ep8                              loss=1.1760
+  sft_4b_nocpt_r32                              loss=1.0669
+  sft_9b_cpt_A                                  loss=1.2572
+  sft_9b_cpt_D                                  loss=1.0296
+  sft_9b_nocpt_A                                loss=1.2089
+  sft_9b_nocpt_ep8                              loss=1.0367
+  sft_9b_nocpt_lr1e5                            loss=1.3467
+  sft_9b_nocpt_r32                              loss=0.9792
+  sft_cpt_4b_gentle_r16_lr1e5_2ep               loss=1.3537
+  sft_cpt_4b_gentle_r16_lr3e5_1ep               loss=1.3535
+  sft_cpt_4b_gentle_r32_lr1e5_2ep               loss=1.3511
+  sft_cpt_9b_gentle_r16                         loss=1.2083
+
+--- 主要モデル出力サンプル (suggest_chf) ---
+
+[adapter_4b_knowledge]
+N/A
+
+[adapter_4b_soap]
+N/A
+
+[adapter_4b_suggest]
+N/A
+
+[adapter_9b_knowledge]
+N/A
+
+[cpt_2b_r64_lr7e5]
+N/A
+
+[cpt_4b_r64]
+N/A
+
+[cpt_9b_r64]
+N/A
+
+[final_08b_F]
+N/A
+
+[final_2b_F]
+N/A
+
+[final_4b_F]
+N/A
+
+[final_9b_F]
+N/A
+
+[sft_08b_r16_lr2e5_5ep_D]
+N/A
+
+[sft_2b_cpt_r128_A]
+N/A
+
+[sft_2b_cpt_r64_A]
+N/A
+
+[sft_2b_cpt_r64_D]
+N/A
+
+[sft_2b_cpt_r64_F]
+N/A
+
+[sft_2b_nocpt_A]
+N/A
+
+[sft_2b_nocpt_F]
+N/A
+
+[sft_4b_cpt_r64_A]
+N/A
+
+[sft_4b_cpt_r64_D]
+N/A
+
+[sft_4b_nocpt_A]
+N/A
+
+[sft_4b_nocpt_ep8]
+N/A
+
+[sft_4b_nocpt_r32]
+N/A
+
+[sft_9b_cpt_A]
+N/A
+
+[sft_9b_cpt_D]
+N/A
+
+[sft_9b_nocpt_A]
+N/A
+
+[sft_9b_nocpt_ep8]
+N/A
+
+[sft_9b_nocpt_lr1e5]
+N/A
+
+[sft_9b_nocpt_r32]
+N/A
+
+[sft_cpt_4b_gentle_r16_lr1e5_2ep]
+N/A
+
+[sft_cpt_4b_gentle_r16_lr3e5_1ep]
+N/A
+
+[sft_cpt_4b_gentle_r32_lr1e5_2ep]
+N/A
+
+[sft_cpt_9b_gentle_r16]
+N/A
