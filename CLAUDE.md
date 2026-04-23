@@ -27,88 +27,152 @@
 
 ---
 
-## 🔥 2026-04-22 Phase 5 作業ログ（最新）
+## 🔥 2026-04-23 本日の作業ログ（最新、/clear 後はここから読む）
 
-### 現在バックグラウンドで動いているもの
+### 完了したこと（**主要マイルストーン**）
 
-| PID | プロセス | 期待所要 | 完了後の次アクション |
+#### A. Phase 5 完了 → ベスト LoRA 確定
+全 18 条件評価（4B/9B × admission/soap × 6+3 variants × 3 cases）→ `results_v6/eval_all_models/summary_1776927344.md`
+
+| タスク | 4B ベスト | 9B ベスト | **本番採用** |
 |---|---|---|---|
-| 1389586 | `training_phase5.sh` (4B→9B の v3_clean_r32 再学習x4) | 2.5-4h | orchestrate_phase5_post.sh が引き継ぎ |
-| 1392191 | `orchestrate_phase5_post.sh` (pipeline 終了後 eval 自動実行) | 上記完了後 +10分 | `results_v6/eval_v3_vs_v2/` にレポ |
+| **admission** | v2p4_r16 (md=141) | **v3_clean_r32 (md=87)** | **9B v3_clean_r32** ⭐ |
+| **soap** | **v2_r64 (md=68)** ⭐ | v2_r32 (md=88) | **4B v2_r64** ⭐ |
+| **suggest** | nocpt_A | nocpt_ep8 | **4B nocpt_A** (UX上速度優先) |
 
-監視コマンド: 
-```bash
-ps aux | grep -E "training_phase5|orchestrate_phase5" | grep -v grep
-tail -f /data2/junkanki/naka/logs/phase5.log
-tail -f /data2/junkanki/naka/logs/phase5_post.log
-```
+主要知見:
+- **タスク依存サイズ効果**: admission は 9B 明確勝、soap は 4B が逆転勝（9B の薬剤ハルシネーション増）
+- **データ量プラトー**: soap は 185→395件で改善せず、データ質>量の事例
+- **rank 効果**: 4B soap で r=64 が r=32/16 圧勝（-17% md）
 
-### Phase 5 で新たに達成したもの
+#### B. 本番 3+1 LoRA 構成への切替
+- `port 8081` (4B): 14 LoRA → **3 LoRA に削減**（VRAM ~900MB節約、起動 20s→5s）
+  - id 0: `sft_4b_nocpt_A`（suggest / SOAPストリーミング 4-call）
+  - id 1: `sft_soap_full_v2_r64_lora`（SOAP 全体 単一呼出）★
+  - id 2: `sft_admission_v2_r32_lora`（admission 4B fallback）
+- `port 8083` (9B): **新設、admission 専用サーバー**
+  - id 0: `sft_admission_9b_v3_clean_r32_lora` ★
+- `setActiveLoRA` の **nLoras ハードコード bug 修正**（動的化）
+- backend env: `SLM_API_URL=http://localhost:8081` + `SLM_ADMISSION_URL=http://localhost:8083`
 
-1. **post-process 実装 (`client.go:cleanModelOutput`)**
-   - markdown (`**` `###` `---` `*` `-`) → `■` / `・` / 削除
-   - 前置き文（「ご提示いただいた〜」型）除去
-   - 補足説明ブロック末尾削除（`---\n**補足説明...**` 型）
-   - `（※〜）` 括弧注釈削除
-   - AI 自己言及メタコメント（「AIとして」「専門医にご相談」等）削除
-   - 作成者フッター削除
-   - 8ケースの単体テスト全 PASS (`client_test.go:TestCleanModelOutput`)
+#### C. EMR backend 改修（emr リポ commit `55a2c05`）
+- `Client.SetAdmissionServer()` 追加 → admission を別 URL にルーティング
+- 9B 呼出失敗時に 4B fallback へ即 retry（`backgroundHealthCheck` 60s を待たず）
+- `AdmissionSummary` に `Server` field 追加（`"9B"` / `"4B-fallback"`）
+- frontend `AdmissionSummaryDrafter`: **fallback時に「⚠ 品質低下モード」警告バー表示**
+- SOAP を `GenerateSOAP` 単一呼出 (LoRASOAPFullID=1) に変更
+  - parser.go: 半角括弧マーカー追加 (`S (Subjective)` 等)
+  - パース失敗時は 4-call suggest fallback
+  - SSE streaming 版 (`GenerateSOAPStreaming`) は 4-call suggest 維持
 
-2. **合成データ Phase 5 増築**
-   - admission: 140件 → **300件**（Phase 5 で +160件）
-   - soap_full: 235件 → **395件**（Phase 5 で +160件）
-   - 領域追加: 消化器緊急、内分泌緊急、希少緊急、悪性腫瘍合併症、血液、透析、周産期、周術期/ICU、高齢転倒骨折、認知症合併、高齢感染症、DNAR、精神神経、皮膚アレルギー、整形、泌尿器、婦人科、小児、健診事後、循環器呼吸器内分泌外来
-   - 残留ノイズ 0% (厳格clean を `merge_synth_v3.py` で適用)
-   - 出力: `data/sft_admission_summary_v3.jsonl` / `_v3_clean.jsonl` / `sft_soap_full_v3.jsonl` / `_v3_clean.jsonl`
+#### D. post-process 強化（cleanModelOutput）
+- 既存 8 ケース + 新規 8 ケース = **16 ケース全 PASS**
+- 新パターン:
+  - **`【解説】` 前置きブロック削除**（ヘルパー関数、RE2 lookahead 非対応のため）
+  - **`■ 補足・注意点` 末尾ブロック削除**（`---` 無し版）
+  - 残留 `**` `***` 安全網
+  - インライン italic / backticks / strikethrough / 行末装飾 *
+  - 末尾 `補足:` プレーンテキスト
+- ファイル: `emr/backend/internal/slm/client.go` + `client_test.go`
 
-3. **RAG メタデータ改修（コード変更のみ、DB再構築は未実行）**
-   - `build_rag_v2.py` の title 抽出ロジックを強化（『〜』型 > ガイドライン含有行 > line1 fallback）
-   - `publication_year` 抽出ロジック追加（タイトル内 + 文書頭「発行/改訂/策定」パターン）
-   - `rag_server.py` の Pydantic SearchResult に `publication_year: Optional[int]` 追加
-   - `RAGEvidencePanel.tsx` で年度を `（2015年）` 表示
-   - **DB再構築は未実行**（1-2時間要、Phase 5 学習と GPU 競合を避けるため後回し）
+#### E. 患者属性自動注入（4B の性別誤認バグ解消）
+- `handler/patient_header.go` 新規 → `buildPatientHeader(p, encounterDate)` で `【患者情報】62歳 女性\n` 生成
+- SOAP draft handler / SLM handler (`/api/slm/suggest/admission`): encounter_id → patient lookup → interviewText 先頭に注入
+- 効果検証済: **4B が女性患者を「男性」と誤認 → 解消**（音声花子 SOAP でテスト）
+- frontend: `suggestAdmissionSummary(text, encounterId?)` に拡張
 
-4. **ノートPC検証手順書**
-   - `/home/junkanki/naka/docs/SETUP_LAPTOP.md` 新規作成
-   - scp 転送、llama.cpp ビルド(Mac/Linux/Win)、EMR起動、よくあるハマりを網羅
-   - 推論速度目安: Apple M2 Pro + Metal で 4B 15-25秒、9B 30-45秒
+#### F. seed: 音声花子 (MRN-0022) 追加
+- 62歳 女性、循環器内科、動悸主訴、AF + LA 軽度拡大 + BNP 145 + LVEF 58% シナリオ
+- **問診記録は STT 生出力風**: 話者ラベルなし、句読点欠、フィラー、自己訂正、同時発話混在
+- encounter ID 37、`/api/test-patient/reset` 対象外（永続）
+- 将来の音声入力モジュール接続テスト用、4B 抽象化耐性検証材料
+- 動作検証済: 4B v2_r64 で 7.8s に SOAP 4 セクション完全生成、音声特有の難所もクリア
 
-### Phase 4 → Phase 5 のデータ量変化
+#### G. HF Hub に配布アーティファクト upload 完了
+- `inaka0303/medical-slm-loras` (model, private): 3 LoRA + README、合計 327MB
+- `inaka0303/medical-slm-rag-db` (dataset, private): `rag_db_v2.tar.gz` 4.7GB（展開後 7.5GB）
+- `unsloth/Qwen3.5-4B-GGUF` (public): ベース GGUF
+- `rag_server.py` を環境変数対応化（`RAG_DB_DIR`）→ git repo にコピー
+- `docs/SETUP_LAPTOP.md` 全面書き換え（M3 16GB 向け、HF Hub 経由）
 
-| データセット | Phase 4 | Phase 5 | 増加率 |
-|---|---|---|---|
-| admission 訓練用 (raw) | 140件 | 300件 | 2.1倍 |
-| admission clean | 140件 | 300件（残留0%） | 2.1倍 |
-| soap_full 訓練用 (raw) | 235件 | 395件 | 1.7倍 |
-| soap_full clean | 235件 | 395件（残留0%） | 1.7倍 |
+### git push 状況（commit ハッシュ）
 
-### Phase 5 完了後にやること（orchestrate_phase5_post.sh が自動でやる部分と手動部分）
+| repo | 最新 commit | 内容 |
+|---|---|---|
+| medical_slm | `85223e8` | docs: SETUP_LAPTOP.md + HF Hub 対応 + rag_server.py |
+| medical_slm | `c9b81f5` | docs: 2026-04-23 構成へ更新（CLAUDE.md） |
+| emr | `55a2c05` | feat: 3-LoRA 分離 + 9B admission 専用化 + post-process + 患者属性 |
 
-**自動（orchestrate_phase5_post.sh）:**
-- [x] 4B/9B × admission/soap の LoRA 訓練完了待ち
-- [x] GGUF 変換 4 件
-- [x] llama-server 14 LoRA 構成で restart
-- [x] `eval_v3_vs_v2.py` 実行 → v2_r32 (Phase4 本番) vs v3_clean_r32 (Phase5 新) の直接比較
-- [x] 結果を `results_v6/eval_v3_vs_v2/summary_*.md` に保存
+---
 
-**次に私（Claude）が起動されたら手動でやること:**
-1. `eval_v3_vs_v2.py` の結果を目視 → v3 が上回っていれば:
-   - `emr/backend/internal/slm/client.go` の `LoRAAdmissionID = 12` / `LoRASOAPFullID = 13` に更新
-   - backend rebuild + restart
-   - ブラウザで山本隆 (MRN-0007、2026-04-18 入院) の admission サマリを試して目視確認
-2. 9B v3 の比較: 別の llama-server を GPU 1 で port 8083 に立てて、`eval_v3_vs_v2.py` を URL/LoRA_ID 書き換えで再実行
-3. `results_v6/eval_v3_vs_v2/discussion_{日付}.md` に所感まとめ
-4. 良い結果だったら CLAUDE.md の現状セクション更新
-5. （時間あれば）RAG DB 再構築: `python3 /data2/junkanki/naka/build_rag_v2.py` を GPU 1 で実行（1-2時間）
+## 📋 次のセッション (/clear 後) への引き継ぎ
 
-### 現本番 LoRA と新候補 LoRA
+### A. 現状の本番構成（再起動コマンドは下記「現在のサービス」）
+- 4B llama-server (port 8081, GPU 2): 3 LoRA
+- 9B admission llama-server (port 8083, GPU 3): 1 LoRA
+- RAG server (port 8082, GPU 1)
+- EMR backend (port 8080, env で SLM_API_URL + SLM_ADMISSION_URL 必要)
+- frontend (port 5173)
 
-| 用途 | Phase 4 本番 | Phase 5 候補 | GGUF |
-|---|---|---|---|
-| admission 4B | `sft_admission_v2_r32` (100件) | `sft_admission_v3_clean_r32` (300件) | `/data2/junkanki/naka/gguf_models/` |
-| soap 4B | `sft_soap_full_v2_r32` (185件) | `sft_soap_full_v3_clean_r32` (395件) | 同上 |
-| admission 9B | `sft_admission_9b_v2_r32` (100件) | `sft_admission_9b_v3_clean_r32` (300件) | 同上 |
-| soap 9B | `sft_soap_full_9b_v2_r32` (185件) | `sft_soap_full_9b_v3_clean_r32` (395件) | 同上 |
+### B. 未着手 / 今後やること（優先順）
+
+#### 1. 論文方針の議論（**今日途中で中断**）
+未返答事項:
+- データセット公開の是非（公開するなら Nature Sci Data 狙い、しないなら JAMIA 等）
+- ACI-Bench (Nature Sci Data 2023, Yim et al.) の JSON schema 借用
+- 対話形式データを追加で作るか
+- IRB と被験者数（10 vs 30）
+- **戦略分岐: 1本論文 vs 「開発論文 + 臨床試験論文」2本立て**
+
+参考リソース:
+- ACI-Bench: https://doi.org/10.1038/s41597-023-02487-3 (英語、CC-BY、対話→診察記録)
+- 我々の差別化: 日本語 × 循環器特化 × 軽量 SLM × ACI-Bench 相当
+
+循環器学会発表設計:
+- 3軸評価: 自動指標 (BERTScore/Opus judge) / 盲検クオリティ (専門医・学生) / 時間短縮 RCT
+- 疾患選定: 11→10 推奨（心アミロイドーシス か 冠攣縮性を落とす）、1疾患2例=20例
+- クロスオーバー RCT、ラテン方格、対応のあるt検定 / Wilcoxon
+
+Tier 戦略（学会発表で打ち出す）:
+- Tier 1（個人クリニック）: ノートPC + 4B + RAG
+- Tier 2（中規模病院）: 院内 WS + 4B + 9B + RAG
+- Tier 3（大学病院）: H100 + 上記 + 拡張
+- 「commodity hardware で動く Japanese-medical-specialized SLM」が論文の主張
+
+#### 2. ノートPC で SETUP_LAPTOP.md の手順実証
+先生の M3 Mac 16GB で実際にセットアップ → 詰まった点を docs に追記。
+
+#### 3. 性別注入のさらなる改善余地
+現状は年齢・性別のみ。追加で:
+- 既往歴・服薬歴も患者プロファイルから自動付与？
+- 受診目的（chief_complaint）はすでに encounter にある → 注入検討
+- ただし冗長になりすぎると suggest UX が悪化するので要バランス
+
+#### 4. 残るハルシネーション対策
+- 4B の薬剤名ハルシネーション（「アプレキサン」「リバスタン」等架空）
+- → RAG 検索結果を P 生成プロンプトに注入する実装（現状 RAG は手動「根拠を確認」のみ）
+
+#### 5. 9B SOAP / 9B suggest の評価
+今日 9B admission のみ専用サーバー化。9B の SOAP/suggest LoRA も評価済（results_v6/eval_all_models）。
+
+#### 6. RAG DB 再構築（保留）
+build_rag_v2.py の title 抽出 + publication_year 改良はコード反映済だが、DB 自体の再構築は未実行（1-2時間 GPU 必要）。
+
+### C. 試したいシナリオ（次回ブラウザで）
+
+1. **音声花子 (MRN-0022, encounter 37)**: STT 風入力 → SOAP 確認、admission で 9B サーバー使用確認 + 性別注入の効果
+2. **新規太郎 (MRN-0021)**: 空白問診から手入力、suggest LoRA の挙動
+3. **山本隆 (MRN-0007, 2026-04-18 入院)**: admission 9B v3_clean_r32 で本番品質確認
+4. **fallback テスト**: 9B サーバーを止めて admission 試行 → 警告バー表示確認
+
+### D. 知っておくべき罠 / TIPS
+
+1. **9B サーバーの kill/restart**: 60s の `backgroundHealthCheck` を待たず、HTTP失敗で即 4B fallback に retry する設計。即座に使えなくなる Window はゼロ。
+2. **post-process は全 SLM 経路で適用**（cleanModelOutput in callChatCompletionWithLoRA、新規太郎 / 音声花子 / 任意 patient で同様）。
+3. **emr repo の SLM client は `nLoras` を Client 起動時に動的決定**（旧コードの 12 ハードコード bug は修正済）。
+4. **RAG server は `RAG_DB_DIR` env で DB パス上書き可**（H100 のフルパス決め打ちではなくなった）。
+5. **音声花子の interview note encounter_id は 37**（seed の順序で決まる、MRN-0021 が enc 36 だったため）。
+6. **HF Hub repo 全部 private**: download に token 必須、share する時は read token を発行する。
 
 ---
 
