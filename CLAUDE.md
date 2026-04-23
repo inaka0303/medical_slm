@@ -1,12 +1,29 @@
 # 医療特化SLM プロジェクト
 
-> **最終更新: 2026-04-22（Phase 5 訓練中 / post-process 実装完了 / RAG metadata 改修）**  
+> **最終更新: 2026-04-23（3+1 LoRA 分離本番化 / post-process 強化 / 患者属性注入 / HF Hub 配布）**  
 > /clear 後はこの CLAUDE.md と `/home/junkanki/naka/results_v6/` を読めば状況復帰できる。
 > 作業中のサービス稼働状況は下記「現在のサービス」セクション参照。
 
 ## 目的
 日本語電子カルテ向け医療特化SLM（Small Language Model）の開発。
 メイン機能: 患者の問診データを参照し、カルテ記載時のsuggest（文章候補提示）を行う。
+
+---
+
+## 🚀 配布アーティファクト（2026-04-23 から）
+
+ノートPC や別マシンで動かすための一式は **Hugging Face Hub** に置いてある:
+
+| repo | 種別 | 内容 |
+|---|---|---|
+| `inaka0303/medical-slm-loras` | model (private) | 4B 用 3 LoRA: suggest / soap_v2_r64 / admission_v2_r32_fallback |
+| `inaka0303/medical-slm-rag-db` | dataset (private) | RAG DB (rag_db_v2.tar.gz, 7.5GB 展開後) |
+| `unsloth/Qwen3.5-4B-GGUF` | model (public) | ベース (`Qwen3.5-4B-UD-Q4_K_XL.gguf`, 2.8GB) |
+
+ノートPC セットアップ手順: `docs/SETUP_LAPTOP.md`
+
+9B admission GGUF (`sft_admission_9b_v3_clean_r32_lora.gguf`, 112MB) は H100 ローカル運用のみ
+（HF にも上げてないので Tier 2 環境を別途用意する場合は scp で転送）。
 
 ---
 
