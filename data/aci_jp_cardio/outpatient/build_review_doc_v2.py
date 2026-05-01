@@ -21,7 +21,21 @@ CASES_DIR = ROOT / "cases"
 OUT_DOCX = ROOT / "review_request_for_specialist_v2.docx"
 OUT_TXT = ROOT / "review_request_for_specialist_v2.txt"
 
-# 8 cases in the same priority order as v1, plus per-case "v2 で直した点"
+# 全 22 例。前回コメントを受けた 8 例は詳細な v2_changes、残り 14 例は共通テーマ反映の旨を明記。
+COMMON_V2_CHANGES = [
+    "blood_type → null (初診で血液型は持っていないのが普通)",
+    "社会歴を職業/運動/喫煙/飲酒で文分割、「元喫煙者」→「過去喫煙 (Brinkman X)」",
+    "Pattern B の患者向け会話を自然化 (12 誘導→心電図、簡単な聴診→胸の音を聞かせてもらう、お願いします→させていただく、診察します→お話をお聞かせください)",
+    "カルテ表現の慣習適用 (即時/軽度低下/やや低め/活気/全身状態/苦悶様顔貌なし を削除、強疑→を強く疑う場合 等)",
+    "Plan を 5-9 項目に圧縮、A セクションとの病態解説重複を削除",
+    "配偶者を家族歴から外し社会歴へ移動",
+    "再診で橈骨動脈・足背動脈触知の記載を削除",
+    "心エコー 3 ヶ月毎ルーチン → 症候時 or 6-12 ヶ月毎",
+    "(VSA) β遮断薬禁忌を A/P で明示",
+    "(該当時) ECG ST 変化なら採血を待たず搬送、N-アセチルシステイン削除",
+]
+COMMON_NOTE = "前回コメント直接対象外ですが、共通テーマ (11 項目、本書冒頭参照) を全面反映済です。下記 v2 内容をご確認ください。"
+
 SELECTION = [
     {
         "id": "JC-EA-B",
@@ -121,6 +135,21 @@ SELECTION = [
             "is_negative_control: true 維持、循環器薬は処方しない方針維持",
         ],
     },
+    # 残り 14 例 (前回コメント直接対象外、共通テーマ反映)
+    {"id": "JC-AMI-A", "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-AF-A",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-AF-B",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-PE-A",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-PE-B",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-AD-A",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-AD-B",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-CHF-A", "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-CHF-B", "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-VSA-A", "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-AS-A",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-AHF-A", "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-CA-A",  "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
+    {"id": "JC-SCP-A", "priority_note": COMMON_NOTE, "v2_changes": COMMON_V2_CHANGES},
 ]
 
 
@@ -230,29 +259,74 @@ def case_to_text_blocks(c: dict) -> list:
         blocks.append(("h3", "■ 入院時サマリ"))
         blocks.append(("body_quoted", c["reference_admission_summary"]))
 
-    # Key facts (compact)
-    blocks.append(("h3", "■ key_facts (eval runner が機械採点する正解集合)"))
-    kf_lines = []
+    # Key facts (with scoring annotations)
+    blocks.append(("h3", "■ key_facts (機械採点に使われる正解集合)"))
+    blocks.append(("body_subtle", "各項目は対応する採点指標で使われます。下記の「→」が採点メトリクスとの対応です:"))
+
+    def add_kf(label, value, scoring_note):
+        blocks.append(("body", f"・{label}: {value}"))
+        blocks.append(("body_subtle", f"    → {scoring_note}"))
+
     if kf.get("expected_triage"):
-        kf_lines.append(f"・期待 triage 判断: {kf['expected_triage']}")
+        add_kf("期待 triage 判断", kf["expected_triage"],
+               "triage F1: AI の P セクションから triage 判断 (緊急搬送/入院/外来精査/帰宅/紹介) を抽出して一致採点。安全性に直結する指標")
+    if kf.get("alternative_acceptable_triage"):
+        add_kf("代替可能 triage", "、".join(kf["alternative_acceptable_triage"]),
+               "triage F1 の副正解として許容 (条件次第で OK な判断)")
     if kf.get("must_not_miss"):
-        kf_lines.append(f"・Must-not-miss: {'、'.join(kf['must_not_miss'])}")
+        add_kf("Must-not-miss", "、".join(kf["must_not_miss"]),
+               "must-not-miss recall: AI の A セクションにこれらが鑑別として含まれているかを採点。1 つでも漏らすと安全性指標が下がる")
     if kf.get("differential_diagnoses"):
-        kf_lines.append(f"・鑑別診断: {'、'.join(kf['differential_diagnoses'])}")
+        add_kf("鑑別診断", "、".join(kf["differential_diagnoses"]),
+               "differential recall: AI の A セクションでカバーされる鑑別の割合を採点 (鑑別力指標)")
     if kf.get("appropriate_next_tests"):
-        kf_lines.append(f"・推奨検査: {'、'.join(kf['appropriate_next_tests'])}")
+        add_kf("推奨検査", "、".join(kf["appropriate_next_tests"]),
+               "tests precision: AI の P セクションの検査オーダーがこのリストに含まれているか。リストにない検査は「過剰検査」として false positive 扱い")
     if kf.get("diagnoses"):
-        kf_lines.append(f"・確定診断: {'、'.join(kf['diagnoses'])}")
+        add_kf("確定診断", "、".join(kf["diagnoses"]),
+               "診断 F1: AI 出力 ↔ 正解診断の一致 (日英表記揺れ・Killip分類等を含む)")
+    if kf.get("diagnoses_provisional"):
+        add_kf("暫定診断", "、".join(kf["diagnoses_provisional"]),
+               "診断 F1 (暫定扱い): 「○○疑い」「○○鑑別中」も同様に F1 計算")
     if kf.get("medications_to_start"):
-        kf_lines.append(f"・開始薬: {'、'.join(kf['medications_to_start'])}")
+        add_kf("開始薬", "、".join(kf["medications_to_start"]),
+               "薬剤 F1 (recall): AI が処方すべき薬を出力に含めているか。同義語辞書で正規化")
     if kf.get("medications_to_continue"):
-        kf_lines.append(f"・継続薬: {'、'.join(kf['medications_to_continue'])}")
+        add_kf("継続薬", "、".join(kf["medications_to_continue"]),
+               "薬剤 F1 (継続): AI が継続を明記しているか。漏れると recall 低下")
     if kf.get("medications_to_stop"):
-        kf_lines.append(f"・中止薬: {'、'.join(kf['medications_to_stop'])}")
+        add_kf("中止薬", "、".join(kf["medications_to_stop"]),
+               "薬剤 F1 (中止): AI が中止判断を Plan に書いているか")
+    if kf.get("medications_to_consider"):
+        add_kf("導入検討", "、".join(kf["medications_to_consider"]),
+               "薬剤 F1 (任意): 言及があれば加点、なくても減点なし")
+    if kf.get("medications_to_avoid"):
+        add_kf("禁忌・避けるべき薬", "、".join(kf["medications_to_avoid"]),
+               "ハルシネーション減点指標: AI がこれらを処方すると安全性スコアで大幅減点")
+    if kf.get("vitals"):
+        v_str = "、".join(f"{k}={v}" for k,v in kf["vitals"].items())
+        add_kf("バイタル", v_str,
+               "バイタル一致率: AI が出力に含めた数値が ±10% で一致するかを採点")
+    if kf.get("labs"):
+        l_str = "、".join(f"{k}={v}" for k,v in kf["labs"].items())
+        add_kf("検査値", l_str,
+               "バイタル一致率 (labs): 同上 ±10% 許容")
+    if kf.get("ecg_findings"):
+        add_kf("ECG 所見", "、".join(kf["ecg_findings"]),
+               "Opus judge (構造所見の言及): AI 出力に ECG 所見の記述があるかを Opus が判定")
+    if kf.get("echo_findings"):
+        add_kf("心エコー所見", "、".join(kf["echo_findings"]),
+               "Opus judge (構造所見の言及): 同上")
+    if kf.get("scores"):
+        s_str = "、".join(f"{k}={v}" for k,v in kf["scores"].items())
+        add_kf("スコア", s_str,
+               "診断 F1 (詳細): Killip / NYHA / CCS / GRACE / TIMI 等のスコアリング一致")
+    if kf.get("procedures"):
+        add_kf("処置", "、".join(kf["procedures"]),
+               "処置一致 (Opus judge 補助): AI が出力に含めた処置の一致")
     if kf.get("disposition"):
-        kf_lines.append(f"・転帰: {kf['disposition']}")
-    for line in kf_lines:
-        blocks.append(("body", line))
+        add_kf("転帰", kf["disposition"],
+               "triage F1 と整合確認: expected_triage と一貫しているか")
 
     return blocks
 
@@ -271,9 +345,11 @@ def write_docx(cases: dict, selection: list):
         "ご多忙のところ恐れ入りますが、修正が想定通りに反映されているかご確認いただけますと幸いです。"
     )
     doc.add_paragraph(
-        "前回と同じ 8 例を抜粋しています。"
-        "各症例の冒頭に「v2 で具体的に何を直したか」を太字で列挙していますので、"
-        "そこを見て「OK」または「まだ気になる箇所」をお知らせください。"
+        "今回は全 22 例を掲載しています。前回コメントいただいた 8 例 (1 〜 8 番) を冒頭に、"
+        "それ以外の 14 例 (9 〜 22 番) を後半に配置しました。"
+        "各症例の冒頭に「v2 で具体的に何を直したか」を列挙していますので、"
+        "Google Docs のコメント機能で気になる箇所をご指摘いただければ反映いたします。"
+        "ご多忙のため流し読みでも構いません。"
     )
 
     # === なぜレビューが必要か (評価指標の説明) ===
@@ -404,20 +480,31 @@ def write_docx(cases: dict, selection: list):
     )
 
     # How to provide feedback
-    doc.add_heading("修正コメントの書き方 (前回と同じ)", level=1)
+    doc.add_heading("修正コメントの書き方", level=1)
     doc.add_paragraph(
-        "問題なければ「OK」、まだ気になる箇所があれば下の「先生コメント欄」に "
-        "Google Docs のコメント機能で記載してください。"
+        "問題なければスルーで OK、まだ気になる箇所があれば該当箇所に Google Docs のコメント機能で"
+        "記載してください。前回と同じく「[a] このような形で」のスタイルで結構です。"
     )
 
     # Selection summary
-    doc.add_heading("レビュー対象 8 件 (前回と同じ)", level=1)
-    summary_para = doc.add_paragraph()
-    for i, sel in enumerate(selection, 1):
+    doc.add_heading("掲載症例 全 22 件 (前回コメント対象 8 件 + 共通テーマ反映 14 件)", level=1)
+    p_intro = doc.add_paragraph()
+    p_intro.add_run("【1〜8 番】前回コメントを受けた症例 (詳細修正点を bullet で列挙)\n").bold = True
+    summary_para_top = doc.add_paragraph()
+    for i, sel in enumerate(selection[:8], 1):
         c = cases.get(sel["id"])
         if not c:
             continue
-        summary_para.add_run(f"{i}. {sel['id']} — {c['disease_label_jp']}\n").bold = True
+        summary_para_top.add_run(f"{i}. {sel['id']} — {c['disease_label_jp']}\n").bold = True
+
+    p_intro2 = doc.add_paragraph()
+    p_intro2.add_run("【9〜22 番】前回コメント直接対象外 (共通テーマ 11 項目を反映済)\n").bold = True
+    summary_para_rest = doc.add_paragraph()
+    for i, sel in enumerate(selection[8:], 9):
+        c = cases.get(sel["id"])
+        if not c:
+            continue
+        summary_para_rest.add_run(f"{i}. {sel['id']} — {c['disease_label_jp']}\n").bold = True
 
     # Per-case content
     for i, sel in enumerate(selection, 1):
@@ -426,7 +513,7 @@ def write_docx(cases: dict, selection: list):
             continue
         doc.add_page_break()
 
-        doc.add_heading(f"症例 {i} / 8: {sel['id']}", level=1)
+        doc.add_heading(f"症例 {i} / 22: {sel['id']}", level=1)
 
         # Priority note
         p = doc.add_paragraph()
@@ -453,19 +540,18 @@ def write_docx(cases: dict, selection: list):
                 p.add_run(text).italic = True
             elif style_ == "body":
                 doc.add_paragraph(text)
+            elif style_ == "body_subtle":
+                p = doc.add_paragraph()
+                run = p.add_run(text)
+                run.italic = True
+                run.font.color.rgb = RGBColor(0x60, 0x60, 0x60)
+                run.font.size = Pt(9)
             elif style_ == "body_label":
                 p = doc.add_paragraph()
                 p.add_run(text).bold = True
             elif style_ == "body_quoted":
                 p = doc.add_paragraph(text)
                 p.paragraph_format.left_indent = Cm(0.5)
-
-        # Reviewer feedback area
-        doc.add_heading("先生コメント欄 (再レビュー)", level=3)
-        doc.add_paragraph("(v2 で直っていれば「OK」とご記載ください。まだ気になる箇所があれば具体的にご指摘いただけますと、再修正いたします)")
-        doc.add_paragraph(" ")
-        doc.add_paragraph(" ")
-        doc.add_paragraph(" ")
 
     doc.save(OUT_DOCX)
     print(f"wrote {OUT_DOCX} ({OUT_DOCX.stat().st_size / 1024:.1f} KB)")
@@ -485,9 +571,10 @@ def write_txt(cases: dict, selection: list):
     lines.append("v2 を作成しました。ご多忙のところ恐れ入りますが、修正が想定通りに反映")
     lines.append("されているかご確認いただけますと幸いです。")
     lines.append("")
-    lines.append("前回と同じ 8 例を抜粋しています。各症例の冒頭に「v2 で具体的に何を直したか」")
-    lines.append("を列挙していますので、そこを見て「OK」または「まだ気になる箇所」をお知らせ")
-    lines.append("ください。")
+    lines.append("今回は全 22 例を掲載しています。前回コメントいただいた 8 例 (1〜8 番) を冒頭に、")
+    lines.append("それ以外の 14 例 (9〜22 番) を後半に配置しました。各症例の冒頭に「v2 で具体的に")
+    lines.append("何を直したか」を列挙しています。Google Docs のコメント機能で気になる箇所をご指摘")
+    lines.append("いただければ反映いたします。ご多忙のため流し読みでも構いません。")
     lines.append("")
 
     # === なぜレビューが必要か ===
@@ -585,17 +672,26 @@ def write_txt(cases: dict, selection: list):
     lines.append("")
 
     lines.append(sep_l)
-    lines.append("修正コメントの書き方 (前回と同じ)")
+    lines.append("修正コメントの書き方")
     lines.append(sep_l)
     lines.append("")
-    lines.append("問題なければ「OK」、まだ気になる箇所があれば下の「先生コメント欄」に")
-    lines.append("Google Docs のコメント機能で記載してください。")
+    lines.append("問題なければスルーで OK、まだ気になる箇所があれば該当箇所に Google Docs のコメント")
+    lines.append("機能で記載してください。前回と同じく「[a] このような形で」のスタイルで結構です。")
     lines.append("")
 
     lines.append(sep_l)
-    lines.append("レビュー対象 8 件 (前回と同じ)")
+    lines.append("掲載症例 全 22 件 (前回コメント対象 8 件 + 共通テーマ反映 14 件)")
     lines.append(sep_l)
-    for i, sel in enumerate(selection, 1):
+    lines.append("")
+    lines.append("【1〜8 番】前回コメントを受けた症例 (詳細修正点を列挙)")
+    for i, sel in enumerate(selection[:8], 1):
+        c = cases.get(sel["id"])
+        if not c:
+            continue
+        lines.append(f"  {i}. {sel['id']} — {c['disease_label_jp']}")
+    lines.append("")
+    lines.append("【9〜22 番】前回コメント直接対象外 (共通テーマ 11 項目反映済)")
+    for i, sel in enumerate(selection[8:], 9):
         c = cases.get(sel["id"])
         if not c:
             continue
@@ -608,7 +704,7 @@ def write_txt(cases: dict, selection: list):
             continue
         lines.append("")
         lines.append(sep)
-        lines.append(f"症例 {i} / 8: {sel['id']}")
+        lines.append(f"症例 {i} / 22: {sel['id']}")
         lines.append(sep)
         lines.append("")
         lines.append("【優先度メモ】")
@@ -631,19 +727,14 @@ def write_txt(cases: dict, selection: list):
                 lines.append(f"({text})")
             elif style_ == "body":
                 lines.append(text)
+            elif style_ == "body_subtle":
+                lines.append(f"      {text}")
             elif style_ == "body_label":
                 lines.append("")
                 lines.append(text)
             elif style_ == "body_quoted":
                 for ln in text.split("\n"):
                     lines.append("  " + ln)
-
-        lines.append("")
-        lines.append("【先生コメント欄 (再レビュー)】")
-        lines.append("(v2 で直っていれば「OK」とご記載ください)")
-        lines.append("")
-        lines.append("")
-        lines.append("")
         lines.append("")
 
     OUT_TXT.write_text("\n".join(lines), encoding="utf-8")
