@@ -276,6 +276,113 @@ def write_docx(cases: dict, selection: list):
         "そこを見て「OK」または「まだ気になる箇所」をお知らせください。"
     )
 
+    # === なぜレビューが必要か (評価指標の説明) ===
+    doc.add_heading("なぜ専門医レビューが必要か (評価指標の説明)", level=1)
+    doc.add_paragraph(
+        "ご記入いただく reference SOAP は、SLM (Small Language Model) を採点するときの "
+        "「物差し」になります。物差しが歪んでいるとすべての評価が信頼できなくなるため、"
+        "医学的に妥当な reference を作っていただくことが本ベンチマークの土台です。"
+    )
+
+    doc.add_heading("採点の流れ (1 症例あたり)", level=2)
+    p = doc.add_paragraph()
+    p.add_run("【入力】問診テキスト (本書の各症例 input_pattern_A/B)\n").bold = True
+    p.add_run("    ↓\n")
+    p.add_run("【SLM が出力】Qwen3.5 ベースの SLM が SOAP を生成\n").bold = True
+    p.add_run("    ↓\n")
+    p.add_run("【採点】SLM 出力 と reference SOAP を 6-7 種類の指標で機械比較\n").bold = True
+    p.add_run("    ↓\n")
+    p.add_run("【最終スコア】各指標を平均した composite スコアが「このモデルの実力」\n").bold = True
+
+    doc.add_heading("採点指標の一覧 (噛み砕いた説明)", level=2)
+
+    metrics_table = doc.add_table(rows=1, cols=3)
+    metrics_table.style = "Light Grid Accent 1"
+    hdr = metrics_table.rows[0].cells
+    hdr[0].text = "指標"
+    hdr[1].text = "何を測るか"
+    hdr[2].text = "ハック耐性 / 弱点"
+
+    metrics_rows = [
+        ("ROUGE-L (単語一致)",
+         "AI 出力と reference の「同じ単語が並ぶ最長部分列」の一致率。"
+         "例: reference「アスピリン 100mg を投与」と AI「アスピリン 100mg を経口投与」"
+         "→ 高一致。MeCab で分かち書きしてから計算。",
+         "言い換え (動悸 ↔ 胸がドキドキ) に弱く、同じ意味でも別単語なら 0 になる"),
+        ("BERTScore (意味類似度)",
+         "BERT という日本語 AI に各単語を埋め込み (embedding) → 意味的に近い単語マッチを採点。"
+         "「動悸」と「胸がドキドキする」を意味的に近いと判定できる。",
+         "BERT 自体の医学知識が浅いと細かい医学的差異 (Killip I vs II など) が見えない"),
+        ("薬剤 F1 (我々の novel 指標)",
+         "reference の key_facts.medications_to_start/continue にある薬剤と、AI が出力に含めた薬剤を比較。"
+         "同義語辞書 (例: アムロジピン = ノルバスク = amlodipine) で正規化。"
+         "AI が架空の薬名を出力すると即マイナス点。",
+         "辞書に登録されていないマイナーな薬は評価できない"),
+        ("診断 F1",
+         "reference の key_facts.diagnoses に含まれる病名 (例: 急性前壁心筋梗塞 / Killip II) と"
+         "AI 出力に含まれる病名を比較。日英表記揺れ (STEMI = ST 上昇型心筋梗塞) を吸収。",
+         "stage 分類など細かい修飾語の評価は粗い"),
+        ("バイタル一致率",
+         "reference の vitals/labs にある数値 (BP 152/94, HR 98 等) を AI が出力に含めているかを"
+         "±10% 許容で一致判定。",
+         "絶対値ベースなので「軽度」「中等度」のような言語的記述は評価できない"),
+        ("Opus-as-judge (5 軸 rubric)",
+         "Claude Opus に reference + AI 出力を渡して、医学的妥当性 / 情報網羅性 / 日本語自然さ / "
+         "ハルシネーション無さ / フォーマット遵守 の 5 軸で 1-5 点採点。"
+         "上記の機械指標で見えない「総合的な質感」を評価。",
+         "Opus 自体の医学知識依存。確定診断系は精度高いが、薬剤量微調整等は判断ぶれあり"),
+    ]
+    for name, what, weak in metrics_rows:
+        row = metrics_table.add_row().cells
+        row[0].text = name
+        row[1].text = what
+        row[2].text = weak
+
+    doc.add_heading("具体例 — 4B SOAP が JC-AMI-S を解いた実測値", level=2)
+    p = doc.add_paragraph()
+    p.add_run("AI が生成した SOAP に対して、reference (先生に作っていただいた正解) と比較した結果:\n").italic = True
+
+    example_table = doc.add_table(rows=1, cols=3)
+    example_table.style = "Light Grid Accent 1"
+    hdr = example_table.rows[0].cells
+    hdr[0].text = "指標"
+    hdr[1].text = "値"
+    hdr[2].text = "解釈"
+    example_rows = [
+        ("ROUGE-L", "0.46", "単語ベースで約半分一致 (悪くない)"),
+        ("BERTScore F1", "0.81", "意味的にはかなり一致"),
+        ("薬剤 F1", "0.66", "アスピリン / クロピドグレル / ヘパリン は当てたが、ビソプロロールを漏らす"),
+        ("診断 F1", "0.50", "「急性前壁心筋梗塞」は当たり、「Killip II」を漏らす"),
+        ("バイタル一致率", "67%", "BP / HR / SpO2 は記載あり、トロポニン / CK-MB を漏らす"),
+        ("Opus judge avg", "4.0/5", "medical=4, completeness=3, naturalness=5, hallucination=4, format=5"),
+        ("Composite", "0.61", "「この症例での 4B SOAP の総合点」"),
+    ]
+    for name, val, interp in example_rows:
+        row = example_table.add_row().cells
+        row[0].text = name
+        row[1].text = val
+        row[2].text = interp
+
+    doc.add_paragraph(
+        "22 例分の Composite を平均すると「そのモデル構成の総合スコア」になります。"
+        "現状 4B モデル: 0.389 / 9B モデル: 0.415 と、9B のほうが約 7% 高い結果が出ています。"
+    )
+
+    doc.add_heading("先生のレビューがどう効くか", level=2)
+    p = doc.add_paragraph()
+    p.add_run("もし reference の S/O/A/P や key_facts に医学的に誤った内容があると…\n").bold = True
+    bullet_examples = [
+        "AI が「禁忌のβ遮断薬を VSA に処方」と出力 → reference にも誤って同じ処方が書かれていれば、薬剤 F1 で「正解扱い」されて満点になり、本来検出すべき危険な誤りがベンチマークから見えなくなる",
+        "AI が「Killip III と判定」と出力 → reference の Killip 分類が間違っていれば、AI の誤りが「正解扱い」される",
+        "AI が「実在しない架空薬」を出力 → reference に書かれていなければ薬剤 F1 で false positive 扱いされ正しくマイナス評価される",
+    ]
+    for ex in bullet_examples:
+        doc.add_paragraph(ex, style="List Bullet")
+    doc.add_paragraph(
+        "つまり「reference の質 = ベンチマーク全体の信頼性」ということで、"
+        "今回の専門医レビューは AI を測るより前に「物差し自体を校正する」作業になります。"
+    )
+
     # Common themes summary
     doc.add_heading("共通テーマの修正サマリ (前回 33 件のコメントを 11 テーマに集約)", level=1)
     table = doc.add_table(rows=1, cols=3)
@@ -381,6 +488,87 @@ def write_txt(cases: dict, selection: list):
     lines.append("前回と同じ 8 例を抜粋しています。各症例の冒頭に「v2 で具体的に何を直したか」")
     lines.append("を列挙していますので、そこを見て「OK」または「まだ気になる箇所」をお知らせ")
     lines.append("ください。")
+    lines.append("")
+
+    # === なぜレビューが必要か ===
+    lines.append(sep_l)
+    lines.append("なぜ専門医レビューが必要か (評価指標の説明)")
+    lines.append(sep_l)
+    lines.append("")
+    lines.append("ご記入いただく reference SOAP は、SLM (Small Language Model) を採点するときの")
+    lines.append("「物差し」になります。物差しが歪んでいるとすべての評価が信頼できなくなるため、")
+    lines.append("医学的に妥当な reference を作っていただくことが本ベンチマークの土台です。")
+    lines.append("")
+    lines.append("【採点の流れ (1 症例あたり)】")
+    lines.append("")
+    lines.append("  入力 (問診テキスト)")
+    lines.append("    ↓")
+    lines.append("  SLM (Qwen3.5 ベース) が SOAP を生成")
+    lines.append("    ↓")
+    lines.append("  SLM 出力 と reference SOAP を 6-7 種類の指標で機械比較")
+    lines.append("    ↓")
+    lines.append("  各指標を平均した composite スコアが「このモデルの実力」")
+    lines.append("")
+    lines.append("【採点指標の一覧 (噛み砕いた説明)】")
+    lines.append("")
+    metrics_simple = [
+        ("ROUGE-L (単語一致)",
+         "AI 出力と reference の同じ単語の並びの一致率を採点。MeCab で分かち書き。",
+         "言い換え (動悸 ↔ 胸がドキドキ) に弱い"),
+        ("BERTScore (意味類似度)",
+         "日本語 BERT で単語を埋め込み (embedding) → 意味的に近い単語マッチを採点。",
+         "細かい医学的差異 (Killip I vs II) は見えにくい"),
+        ("薬剤 F1",
+         "reference の key_facts.medications にある薬と AI 出力の薬を比較。"
+         "同義語辞書 (アムロジピン = ノルバスク 等) で正規化。架空薬は即マイナス。",
+         "辞書未登録の薬は評価不能"),
+        ("診断 F1",
+         "reference の key_facts.diagnoses にある病名と AI 出力の病名を比較。"
+         "日英表記揺れ (STEMI = ST 上昇型心筋梗塞) を吸収。",
+         "stage 分類など細かい修飾語の評価は粗い"),
+        ("バイタル一致率",
+         "reference の vitals/labs の数値を AI が出力に含めているかを ±10% 許容で判定。",
+         "「軽度」「中等度」のような言語的記述は評価できない"),
+        ("Opus-as-judge (5 軸 rubric)",
+         "Claude Opus に reference + AI 出力を渡して 医学的妥当性 / 情報網羅性 / "
+         "日本語自然さ / ハルシネーション無さ / フォーマット遵守 を 5 軸 1-5 点採点。",
+         "Opus 自体の医学知識依存"),
+    ]
+    for name, what, weak in metrics_simple:
+        lines.append(f"  ・{name}")
+        lines.append(f"      何を測るか: {what}")
+        lines.append(f"      弱点      : {weak}")
+        lines.append("")
+
+    lines.append("【具体例 — 4B SOAP が JC-AMI-S を解いた実測値】")
+    lines.append("")
+    lines.append("  ROUGE-L            = 0.46  (単語ベースで約半分一致)")
+    lines.append("  BERTScore F1       = 0.81  (意味的にはかなり一致)")
+    lines.append("  薬剤 F1            = 0.66  (アスピリン/クロピドグレル/ヘパリン 当て、ビソプロロール漏らす)")
+    lines.append("  診断 F1            = 0.50  (急性前壁心筋梗塞 当たり、Killip II 漏らす)")
+    lines.append("  バイタル一致率     = 67%   (BP/HR/SpO2 OK、トロポニン/CK-MB 漏らす)")
+    lines.append("  Opus judge avg     = 4.0/5 (medical=4, completeness=3, naturalness=5, hallucination=4, format=5)")
+    lines.append("  Composite          = 0.61  (この症例での 4B SOAP の総合点)")
+    lines.append("")
+    lines.append("22 例分の Composite を平均すると「そのモデル構成の総合スコア」になります。")
+    lines.append("現状 4B モデル: 0.389 / 9B モデル: 0.415 と、9B のほうが約 7% 高い結果が出ています。")
+    lines.append("")
+    lines.append("【先生のレビューがどう効くか】")
+    lines.append("")
+    lines.append("もし reference の S/O/A/P や key_facts に医学的に誤った内容があると…")
+    lines.append("")
+    lines.append("  ・AI が「禁忌のβ遮断薬を VSA に処方」と出力 → reference にも誤って同じ")
+    lines.append("    処方が書かれていれば薬剤 F1 で「正解扱い」されて満点になり、本来検出")
+    lines.append("    すべき危険な誤りがベンチマークから見えなくなる")
+    lines.append("")
+    lines.append("  ・AI が「Killip III と判定」と出力 → reference の Killip 分類が間違って")
+    lines.append("    いれば AI の誤りが「正解扱い」される")
+    lines.append("")
+    lines.append("  ・AI が「実在しない架空薬」を出力 → reference に書かれていなければ薬剤 F1")
+    lines.append("    で false positive 扱いされ正しくマイナス評価される")
+    lines.append("")
+    lines.append("つまり「reference の質 = ベンチマーク全体の信頼性」。今回の専門医レビューは")
+    lines.append("AI を測るより前に「物差し自体を校正する」作業になります。")
     lines.append("")
 
     lines.append(sep_l)
