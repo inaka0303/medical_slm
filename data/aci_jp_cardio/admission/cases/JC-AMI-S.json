@@ -1,0 +1,97 @@
+{
+  "encounter_id": "JC-AMI-S",
+  "format": "structured",
+  "disease_label": "acute_myocardial_infarction",
+  "disease_label_jp": "急性心筋梗塞 (前壁 STEMI)",
+
+  "patient": {
+    "age": 68,
+    "gender": "男性",
+    "blood_type": "A",
+    "comorbidities": ["高血圧", "2型糖尿病", "脂質異常症"],
+    "current_medications": [
+      "アムロジピン 5mg 1錠 朝食後",
+      "メトホルミン 500mg 2錠 朝夕食後",
+      "アトルバスタチン 10mg 1錠 夕食後"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": ["父: 心筋梗塞 (62歳)", "母: 糖尿病"],
+    "social_history": "喫煙 20本/日 × 40年 (Brinkman 800)、機会飲酒 (週1回ビール大瓶1本)、職業: 元営業職、現在は自営業 (印刷会社経営)"
+  },
+
+  "encounter": {
+    "department": "循環器内科",
+    "encounter_type": "外来初診→緊急入院",
+    "chief_complaint": "突然の胸部圧迫感",
+    "secondary_complaints": ["冷汗", "左肩への放散痛", "嘔気"],
+    "encounter_date": "2026-04-15",
+    "admission_date": "2026-04-15",
+    "discharge_date": null
+  },
+
+  "interview_text": {
+    "raw_text": "本日午前 6 時 30 分頃、起床後しばらくして突然胸部中央に強い圧迫感が出現。\"象に乗られているような\" 重苦しさで、冷汗を伴った。痛みは左肩から左腕内側にかけて放散し、嘔気あり。\n症状は持続し、自己判断で安静にしたが軽快せず、午前 7 時 45 分に妻の運転で当院救急外来を受診。\nNTG 舌下投与で疼痛は軽減傾向だが完全消失せず。発症から 1 時間 30 分経過。\n昨日までは普段通りに勤務、特記すべき体調不良なし。胸痛の既往なし。動悸・失神・呼吸困難なし。\n喫煙 20 本/日 × 40 年継続中。3 年前から DM 加療中、HbA1c は最近 7.2%。",
+    "medication_list": "【お薬手帳より】\n・アムロジピンベシル酸塩錠 5mg 1錠 朝食後\n・メトホルミン塩酸塩錠 500mg 2錠 朝夕食後\n・アトルバスタチンカルシウム錠 10mg 1錠 夕食後\n服薬コンプライアンス良好、本日朝も内服済。",
+    "exam_findings": "意識清明、苦悶様顔貌、冷汗著明。\nバイタル: BP 152/94 mmHg (両上肢差なし)、HR 98/min 整、SpO2 96% (room air)、RR 20/min、BT 36.7℃。\n胸部聴診: 心音 I/II 整、III音 軽度聴取、収縮期雑音なし、肺音清。\n下腿浮腫なし、頸静脈怒張なし。\n四肢冷感あり、橈骨動脈・足背動脈触知良好、左右差なし。",
+    "lab_results": "【心電図 (来院時)】\nV1-V4 で 2-4mm の ST 上昇、II/III/aVF で軽度 ST 低下 (鏡像変化)。\nQRS 0.08 秒、QT 0.40 秒、洞調律 HR 98。\n\n【採血】\nWBC 11,200/μL、Hb 14.2 g/dL、Plt 24.5万/μL\nCK 845 U/L (↑)、CK-MB 78 U/L (↑)、トロポニン I 12.4 ng/mL (↑↑)\nBNP 280 pg/mL、D-dimer 1.2 μg/mL\nNa 138、K 4.1、Cl 102、BUN 18、Cr 0.92、eGFR 68\nGlucose 168 mg/dL、HbA1c 7.2%、LDL-C 142 mg/dL\nCRP 0.4 mg/dL\n\n【胸部 X-p】\n心拡大なし (CTR 48%)、肺うっ血所見なし。\n\n【経胸壁心エコー (来院時 emergency echo)】\nLVEF 42% (modified Simpson)、前壁中隔 hypokinesis、僧帽弁逆流 軽度、心嚢液なし。"
+  },
+
+  "interview_text_voice": null,
+
+  "reference_soap": {
+    "S": "68 歳男性。本日 6 時 30 分頃、起床後に突然の胸部圧迫感が出現。象に乗られているような強い圧迫感で、冷汗・左肩への放散痛・嘔気を伴う。NTG 舌下で軽減傾向も消失せず。発症から約 1.5 時間で当院受診。胸痛既往なし。3 年来 2 型糖尿病加療中 (HbA1c 7.2%)、高血圧・脂質異常症あり。喫煙 20 本/日 × 40 年継続。父に心筋梗塞 (62 歳発症) の家族歴あり。",
+    "O": "意識清明、苦悶様顔貌、冷汗著明。BP 152/94 mmHg (両上肢差なし)、HR 98/min 整、SpO2 96% RA、RR 20、BT 36.7。心音 I/II 整、III 音軽度聴取、収縮期雑音なし。肺音清、下腿浮腫・頸静脈怒張なし、四肢冷感あり。\n12 誘導心電図: V1-V4 で 2-4mm の ST 上昇、II/III/aVF 鏡像変化、洞調律。\n採血: トロポニン I 12.4 ng/mL (高値)、CK 845 / CK-MB 78 (高値)、BNP 280、Cr 0.92。Glucose 168、HbA1c 7.2、LDL 142。\n胸部 X-p: 心拡大なし、肺うっ血なし。\n経胸壁心エコー: LVEF 42%、前壁中隔 hypokinesis、MR 軽度、心嚢液なし。",
+    "A": "急性前壁心筋梗塞 (anterior STEMI)。Killip 分類 II (III 音聴取)。GRACE スコア 142 (中等度〜高リスク)、TIMI スコア 4。発症から 1.5 時間と door-to-balloon time の短縮が予後改善に直結する状況。冠危険因子: 高血圧・2 型糖尿病・脂質異常症・喫煙・家族歴の 5 因子集積、典型的高リスク症例。",
+    "P": "1. 緊急冠動脈造影 (CAG) → primary PCI を計画。発症 12 時間以内であり第一選択。\n2. 抗血栓療法: アスピリン 200mg 負荷後 100mg/日、クロピドグレル 300mg 負荷後 75mg/日 (DAPT)。ヘパリン 5000 単位静注後、PCI 中 ACT 250-300 秒目標で持続投与。\n3. β遮断薬: ビソプロロール 2.5mg/日 開始 (心不全徴候に注意しつつ漸増)。\n4. ACE 阻害薬: 血行動態安定後にエナラプリル 2.5mg/日 開始予定 (左室リモデリング抑制)。\n5. 高用量スタチン: 既存アトルバスタチンを 20mg/日へ増量。\n6. 糖尿病管理: メトホルミン継続 (Cr 0.92 で問題なし)、急性期は血糖モニタリング (目標 140-180 mg/dL)。\n7. CCU 入院、心電図モニター下管理、Killip 分類再評価。\n8. 禁煙指導 (本人・家族同席)、心臓リハビリテーション計画、退院後 2 次予防外来フォロー。"
+  },
+
+  "reference_admission_summary": "【入院時サマリ】\n68 歳男性。既往: 高血圧、2 型糖尿病 (HbA1c 7.2%)、脂質異常症。喫煙 20 本×40 年、父に心筋梗塞家族歴あり。\n2026-04-15 午前 6 時 30 分頃、起床後に突然の胸部圧迫感・冷汗・左肩放散痛が出現、NTG 舌下で軽減もなおあり、発症 1.5 時間で当院受診。来院時 BP 152/94、HR 98、SpO2 96% RA、苦悶様顔貌・冷汗著明。12 誘導心電図で V1-V4 に 2-4mm の ST 上昇、II/III/aVF 鏡像変化。トロポニン I 12.4 ng/mL、CK-MB 78 U/L と上昇。心エコーで前壁中隔 hypokinesis、LVEF 42%。\n#1 急性前壁心筋梗塞 (anterior STEMI)、Killip II、GRACE 142、TIMI 4 と診断。緊急 CAG → primary PCI 適応と判断し心臓カテーテル室へ搬送。\n#2 高血圧、2 型糖尿病、脂質異常症は継続加療。\n治療方針: primary PCI 後 CCU 管理、DAPT (アスピリン+クロピドグレル) 開始、β遮断薬・ACE 阻害薬・高用量スタチン導入、心臓リハビリテーション、禁煙指導。",
+
+  "key_facts": {
+    "diagnoses": ["急性前壁心筋梗塞", "anterior STEMI", "Killip分類 II"],
+    "medications_to_start": [
+      "アスピリン 200mg 負荷",
+      "アスピリン 100mg/日",
+      "クロピドグレル 300mg 負荷",
+      "クロピドグレル 75mg/日",
+      "ヘパリン",
+      "ビソプロロール 2.5mg/日",
+      "エナラプリル 2.5mg/日"
+    ],
+    "medications_to_continue": [
+      "アムロジピン 5mg/日",
+      "メトホルミン 500mg×2/日",
+      "アトルバスタチン (10mg→20mg に増量)"
+    ],
+    "medications_to_stop": [],
+    "vitals": {"BP_sys": 152, "BP_dia": 94, "HR": 98, "SpO2": 96, "RR": 20, "BT": 36.7},
+    "labs": {
+      "Tnl": 12.4,
+      "CK": 845,
+      "CK_MB": 78,
+      "BNP": 280,
+      "Cr": 0.92,
+      "eGFR": 68,
+      "Glucose": 168,
+      "HbA1c": 7.2,
+      "LDL_C": 142,
+      "CRP": 0.4
+    },
+    "ecg_findings": ["V1-V4 ST 上昇 2-4mm", "II/III/aVF 鏡像変化", "洞調律"],
+    "echo_findings": ["前壁中隔 hypokinesis", "LVEF 42%", "MR 軽度"],
+    "scores": {"GRACE": 142, "TIMI": 4, "Killip": 2},
+    "procedures": ["緊急冠動脈造影 (CAG)", "経皮的冠動脈形成術 (primary PCI)"],
+    "disposition": "CCU 入院"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS 2018 急性冠症候群ガイドライン", "section": "STEMI 初期治療", "key_point": "発症 12 時間以内の STEMI には primary PCI が第一選択 (door-to-balloon 90 分以内目標)"},
+    {"guideline": "JCS 2018 急性冠症候群ガイドライン", "section": "抗血小板療法", "key_point": "急性期は DAPT (アスピリン + P2Y12 阻害薬) を開始、12 ヶ月継続が標準"},
+    {"guideline": "JCS 2017 心筋梗塞二次予防ガイドライン", "section": "薬物療法", "key_point": "β遮断薬・ACE 阻害薬・高用量スタチンを左室リモデリング抑制目的で導入"}
+  ],
+
+  "format_pair_id": "JC-AMI-PAIR-01",
+  "is_negative_control": false,
+  "difficulty": "typical",
+  "notes_for_reviewer": "標準的な前壁 STEMI 症例。冠危険因子 5 因子集積。primary PCI 適応で fibrinolytic は適応外。DAPT・β遮断・ACE-I・スタチン・禁煙の二次予防 5 点セットを SLM が漏らさず出せるかが評価ポイント。"
+}

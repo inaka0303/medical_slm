@@ -1,0 +1,140 @@
+{
+  "encounter_id": "JC-AHF-S",
+  "format": "structured",
+  "disease_label": "acute_decompensated_heart_failure",
+  "disease_label_jp": "急性心不全 (慢性心不全急性増悪、HFrEF)",
+
+  "patient": {
+    "age": 81,
+    "gender": "男性",
+    "blood_type": "B",
+    "comorbidities": [
+      "拡張型心筋症 (HFrEF, LVEF 28%)",
+      "慢性心不全 (NYHA III)",
+      "慢性腎臓病 (CKD stage 3b, eGFR 36)",
+      "非弁膜症性心房細動 (DOAC 内服中)",
+      "高血圧"
+    ],
+    "current_medications": [
+      "エナラプリル 2.5mg 1錠 朝食後",
+      "ビソプロロール 1.25mg 1錠 朝食後",
+      "スピロノラクトン 25mg 1錠 朝食後",
+      "フロセミド 20mg 1錠 朝食後",
+      "エドキサバン 30mg 1錠 朝食後 (低用量・腎機能調整)"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": ["父: 不明 (早世)", "兄: 心不全 (70歳代)"],
+    "social_history": "元喫煙者 (15本/日 × 30年、20年前禁煙)、機会飲酒、妻と二人暮らし、ADL 自立だが最近階段昇降で息切れ増悪"
+  },
+
+  "encounter": {
+    "department": "循環器内科",
+    "encounter_type": "外来→緊急入院 (CCU)",
+    "chief_complaint": "起座呼吸増悪と下腿浮腫",
+    "secondary_complaints": ["労作時呼吸困難", "倦怠感", "夜間咳嗽", "体重増加 3kg/1週間"],
+    "encounter_date": "2026-04-18",
+    "admission_date": "2026-04-18",
+    "discharge_date": null
+  },
+
+  "interview_text": {
+    "raw_text": "1 週間前から両下腿の浮腫が徐々に増悪、5 日前から夜間に枕を 2 つ重ねないと眠れなくなり、3 日前からは起座位でなければ呼吸困難で眠れない状態となった。\n体重は 1 週間で 3kg 増加 (普段 58kg → 本日 61kg)。食事量は変わらず、塩分摂取量も普段通り。内服コンプライアンス良好と妻が確認。\n本日早朝より安静時にも息切れが出現し、咳嗽・ピンク色の痰なし、起座呼吸 30 度では会話困難となり外来予約を繰り上げて受診。\n胸痛なし、動悸は持続性 (本人は AF と認識)、失神なし、発熱なし。\n基礎疾患は拡張型心筋症で 5 年前から当院循環器内科で加療中。直近の心エコー (3 ヶ月前) で LVEF 28%。心房細動に対しエドキサバンを腎機能調整して内服中。\n誘因として明らかな感染兆候・水分過剰摂取・服薬中断はなし。",
+    "medication_list": "【お薬手帳より】\n・エナラプリルマレイン酸塩錠 2.5mg 1錠 朝食後 (5年継続)\n・ビソプロロールフマル酸塩錠 1.25mg 1錠 朝食後 (5年継続、目標 2.5mg だが症状で漸増中断)\n・スピロノラクトン錠 25mg 1錠 朝食後 (3年継続)\n・フロセミド錠 20mg 1錠 朝食後 (1年継続、ベース用量)\n・エドキサバントシル酸塩錠 30mg 1錠 朝食後 (CrCl 30-50 で減量、AF 発症 2年前から)\n服薬コンプライアンス良好、本日朝も妻の確認下で内服済。SGLT2 阻害薬は未導入 (糖尿病なしで保険上未使用)、ARNI も未導入。",
+    "exam_findings": "意識清明、起座位、軽度の頻呼吸あり。\nバイタル: BP 92/68 mmHg (普段 110/70 程度)、HR 108/min 不整 (心房細動)、SpO2 91% (room air)、RR 26/min、BT 36.5℃、四肢冷感あり、末梢チアノーゼ軽度。\n頸部: 頸静脈怒張著明 (60 度坐位で 8cm)、肝頸静脈逆流陽性。\n胸部聴診: 心音 I/II 不整、III 音聴取明瞭 (gallop)、心尖部に II/VI 度の収縮期雑音 (機能性 MR)、両側下肺野で fine crackles 著明。\n腹部: 軟、肝下縁 3 横指触知、軽度圧痛あり、腹水なし。\n下肢: 両下腿に圧痕性浮腫 ++、足背〜下腿前面まで及ぶ、皮膚温低下、末梢動脈触知微弱。\n四肢末梢冷感あり、capillary refill 4 秒と延長。",
+    "lab_results": "【心電図 (来院時)】\n心房細動 HR 108/min、不整脈の RR 不整、左室肥大所見 (Sokolow-Lyon 39mm)、V1-V3 で poor R progression、虚血性 ST-T 変化なし。\n\n【胸部 X-p】\n心拡大 著明 (CTR 62%)、両側肺うっ血所見、Kerley B 線、両側胸水 (右 > 左)、肺門部血管影増強、butterfly shadow 軽度。\n\n【経胸壁心エコー (来院時 emergency echo)】\nLVEF 26% (modified Simpson、3 ヶ月前 28% から軽度低下)、左室拡張末期径 (LVDd) 68mm、全周性 hypokinesis、僧帽弁逆流 中等度 (機能性 MR)、三尖弁逆流 中等度、推定 PASP 52 mmHg、下大静脈径 24mm 呼吸性変動 < 50% (右心系うっ血所見)、心嚢液なし。\n\n【採血】\nWBC 8,400/μL、Hb 12.2 g/dL、Plt 19.8万/μL\nNa 132、K 4.6、Cl 96、BUN 38、Cr 1.62、eGFR 32 (普段 36 から悪化)、AST 48、ALT 42、T-Bil 1.4、Alb 3.4 g/dL\nBNP 1,840 pg/mL (↑↑↑、3 ヶ月前 380)、NT-proBNP 9,650 pg/mL\nトロポニン I 0.04 ng/mL (基準内)、CK 142、CK-MB 18 (基準内)\nCRP 0.6 mg/dL、TSH 1.8、procalcitonin 0.08 (感染兆候なし)\nLactate 2.4 mmol/L (軽度上昇)、動脈血ガス: pH 7.42、PaO2 62、PaCO2 34、HCO3 22、SpO2 91% (RA)\n\n【その他】\n体重 61.0 kg (1 週間前 58.0 kg、3kg 増加)、尿量 (来院時カテーテル) 30 mL/hr 程度。"
+  },
+
+  "interview_text_voice": null,
+
+  "reference_soap": {
+    "S": "81 歳男性。拡張型心筋症 (HFrEF, LVEF 28%)、慢性腎臓病 stage 3b、心房細動 (エドキサバン内服)、高血圧の既往。1 週間前から下腿浮腫が出現、5 日前から起座呼吸 (枕 2 つ → 3 日前から坐位必須) に増悪、体重 3kg 増。本日安静時呼吸困難で外来繰り上げ受診。胸痛・発熱・感染兆候なし、内服コンプライアンス良好、明らかな誘因不明。基礎心機能低下に伴う慢性心不全急性増悪と考える。",
+    "O": "意識清明、起座位、軽度頻呼吸。BP 92/68 mmHg (低血圧傾向)、HR 108/min 不整 (心房細動)、SpO2 91% RA、RR 26、BT 36.5、四肢冷感・末梢チアノーゼ軽度。頸静脈怒張著明 (8cm)、肝頸静脈逆流陽性、III 音聴取、心尖部 II/VI 機能性 MR 雑音、両側下肺野 fine crackles 著明。下腿圧痕性浮腫 ++、肝 3 横指触知、capillary refill 4 秒。\n心電図: 心房細動 HR 108、左室肥大、虚血性変化なし。\n胸部 X-p: CTR 62%、両側肺うっ血、Kerley B 線、両側胸水。\n心エコー: LVEF 26% (悪化)、LVDd 68mm、機能性 MR 中等度、推定 PASP 52 mmHg、IVC 24mm 呼吸性変動 < 50%。\n採血: BNP 1,840 pg/mL (3 ヶ月前 380 から急激増)、NT-proBNP 9,650、Cr 1.62 / eGFR 32 (悪化)、Na 132 (低 Na)、Lactate 2.4、トロポニン陰性、CRP 陰性。",
+    "A": "慢性心不全急性増悪 (acute decompensated heart failure on chronic HFrEF)。Nohria-Stevenson 分類 wet & cold (C 型: うっ血所見 + 末梢低灌流の両方あり)。Clinical Scenario (CS) 分類 II (BP 90-140、慢性経過の体液過剰主体)。Forrester 分類 IV (低拍出 + 肺うっ血)。\n基礎: 拡張型心筋症 HFrEF (LVEF 26% に低下)、心房細動による頻脈 (HR 108) が増悪要因の一つと推測。腎機能も Cr 1.62 / eGFR 32 と悪化しており cardiorenal syndrome 合併。低血圧 (BP 92/68) と末梢低灌流 (capillary refill 延長、Lactate 2.4 上昇) のため変力作用薬併用が必要、純粋な利尿のみでは改善困難な可能性高い。\n誘因として明らかな感染・服薬中断・水分過剰なし → 自然経過の悪化または AF 頻脈関与を考慮。",
+    "P": "1. CCU 入院、心電図・観血的動脈圧モニタリング、尿カテーテル留置、IN-OUT 厳密管理。Swan-Ganz カテーテル留置検討 (低拍出と肺うっ血併存、変力作用薬の用量調整目的)。\n2. 利尿薬: フロセミド 20mg 静注で開始、反応 (尿量 100mL/hr 目標) 不十分なら持続静注 5-10mg/hr へ移行。トルバプタン 7.5mg/日 併用検討 (低 Na 132、ループ抵抗時)。\n3. 変力作用薬: ドブタミン 2-3 μg/kg/min から少量開始、BP・HR・尿量モニターで漸増。CS II・wet/cold C 型のため血管拡張薬単独は禁忌、ドブタミン+利尿薬併用が第一選択。\n4. 血管拡張薬: BP 安定 (収縮期 100 以上維持) 確認後にカルペリチド 0.025-0.05 μg/kg/min 持続静注 (利尿+前負荷軽減)。ニトログリセリンは BP 低めのため見送り。\n5. 酸素療法: SpO2 ≥ 94% 目標で経鼻 3L/min 開始、改善不十分なら NPPV 導入準備。\n6. 心房細動レート管理: HR 108 と頻脈、ジゴキシン 0.125mg 静注で開始 (β遮断薬は急性期低血圧で増量困難)。エドキサバンは継続 (脳塞栓予防、CrCl 再評価で用量調整)。\n7. 基礎治療: ビソプロロール・エナラプリル・スピロノラクトンは血行動態安定後に再開 (急性期は低血圧のため一時休薬)。\n8. 退院前に fantastic four (ARNI または ACE-I/ARB、β遮断薬、MRA、SGLT2 阻害薬) 全部処方し直し: サクビトリル/バルサルタン (エナラプリルから切替、washout 36 時間)、ビソプロロール 漸増、スピロノラクトン継続、ダパグリフロジン 10mg/日 新規追加 (HFrEF 適応、糖尿病非合併でも保険適応)。\n9. CKD stage 3b 配慮: 利尿薬使用下で Cr・K モニタリング、造影検査は最小限。\n10. 退院後計画: 体重・血圧自己測定指導、塩分 6g/日 制限、心臓リハ導入、心不全外来 2 週後フォロー。"
+  },
+
+  "reference_admission_summary": "【入院時サマリ】\n81 歳男性、妻と二人暮らし。既往: 拡張型心筋症 (HFrEF, LVEF 28%)、慢性心不全 NYHA III、慢性腎臓病 stage 3b (eGFR 36)、非弁膜症性心房細動 (エドキサバン 30mg/日)、高血圧。元喫煙者 (20 年前禁煙)、当院循環器内科で 5 年通院加療中。\n2026-04-18、1 週間前からの下腿浮腫増悪・起座呼吸増悪 (枕 2 つ → 坐位必須)・体重 3kg 増を主訴に外来繰り上げ受診。明らかな感染・服薬中断・水分過剰摂取はなし。来院時 BP 92/68、HR 108 不整 (AF)、SpO2 91% RA、起座位・四肢冷感・末梢チアノーゼ軽度・頸静脈怒張 8cm・III 音聴取・両側下肺野 fine crackles・下腿圧痕性浮腫 ++・capillary refill 4 秒延長。\n胸部 X-p で CTR 62%・両側肺うっ血・両側胸水、心エコーで LVEF 26% (3 ヶ月前 28% から悪化)、機能性 MR 中等度、推定 PASP 52、IVC 24mm 呼吸性変動消失。BNP 1,840 (3 ヶ月前 380)、NT-proBNP 9,650、Cr 1.62 / eGFR 32 (悪化)、Na 132、Lactate 2.4、トロポニン陰性、CRP 陰性。\n#1 慢性心不全急性増悪 (HFrEF 増悪)、Nohria-Stevenson wet & cold (C 型)、CS 分類 II、Forrester IV と診断。CCU 入院、フロセミド静注 + ドブタミン少量併用、Swan-Ganz 留置検討。\n#2 急性腎機能悪化 (cardiorenal syndrome)、CKD stage 3b ベース → 利尿薬使用下で Cr・K モニタリング。\n#3 心房細動 HR 108 頻脈 → ジゴキシン静注でレートコントロール、エドキサバン継続。\n#4 低 Na 血症 (132) → トルバプタン併用検討。\n治療方針: CCU 管理、利尿+変力作用薬+酸素療法、SpO2 不十分なら NPPV、血行動態安定後に基礎治療 (ARNI、β遮断薬、MRA、SGLT2 阻害薬) を fantastic four として再構築し退院前に全処方し直し。退院後は体重・塩分管理指導、心臓リハ、心不全外来フォロー。",
+
+  "key_facts": {
+    "diagnoses": [
+      "急性心不全 (慢性心不全急性増悪)",
+      "HFrEF (LVEF 26%)",
+      "拡張型心筋症",
+      "Nohria-Stevenson 分類 wet & cold (C 型)",
+      "Clinical Scenario (CS) 分類 II",
+      "Forrester 分類 IV",
+      "心房細動 (頻脈)",
+      "急性腎機能悪化 (cardiorenal syndrome)",
+      "慢性腎臓病 stage 3b",
+      "低 Na 血症"
+    ],
+    "medications_to_start": [
+      "フロセミド 20mg 静注 (持続静注 5-10mg/hr に移行可)",
+      "ドブタミン 2-3 μg/kg/min 持続静注",
+      "カルペリチド 0.025-0.05 μg/kg/min 持続静注 (BP 安定後)",
+      "トルバプタン 7.5mg/日",
+      "ジゴキシン 0.125mg 静注",
+      "サクビトリル/バルサルタン (退院前 ARNI 切替)",
+      "ダパグリフロジン 10mg/日 (退院前 SGLT2i 新規導入)"
+    ],
+    "medications_to_continue": [
+      "スピロノラクトン 25mg/日 (血行動態安定後再開)",
+      "ビソプロロール (血行動態安定後再開・漸増)",
+      "エドキサバン 30mg/日 (CrCl 再評価で用量調整)"
+    ],
+    "medications_to_stop": [
+      "エナラプリル 2.5mg/日 (急性期一時休薬、退院前に ARNI へ切替)"
+    ],
+    "vitals": {"BP_sys": 92, "BP_dia": 68, "HR": 108, "SpO2": 91, "RR": 26, "BT": 36.5},
+    "labs": {
+      "BNP": 1840,
+      "NT_proBNP": 9650,
+      "TnI": 0.04,
+      "CK": 142,
+      "CK_MB": 18,
+      "Cr": 1.62,
+      "eGFR": 32,
+      "BUN": 38,
+      "Na": 132,
+      "K": 4.6,
+      "Cl": 96,
+      "Alb": 3.4,
+      "Hb": 12.2,
+      "Lactate": 2.4,
+      "CRP": 0.6,
+      "T_Bil": 1.4
+    },
+    "ecg_findings": ["心房細動 HR 108", "左室肥大 (Sokolow-Lyon 39mm)", "V1-V3 poor R progression", "虚血性変化なし"],
+    "echo_findings": [
+      "LVEF 26% (3 ヶ月前 28% から悪化)",
+      "LVDd 68mm",
+      "全周性 hypokinesis",
+      "機能性 MR 中等度",
+      "三尖弁逆流 中等度",
+      "推定 PASP 52 mmHg",
+      "IVC 24mm 呼吸性変動 < 50%"
+    ],
+    "scores": {"NYHA": 4, "Nohria_Stevenson": "C (wet/cold)", "Clinical_Scenario": 2, "Forrester": 4},
+    "procedures": [
+      "CCU 入院",
+      "心電図モニタリング",
+      "観血的動脈圧モニタリング",
+      "尿カテーテル留置",
+      "Swan-Ganz カテーテル留置 (検討)",
+      "NPPV 導入準備"
+    ],
+    "disposition": "CCU 入院"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS 2017/2018 急性・慢性心不全診療ガイドライン", "section": "急性心不全の初期治療フロー (CS 分類)", "key_point": "Clinical Scenario 1-5 に応じた治療選択、CS II では利尿薬+血管拡張薬を中心とするが低血圧時は変力作用薬併用"},
+    {"guideline": "JCS 2017/2018 急性・慢性心不全診療ガイドライン", "section": "Nohria-Stevenson 分類", "key_point": "wet/cold (C 型) はうっ血+低灌流併存、利尿薬+変力作用薬併用、血管拡張薬単独は不適切"},
+    {"guideline": "JCS 2024 心不全フォーカスアップデート", "section": "HFrEF の薬物療法 (fantastic four)", "key_point": "ARNI/ACE-I/ARB、β遮断薬、MRA、SGLT2 阻害薬の 4 剤併用が予後改善のエビデンス、糖尿病合併に関わらず SGLT2i 適応"},
+    {"guideline": "JCS 2017/2018 急性・慢性心不全診療ガイドライン", "section": "利尿薬抵抗性への対応", "key_point": "ループ利尿薬抵抗時はフロセミド持続静注、トルバプタン併用、低 Na 血症ではトルバプタンが特に有効"}
+  ],
+
+  "format_pair_id": "JC-AHF-PAIR-01",
+  "is_negative_control": false,
+  "difficulty": "typical",
+  "notes_for_reviewer": "典型的な慢性心不全急性増悪 (HFrEF 増悪) 症例。評価ポイント: (1) Clinical Scenario 分類 (CS II) を正しく適用できるか、(2) Nohria-Stevenson wet/cold (C 型) を診断し、変力作用薬+利尿薬併用の必要性を判断できるか (血管拡張薬単独は不適切)、(3) Forrester IV で Swan-Ganz 留置を検討できるか、(4) フロセミド静注+ドブタミン少量+NPPV 導入準備の使い分けを書けるか、(5) 退院前に fantastic four (ARNI/β遮断薬/MRA/SGLT2i) 全部処方し直す方針を明示できるか、(6) cardiorenal syndrome と低 Na 血症への配慮 (トルバプタン)、(7) AF レート管理にジゴキシン選択 (急性期 β遮断薬増量困難)、(8) 4B 薬剤ハルシネーション (架空 ARNI 商品名等) 検出。"
+}

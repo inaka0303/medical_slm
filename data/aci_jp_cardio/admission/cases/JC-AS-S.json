@@ -1,0 +1,116 @@
+{
+  "encounter_id": "JC-AS-S",
+  "format": "structured",
+  "disease_label": "aortic_stenosis",
+  "disease_label_jp": "大動脈弁狭窄症 (severe AS、TAVI workup)",
+
+  "patient": {
+    "age": 73,
+    "gender": "男性",
+    "blood_type": "A",
+    "comorbidities": ["高血圧", "脂質異常症 (軽度)", "慢性腎臓病 stage 3 (eGFR 48)"],
+    "current_medications": [
+      "アムロジピン 5mg 1錠 朝食後",
+      "ロスバスタチン 2.5mg 1錠 夕食後",
+      "フロセミド 20mg 1錠 朝食後 (労作時息切れに対し前医より少量導入、3 ヶ月前から)"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": ["父: 脳梗塞 (70歳代)", "母: 高血圧"],
+    "social_history": "元喫煙者 (10本/日 × 30年、5年前禁煙、Brinkman 300)、機会飲酒、ADL 自立、独居だが近隣に長男夫婦在住、元会社員 (経理職)、現在年金生活"
+  },
+
+  "encounter": {
+    "department": "循環器内科",
+    "encounter_type": "外来精査入院 (TAVI 適応評価)",
+    "chief_complaint": "労作時息切れの増悪",
+    "secondary_complaints": ["1 ヶ月前の失神既往 (1 回)", "胸部圧迫感 (階段 2 階分で出現)"],
+    "encounter_date": "2026-04-14",
+    "admission_date": "2026-04-14",
+    "discharge_date": null
+  },
+
+  "interview_text": {
+    "raw_text": "73 歳男性。半年前から坂道や階段で息切れを自覚し、徐々に増悪。3 ヶ月前に近医受診、心エコーで大動脈弁狭窄症を指摘され当院紹介となった。\n1 ヶ月前、自宅近くの公園を散歩中に突然目の前が暗くなり、ベンチに座り込んで意識消失 (約 10 秒間、目撃者あり、舌咬傷・尿失禁なし、けいれんなし)。前駆症状として軽度の動悸あり。失神後の意識回復は速やかで、頭部打撲なし。同日近医で心電図・採血したが新規所見なく経過観察となっていた。\n以降は失神再発なし。最近は買い物で 200m 歩くと息切れと軽度胸部圧迫感が出現、立ち止まると数分で軽快。安静時症状なし。起座呼吸・夜間発作性呼吸困難なし、下腿浮腫の自覚なし。\n排尿良好、食欲良好、体重変化なし (3 ヶ月で +0.5kg)。\n喫煙は 5 年前に禁煙、機会飲酒のみ。ADL 自立、認知機能良好、家事・買い物・服薬管理すべて自己管理。長男夫婦と週 2-3 回会う。\n本人は「もう 73 だから手術は怖い、できれば薬で何とかしたい」と話すが、症候性 severe AS と説明したところ「先生にお任せします」と方針決定への協力的姿勢あり。",
+    "medication_list": "【お薬手帳より】\n・アムロジピンベシル酸塩錠 5mg 1錠 朝食後 (10 年前から、前医処方)\n・ロスバスタチンカルシウム錠 2.5mg 1錠 夕食後 (5 年前から)\n・フロセミド錠 20mg 1錠 朝食後 (3 ヶ月前から、息切れに対し前医導入)\n服薬コンプライアンス良好、本人がカレンダー管理。\nOTC・サプリメント使用なし。",
+    "exam_findings": "意識清明、ADL 自立、栄養状態良好、身長 168cm 体重 64kg (BMI 22.7)。\nバイタル: BP 138/68 mmHg (両上肢差なし、脈圧 70 大)、HR 72/min 整、SpO2 96% (room air)、RR 16/min、BT 36.5℃。\n胸部聴診: 心音 I 正常、II 減弱 (大動脈弁成分減弱)、収縮期駆出性雑音 Levine 4/6 度を 2 音域 (右第 2 肋間胸骨右縁) で最強、頸部 (右頸動脈) へ放散、心尖部にも伝播 (Gallavardin 現象)。III 音・IV 音なし、肺音清。\n頸動脈拍動: parvus et tardus (小遅脈)、頸静脈怒張なし。\n下腿浮腫なし、四肢冷感なし、橈骨動脈・足背動脈触知良好、左右差なし。\n認知機能: MMSE 28/30 (年齢相応)、Clinical Frailty Scale (CFS) 3 (Managing Well、frailty なし〜軽度)。",
+    "lab_results": "【心電図】\n洞調律 HR 72、PR 0.18 秒、QRS 0.10 秒、QT 0.42 秒。\nV5/V6 で R 波増高、I/aVL で軽度 ST 低下と T 波陰転 (左室肥大による strain pattern)。Sokolow-Lyon 指数 38mm (左室肥大基準を満たす)。\n心房細動なし。\n\n【採血】\nWBC 6,800、Hb 13.4、Plt 22.0万\nAST 24、ALT 22、γ-GTP 28、Alb 4.0、T-Bil 0.8\nNa 140、K 4.2、Cl 104、BUN 22、Cr 1.18、eGFR 48\nGlucose 102、HbA1c 5.8、LDL-C 88、HDL-C 52、TG 124\nBNP 425 pg/mL (高値)、Tnl 0.012 ng/mL (基準内、慢性負荷反映)\nCRP 0.1\n\n【胸部 X-p】\nCTR 52% (軽度心拡大)、肺血管陰影正常、胸水なし、大動脈弁石灰化陰影あり、上行大動脈軽度拡張。\n\n【経胸壁心エコー】\n大動脈弁: 三尖弁、高度石灰化、弁尖開放制限著明。\n大動脈弁口面積 (AVA) 0.7 cm² (continuity equation 法)、indexed AVA 0.40 cm²/m²。\nPeak velocity 4.5 m/s、Peak PG 81 mmHg、Mean PG 48 mmHg。\nLV: 左室壁厚 IVS 13mm / PW 12mm (concentric hypertrophy)、LVEF 62% (保たれた)、E/e' 14 (軽度上昇)。\n大動脈弁逆流 trivial、MR mild、TR mild、推定 PASP 32 mmHg。\n左房径 42mm (軽度拡大)、心嚢液なし。\n→ Severe symptomatic AS、LV systolic function preserved、LV concentric hypertrophy。\n\n【冠動脈 CT (TAVI 前精査として外来で先行施行)】\n冠動脈: LAD#7 50% 狭窄 (functional に有意でない)、その他有意狭窄なし、石灰化スコア中等度。\n大動脈弁輪径 24.2mm、面積 462mm²、SOV 32mm、Valsalva 高 22mm、冠動脈起始高 (LCA 14mm / RCA 16mm)、TAVI 適応に支障なし。\nアクセスルート: 両側総大腿動脈 7.5-8.0mm 径、屈曲・石灰化軽度、経大腿アプローチ可能。\n\n【頸動脈エコー】\n両側頸動脈 IMT 軽度肥厚、有意狭窄なし。\n\n【呼吸機能】\n%VC 92%、FEV1.0% 78% (年齢相応、COPD なし)。"
+  },
+
+  "interview_text_voice": null,
+
+  "reference_soap": {
+    "S": "73 歳男性。半年前からの労作時息切れ増悪、1 ヶ月前に散歩中の失神 (10 秒、前駆動悸あり、舌咬傷・けいれんなし) 1 回、最近は 200m 歩行で息切れと軽度胸部圧迫感。安静時症状なし。既往: 高血圧、脂質異常症 (軽度)、CKD stage 3 (eGFR 48)。内服: アムロジピン、ロスバスタチン、フロセミド (3 ヶ月前から少量)。元喫煙 (5 年前禁煙)、ADL 自立、認知機能良好、独居だが長男夫婦近在。本人は当初手術回避希望も、症候性 severe AS の説明に方針決定協力的。",
+    "O": "BP 138/68 (脈圧 70 と開大)、HR 72 整、SpO2 96% RA、BMI 22.7。II 音減弱、2 音域で収縮期駆出性雑音 Levine 4/6、頸部・心尖部へ放散 (Gallavardin)、parvus et tardus 脈、下腿浮腫なし。CFS 3、MMSE 28/30。\n心電図: 洞調律、左室肥大 (Sokolow 38mm)、I/aVL strain。\n採血: BNP 425 (高値)、Cr 1.18 / eGFR 48、Tnl 0.012、Hb 13.4、Alb 4.0。\n胸部 X-p: CTR 52、大動脈弁石灰化、肺うっ血なし。\n経胸壁心エコー: AVA 0.7 cm² (indexed 0.40)、Peak velocity 4.5 m/s、Mean PG 48 mmHg、Peak PG 81 mmHg、LVEF 62% (保たれた)、concentric LVH (IVS 13/PW 12)、E/e' 14、PASP 32、LA 42mm。AR trivial、MR/TR mild。\n冠動脈 CT: LAD#7 50% (非有意)、TAVI 解剖学的指標適合 (弁輪径 24.2mm、両側大腿アプローチ可能)。\n頸動脈エコー有意狭窄なし、呼吸機能 COPD なし。",
+    "A": "症候性重症大動脈弁狭窄症 (severe symptomatic aortic stenosis)。\n指標: AVA 0.7 cm² / indexed 0.40 cm²/m²、Peak velocity 4.5 m/s、Mean PG 48 mmHg → ガイドライン上 severe AS の基準充足。LVEF 62% で保たれた high-gradient severe AS (Stage D1)。\n症状: 労作時息切れ・失神既往・労作時胸部圧迫感の AS 古典的三徴のうち 2 徴を満たす。BNP 425 と心負荷上昇あり、無治療では予後不良 (失神症例の 2-3 年生存率 50%)。\n手術リスク: STS score 推定 3.5% (低〜中等度)、年齢 73 歳、CFS 3、ADL 自立、認知機能良好、合併症は CKD stage 3 のみで重大な臓器障害なし。\nハートチームでの議論を経て、年齢 75 歳近く・CKD・経大腿アプローチ可能・冠動脈病変軽度の点から TAVI が SAVR に対し非劣性と判断されうる症例。",
+    "P": "1. ハートチーム (循環器内科・心臓血管外科・麻酔科・看護師・MSW) カンファレンスで TAVI vs SAVR を協議。本症例は年齢 73、CKD stage 3、frailty なし〜軽度、解剖学的に経大腿アクセス可能、冠動脈病変は機能的に有意でない (LAD 50%) → **TAVI 推奨方針** で家族・本人に IC 予定。\n2. 術前評価追加: 経食道心エコー (TEE) で僧帽弁・心房中隔・左心耳評価、フレイル評価追加 (modified Essential Frailty Toolset、握力測定)、嚥下機能・栄養評価。\n3. 内服調整: アムロジピン継続 (血圧降下に注意、術直前は確認)、ロスバスタチン継続、フロセミド 20mg は前負荷依存性 AS であり脱水リスクから症状次第で減量・中止検討 (本入院中に是非を判断)。\n4. CKD stage 3 対策: 造影 CT 既施行のため新たな造影は最小限、TAVI 当日は等張食塩水補液、Cr 推移フォロー。\n5. 抗血栓療法計画: TAVI 後はアスピリン 100mg 単剤を 3-6 ヶ月、AF 出現時は DOAC 切替を検討 (現時点 AF なし)。\n6. 失神再発予防: 退院までは病棟内 ADL とし、入浴・排便時の急激な姿勢変換を避けるよう指導。\n7. 患者・家族 IC: severe symptomatic AS の自然予後、TAVI と SAVR の利益・リスク (脳梗塞・伝導障害・血管合併症)、術後生活、長男夫婦同席の上で説明予定。\n8. 退院後計画: TAVI 施行 → 術後 5-7 日で退院、外来心リハ導入、半年・1 年・以降年 1 回の心エコーフォロー。"
+  },
+
+  "reference_admission_summary": "【入院時サマリ】\n73 歳男性、ADL 自立、独居 (長男夫婦近在)。既往: 高血圧、軽度脂質異常症、CKD stage 3 (eGFR 48)。元喫煙者 (5 年前禁煙、Brinkman 300)、機会飲酒。\n2025 年 10 月頃から労作時息切れを自覚、漸増。2026 年 3 月に散歩中の失神 (約 10 秒、前駆動悸あり、舌咬傷・けいれんなし) を 1 回認め、近医心エコーで大動脈弁狭窄症を指摘されて当院紹介。最近は 200m 歩行で息切れと軽度胸部圧迫感を伴う。\n2026-04-14 TAVI 適応評価目的で予定入院。来院時 BP 138/68 (脈圧開大)、HR 72、SpO2 96% RA。II 音減弱、Levine 4/6 の収縮期駆出性雑音を 2 音域で最強、頸部・心尖部へ放散、parvus et tardus を聴取。BNP 425 と上昇、Cr 1.18 / eGFR 48。経胸壁心エコーで AVA 0.7 cm² / indexed 0.40 cm²/m²、Peak velocity 4.5 m/s、Mean PG 48 mmHg、LVEF 62% で symptomatic severe AS (high-gradient、Stage D1) と診断。冠動脈 CT で TAVI 解剖学的適合、両側経大腿アプローチ可能、有意冠動脈狭窄なし (LAD#7 50% は非有意)。CFS 3、MMSE 28/30、frailty なし〜軽度。\n#1 症候性重症大動脈弁狭窄症 (severe symptomatic AS、Stage D1) — ハートチーム協議の上、年齢 73 歳・CKD stage 3・解剖学的に経大腿 TAVI 可能・冠動脈病変軽度の点から TAVI 推奨方針で IC 予定。\n#2 慢性腎臓病 stage 3 — 造影最小化、補液で造影剤腎症予防。\n#3 高血圧・脂質異常症 — 既存内服継続、フロセミド少量は AS 前負荷依存性のため減量・中止を入院中に判断。\n治療方針: TAVI 前精査追加 (TEE、栄養・嚥下・フレイル評価)、ハートチーム最終判断 → TAVI 施行 → 術後 DAPT ではなくアスピリン 100mg 単剤 3-6 ヶ月、心リハ導入、外来 follow up。退院後は ADL 自立継続見込みだが長男夫婦と支援体制を再確認予定。",
+
+  "key_facts": {
+    "diagnoses": ["症候性重症大動脈弁狭窄症", "severe symptomatic aortic stenosis", "high-gradient AS Stage D1", "左室求心性肥大 (concentric LVH)", "慢性腎臓病 stage 3"],
+    "medications_to_start": [
+      "TAVI 後アスピリン 100mg/日 (3-6 ヶ月単剤)"
+    ],
+    "medications_to_continue": [
+      "アムロジピン 5mg/日",
+      "ロスバスタチン 2.5mg/日"
+    ],
+    "medications_to_stop": [
+      "フロセミド 20mg/日 (AS 前負荷依存性のため減量・中止を入院中判断)"
+    ],
+    "vitals": {"BP_sys": 138, "BP_dia": 68, "HR": 72, "SpO2": 96, "RR": 16, "BT": 36.5},
+    "labs": {
+      "BNP": 425,
+      "Tnl": 0.012,
+      "Cr": 1.18,
+      "eGFR": 48,
+      "Hb": 13.4,
+      "Alb": 4.0,
+      "Na": 140,
+      "K": 4.2,
+      "HbA1c": 5.8,
+      "LDL_C": 88,
+      "CRP": 0.1
+    },
+    "ecg_findings": ["洞調律 HR 72", "左室肥大 (Sokolow-Lyon 38mm)", "I/aVL strain pattern"],
+    "echo_findings": [
+      "AVA 0.7 cm²",
+      "indexed AVA 0.40 cm²/m²",
+      "Peak velocity 4.5 m/s",
+      "Mean PG 48 mmHg",
+      "Peak PG 81 mmHg",
+      "LVEF 62%",
+      "concentric LVH (IVS 13mm / PW 12mm)",
+      "E/e' 14",
+      "AR trivial",
+      "MR mild",
+      "TR mild",
+      "PASP 32 mmHg",
+      "LA 42mm"
+    ],
+    "scores": {"CFS": 3, "MMSE": 28, "STS_estimated": 3.5},
+    "procedures": [
+      "経胸壁心エコー",
+      "冠動脈 CT (TAVI 前精査)",
+      "頸動脈エコー",
+      "呼吸機能検査",
+      "経食道心エコー (予定)",
+      "ハートチームカンファレンス",
+      "経カテーテル大動脈弁置換術 (TAVI、予定)"
+    ],
+    "disposition": "循環器内科病棟入院 → TAVI 施行予定"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS/JSCVS/JATS/JSVS 2020 弁膜症治療ガイドライン", "section": "大動脈弁狭窄症の重症度判定", "key_point": "AVA <1.0 cm² / indexed <0.6 cm²/m²、Peak velocity >4.0 m/s、Mean PG >40 mmHg のいずれかで severe AS と判定"},
+    {"guideline": "JCS/JSCVS/JATS/JSVS 2020 弁膜症治療ガイドライン", "section": "症候性 severe AS の介入適応", "key_point": "症候性 severe AS は Class I 介入適応、SAVR か TAVI かはハートチームで決定する"},
+    {"guideline": "JCS/JSCVS/JATS/JSVS 2020 弁膜症治療ガイドライン", "section": "TAVI 適応", "key_point": "75 歳以上、または STS score 高値、フレイルや解剖学的・併存疾患的に SAVR が高リスクな症例で TAVI 推奨。経大腿アプローチが第一選択"},
+    {"guideline": "JCS 2018 安定冠動脈疾患の血行再建ガイドライン", "section": "TAVI 前冠動脈評価", "key_point": "TAVI 前に冠動脈 CT または CAG で有意狭窄評価が推奨、機能的に有意な狭窄は事前 PCI を検討"}
+  ],
+
+  "format_pair_id": "JC-AS-PAIR-01",
+  "is_negative_control": false,
+  "difficulty": "typical",
+  "notes_for_reviewer": "典型的な症候性 severe AS の TAVI workup 入院症例。評価ポイント: (1) AVA 0.7 / Peak velocity 4.5 / Mean PG 48 から severe AS と正しく判定できるか。(2) 失神 + 労作時息切れ + 胸部圧迫感の AS 三徴を認識し、無治療予後の悪さに言及できるか。(3) 年齢 73・CFS 3・CKD stage 3・経大腿可能・冠動脈軽度の組合せから TAVI 推奨理由を提示できるか (SAVR との比較)。(4) フロセミドが AS 前負荷依存性のため減量検討対象になることを指摘できるか (高用量利尿薬・ACE-I は AS で慎重)。(5) ハートチーム決定・SDM の言及があるか。架空薬剤 (アプレキサン等) を生成しないか。"
+}

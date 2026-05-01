@@ -1,0 +1,44 @@
+2026-04-27 17:07:54,144 [INFO] === run config ===
+2026-04-27 17:07:54,144 [INFO]   cases: cases.jsonl
+2026-04-27 17:07:54,144 [INFO]   target: soap
+2026-04-27 17:07:54,144 [INFO]   model: 4b_soap_full (4B + soap_full LoRA) at http://localhost:8081
+2026-04-27 17:07:54,144 [INFO]   output: results/baseline_4b_soap.json
+2026-04-27 17:07:54,147 [INFO]   cases loaded: 22
+2026-04-27 17:08:08,625 [INFO] Using default tokenizer.
+2026-04-27 17:08:08,638 [INFO] [1/22] JC-AD-S: 13453ms  R-L=0.4611 drug_f1=0.0 diag_f1=0.5
+2026-04-27 17:08:20,217 [INFO] [2/22] JC-AD-V: 11572ms  R-L=0.1415 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:08:33,170 [INFO] [3/22] JC-AF-S: 12934ms  R-L=0.3575 drug_f1=0.75 diag_f1=0.333
+2026-04-27 17:08:41,651 [INFO] [4/22] JC-AF-V: 8472ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:08:54,357 [INFO] [5/22] JC-AHF-S: 12669ms  R-L=0.3535 drug_f1=0.625 diag_f1=0.5
+2026-04-27 17:09:06,971 [INFO] [6/22] JC-AHF-V: 12602ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:09:18,439 [INFO] [7/22] JC-AMI-S: 11442ms  R-L=0.4026 drug_f1=0.857 diag_f1=0.571
+2026-04-27 17:09:30,074 [INFO] [8/22] JC-AMI-V: 11626ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:09:43,025 [INFO] [9/22] JC-AS-S: 12899ms  R-L=0.3797 drug_f1=0.5 diag_f1=0.5
+2026-04-27 17:09:54,674 [INFO] [10/22] JC-AS-V: 11622ms  R-L=0.1488 drug_f1=0.5 diag_f1=0.0
+2026-04-27 17:10:07,989 [INFO] [11/22] JC-CA-S: 13271ms  R-L=0.5075 drug_f1=0.8 diag_f1=0.533
+2026-04-27 17:10:20,392 [INFO] [12/22] JC-CA-V: 12371ms  R-L=0.1737 drug_f1=0.615 diag_f1=0.167
+2026-04-27 17:10:33,349 [INFO] [13/22] JC-CHF-S: 12912ms  R-L=0.4855 drug_f1=0.727 diag_f1=0.364
+2026-04-27 17:10:45,840 [INFO] [14/22] JC-CHF-V: 12480ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:10:58,840 [INFO] [15/22] JC-EA-S: 12963ms  R-L=0.4269 drug_f1=0.444 diag_f1=0.571
+2026-04-27 17:11:09,884 [INFO] [16/22] JC-EA-V: 11017ms  R-L=0.2526 drug_f1=0.615 diag_f1=0.333
+2026-04-27 17:11:22,895 [INFO] [17/22] JC-PE-S: 13002ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:11:35,765 [INFO] [18/22] JC-PE-V: 12858ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:11:48,677 [INFO] [19/22] JC-SCP-S: 12887ms  R-L=0.4822 drug_f1=1.0 diag_f1=0.0
+2026-04-27 17:12:01,226 [INFO] [20/22] JC-SCP-V: 12538ms  R-L=0 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:12:14,199 [INFO] [21/22] JC-VSA-S: 12945ms  R-L=0.5209 drug_f1=0.667 diag_f1=0.5
+2026-04-27 17:12:25,663 [INFO] [22/22] JC-VSA-V: 11444ms  R-L=0.1767 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:12:25,664 [INFO] === aggregate ===
+2026-04-27 17:12:25,664 [INFO]   total_cases: 22
+2026-04-27 17:12:25,664 [INFO]   valid_evaluations: 22
+2026-04-27 17:12:25,664 [INFO]   rouge_l: 0.2396
+2026-04-27 17:12:25,664 [INFO]   bertscore_f1: None
+2026-04-27 17:12:25,664 [INFO]   drug_f1: 0.3682
+2026-04-27 17:12:25,664 [INFO]   drug_recall: 0.3108
+2026-04-27 17:12:25,664 [INFO]   drug_precision: 0.5023
+2026-04-27 17:12:25,664 [INFO]   diagnosis_f1: 0.2215
+2026-04-27 17:12:25,664 [INFO]   vitals_match_rate: 0.33
+2026-04-27 17:12:25,664 [INFO]   mean_latency_ms: 12271
+2026-04-27 17:12:25,665 [INFO]   parse_ok_rate: 0.545
+2026-04-27 17:12:25,665 [INFO]   composite_score: 0.2319
+2026-04-27 17:12:25,665 [INFO]   by_format: {'structured': {'n': 11, 'rouge_l': 0.3979, 'drug_f1': 0.5791, 'diagnosis_f1': 0.3975}, 'voice': {'n': 11, 'rouge_l': 0.0812, 'drug_f1': 0.1573, 'diagnosis_f1': 0.0455}}
+2026-04-27 17:12:25,683 [INFO] wrote results/baseline_4b_soap.json

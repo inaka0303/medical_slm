@@ -1,0 +1,130 @@
+{
+  "encounter_id": "JC-CHF-A",
+  "scenario": "referral_or_revisit",
+  "disease_label": "chronic_heart_failure",
+  "disease_label_jp": "慢性心不全 (HFrEF、SGLT2-i 導入後 1 ヶ月再診、薬剤調整目的)",
+  "difficulty": "typical",
+  "version": "v2 (2026-05-01 専門医レビュー反映)",
+
+  "patient": {
+    "age": 67,
+    "gender": "男性",
+    "blood_type": null,
+    "comorbidities": [
+      "慢性心不全 HFrEF (LVEF 32%、3 ヶ月前 28% から改善傾向、reverse remodeling 進行中)",
+      "拡張型心筋症 (DCM、5 年前確定診断、冠動脈 CT で有意狭窄なし)",
+      "2 型糖尿病 (5 年前発症、HbA1c コントロール改善中)",
+      "慢性腎臓病 stage 2-3 (eGFR 55-65 で推移)"
+    ],
+    "current_medications": [
+      "サクビトリルバルサルタン 100mg 1錠 朝夕食後 (ARNI、エナラプリルから切替済み)",
+      "ビソプロロール 5mg 1錠 朝食後 (β遮断薬、目標 7.5-10mg まで段階的増量予定)",
+      "スピロノラクトン 25mg 1錠 朝食後 (MRA)",
+      "ダパグリフロジン 10mg 1錠 朝食後 (SGLT2-i、3 ヶ月前から 1 ヶ月前に新規導入)",
+      "フロセミド 20mg 1錠 朝食後 (うっ血コントロール、低用量維持)",
+      "メトホルミン 500mg 2錠 朝夕食後",
+      "アスピリン 100mg 1錠 朝食後 (心保護目的、低リスク継続)"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": ["父: 突然死 (60 歳代、詳細不明、心血管系疑い)", "母: 高血圧"],
+    "social_history": "退職 (元事務職)、妻と二人暮らし。運動習慣として週 2-3 回近所をウォーキング 20-30 分継続、心臓リハビリ通院中 (週 1 回、外来 CR プログラム参加 6 ヶ月目)、自宅でも運動習慣は維持されている。喫煙歴: 過去喫煙 (Brinkman 600、10 年前禁煙)。飲酒は機会飲酒 (発症後ほぼ禁酒)。自宅で塩分制限食を実施 (妻が管理、6g/日 目標)。睡眠 7 時間、SAS スクリーニング陰性。"
+  },
+
+  "encounter": {
+    "type": "外来再診",
+    "department": "循環器内科",
+    "encounter_date": "2026-04-22",
+    "chief_complaint": "SGLT2-i 導入後 1 ヶ月の定期再診 (薬剤調整目的、症状安定)",
+    "secondary_complaints": []
+  },
+
+  "reception_vitals": {
+    "BP_sys": 118, "BP_dia": 70, "HR": 64, "SpO2": 97, "RR": 16, "BT": 36.3
+  },
+
+  "input_pattern_A": {
+    "physician_summary": {
+      "raw_text": "67 歳男性、5 年前に DCM ベースの HFrEF (LVEF 25-28% で推移) と確定。3 ヶ月前から fantastic four (ARNI/β遮断薬/MRA/SGLT2-i) の段階的導入を開始。1 ヶ月前にダパグリフロジン 10mg/日を新規追加し、本日は SGLT2-i 導入後 1 ヶ月の薬剤調整目的の再診。\n\n前回受診 (2026-03-22、SGLT2-i 開始日) 以降の自覚症状: NYHA II 維持、新規の労作時息切れ・夜間発作性呼吸困難・起座呼吸・浮腫・体重増加なく安定。心臓リハビリは予定通り週 1 回継続、20 分ウォーキング × 週 2-3 回も無症状で完遂可能。眠気・倦怠感・脱水症状・性器感染症状・尿路感染症状なし。SGLT2-i 開始時に懸念された volume depletion・低血圧症状なし。\n\n服薬コンプライアンス良好、自己中断なし。妻が服薬カレンダーで管理。塩分制限 (6g/日 目標) 継続、体重日記記録継続中で過去 1 ヶ月安定 (61.5-62.2 kg、変動 < 1 kg)。\n\n本日採血で腎機能・電解質・HbA1c・BNP・脂質を確認。SGLT2-i 開始後早期の eGFR initial dip (3-5 mL/min/1.73m² 程度の一過性低下) と、その後の安定化傾向を評価。今回心エコーで LVEF 経過 (前回 28% → 今回 32%) を確認、reverse remodeling 進行中。",
+      "medication_list": "【お薬手帳より】\n・サクビトリルバルサルタン錠 100mg 1錠 朝夕食後 (ARNI、3 ヶ月前にエナラプリル 5mg から切替、目標用量 200mg×2/日 まで漸増予定)\n・ビソプロロールフマル酸塩錠 5mg 1錠 朝食後 (3 ヶ月前 2.5mg から増量、目標 7.5-10mg まで漸増予定)\n・スピロノラクトン錠 25mg 1錠 朝食後 (MRA、K・Cr 確認しつつ継続)\n・ダパグリフロジン錠 10mg 1錠 朝食後 (SGLT2-i、1 ヶ月前新規導入)\n・フロセミド錠 20mg 1錠 朝食後 (うっ血コントロール、低用量維持)\n・メトホルミン塩酸塩錠 500mg 2錠 朝夕食後\n・アスピリン錠 100mg 1錠 朝食後\n\n服薬カレンダー使用、自己中断なし、副作用報告なし、妻の服薬管理良好。",
+      "exam_findings": "意識清明。立位起立時のふらつきなし (orthostatic 評価陰性)。\n聴診: 心音 I/II 整、S3 ギャロップ前回まで聴取あったが本日聴取なし、収縮期雑音なし、肺音清で湿性ラ音なし。\n下腿浮腫なし (前回まで両側 trace 程度あったが本日消失)、頸静脈怒張なし。\n体重 61.8 kg (前回 62.0 kg、変動 -0.2 kg)、過去 1 ヶ月の体重日記記録で 61.5-62.2 kg の範囲で安定。\nBMI 22.5。",
+      "lab_results": "【今回採血 (本日朝)】\nWBC 6,200/μL、Hb 13.2 g/dL、Plt 21.5 万/μL\nAST 24 / ALT 20 / γ-GTP 30、Cr 1.05 (前回 1.02、SGLT2-i 開始時 0.98)、eGFR 58 (前回 60、開始時 62)\n  → SGLT2-i 開始後の initial dip 範囲内 (3-5 mL/min/1.73m² 低下)、現在は安定化\nNa 140、K 4.4 (MRA 内服下で正常範囲維持)、Cl 102\nGlucose 118 mg/dL、HbA1c 6.5% (3 ヶ月前 7.1% → 1 ヶ月前 6.8% → 今回 6.5%、明確な改善)\nLDL-C 78 mg/dL、HDL-C 45、TG 142、non-HDL 95\nBNP 142 pg/mL (3 ヶ月前 285 → 1 ヶ月前 198 → 今回 142、有意な改善傾向)\nNT-proBNP 580 pg/mL (前回 820、改善)\nCRP 0.05 mg/dL\n尿一般: 蛋白 (-)、糖 (3+) (SGLT2-i による生理的糖尿、想定範囲内)、潜血 (-)、白血球反応 (-)\n\n【ECG (本日)】\n洞調律、HR 64、PR 178 ms、QRS 0.10 秒、QT 0.42 秒\nLBBB 様の幅広い QRS なし、左室肥大所見軽度、ST-T 異常なし\n前回 ECG と比較して有意変化なし\n\n【経胸壁心エコー (本日)】\nLVEF 32% (Simpson 法、modified biplane)、前回 28% → 今回 32% で改善\nLVDd 58 mm (前回 62 mm、軽度縮小、reverse remodeling 進行中)、LVDs 47 mm\n壁運動: 全周性 hypokinesis (DCM パターン)、前回より軽度改善\n僧帽弁逆流: 中等度 → 軽度〜中等度 (functional MR、reverse remodeling に伴い改善)\nAR/TR: なし〜trace、心嚢液なし\n左房径 42 mm (前回 44、軽度縮小)、IVC 14 mm (collapsibility 良好)、PASP 28 mmHg (推定、軽度上昇のみ)\nstrain 解析: GLS -10.5% (前回 -8.8%、改善傾向、ただし正常 -18% 未満は維持)"
+    }
+  },
+
+  "input_pattern_B": null,
+
+  "reference_soap": {
+    "S": "67 歳男性、DCM ベースの HFrEF (前回 LVEF 28%) で 5 年来通院中。3 ヶ月前から fantastic four (ARNI/β/MRA/SGLT2-i) 段階的導入中、1 ヶ月前にダパグリフロジン 10mg/日 新規追加。本日は SGLT2-i 導入後 1 ヶ月の薬剤調整目的の再診。\nNYHA II 維持で安定、新規の労作時息切れ・PND・起座呼吸・浮腫・体重増加なし、20-30 分ウォーキング週 2-3 回完遂可能。SGLT2-i に伴う眠気・倦怠感・脱水・性器感染・尿路感染症状なし。\n服薬コンプライアンス良好 (妻管理)、塩分制限 6g/日継続、体重日記で過去 1 ヶ月 61.5-62.2 kg で安定。心臓リハビリ週 1 回継続中。",
+    "O": "受付バイタル: BP 118/70 mmHg、HR 64/min、SpO2 97% (RA)、RR 16、BT 36.3℃。意識清明、orthostatic 陰性。\n聴診: 心音 I/II 整、前回まで聴取された S3 ギャロップ本日消失、収縮期雑音なし、肺音清で湿性ラ音なし。下腿浮腫前回 trace → 本日なし、頸静脈怒張なし。\n体重 61.8 kg (前回 62.0、過去 1 ヶ月安定)、BMI 22.5。\n\n採血: Cr 1.05 (前回 1.02、SGLT2-i 開始時 0.98、initial dip 範囲内で安定化)、eGFR 58 (前回 60、開始時 62)、K 4.4 (MRA 下で正常)、Na 140。\nHbA1c 6.5% (3 ヶ月前 7.1% → 1 ヶ月前 6.8% → 今回 6.5%、改善)。\nBNP 142 (3 ヶ月前 285 → 1 ヶ月前 198 → 今回 142、明確な改善)、NT-proBNP 580 (前回 820、改善)。\nLDL-C 78、CRP 0.05。尿糖 3+ (SGLT2-i による生理的糖尿、想定範囲)、尿蛋白 (-)、UTI 所見なし。\n\n本日 ECG: 洞調律 HR 64、QRS 0.10 秒、ST-T 異常なし、前回比有意変化なし。\n本日心エコー: LVEF 32% (前回 28% → 改善)、LVDd 58 mm (前回 62、軽度縮小)、全周性 hypokinesis 軽度改善、functional MR 中等度→軽度〜中等度に改善、左房径 42 mm (前回 44 縮小)、PASP 28 mmHg、GLS -10.5% (前回 -8.8% 改善)。Reverse remodeling 進行中。",
+    "A": "# 1. 慢性心不全 HFrEF (DCM ベース) — NYHA II 安定、reverse remodeling 進行中\n  - LVEF 経過: 5 年前発症時 25% → 3 ヶ月前 28% → 今回 32%、明確な改善\n  - LVDd 62 → 58 mm 縮小、左房径 44 → 42 mm 縮小、functional MR 改善、GLS -8.8 → -10.5% 改善\n  - BNP 285 → 198 → 142 で明確な改善傾向、NT-proBNP も同様\n  - S3 ギャロップ消失、下腿浮腫消失、体重安定 = うっ血コントロール良好\n  - Nohria-Stevenson 分類 profile A (warm & dry) 維持\n  - Fantastic four 4 剤併用効果良好、忍容性良好\n# 2. 拡張型心筋症 (DCM) — 5 年来確定診断、冠動脈 CT で有意狭窄なし、reverse remodeling 進行中\n# 3. 2 型糖尿病 — HbA1c 7.1% → 6.5% に改善 (SGLT2-i + メトホルミンで良好コントロール)\n# 4. 慢性腎臓病 stage 2-3 — eGFR 58 で安定、SGLT2-i initial dip は許容範囲内 (3-5 mL/min/1.73m² 低下、その後安定化、長期的には腎保護効果期待)\n# 5. SGLT2-i 導入後 1 ヶ月評価 — 眠気・脱水・性器感染・UTI なく忍容性良好、HbA1c・BNP 改善、Cr/eGFR 安定、生理的尿糖のみ",
+    "P": "1. **ARNI 増量予定**: サクビトリルバルサルタン 100mg×2/日 → 200mg×2/日 へ漸増。本日 BP 118/70 で十分な余裕あり、Cr/K 安定。次回再診 (2 週後) で BP・Cr・K 再確認後に増量決定。目標は最大耐容量。\n2. **β遮断薬増量予定**: ビソプロロール 5mg → 7.5mg/日 を次回判断。HR 64 で余裕あり、目標 7.5-10mg/日。HR 50-60、BP 100 以上を維持しつつ漸増。\n3. **MRA・SGLT2-i 継続**: スピロノラクトン 25mg/日、ダパグリフロジン 10mg/日。K 4.4・Cr 1.05 安定、忍容性良好。シックデイルール (発熱・嘔吐・下痢時は SGLT2-i / メトホルミン / フロセミドを一時休薬し連絡) を本人・妻に紙面で再指導。\n4. **フロセミド継続**: 20mg/日。うっ血改善持続なら次回以降に減量 (20→10mg) を視野に入れるが、現状は維持。\n5. **メトホルミン・アスピリン継続**: 用量変更なし。\n6. **心臓リハビリ継続 + CPX 再評価**: 週 1 回外来 CR プログラム継続、3 ヶ月後に CPX で VO2peak 再評価。\n7. **次回外来**: 2 週後 (2026-05-06)、ARNI 増量前の BP/Cr/K 確認。心エコーは状況に応じ 6-12 ヶ月後を目処。\n8. **Red flag 再確認**: 体重 +2 kg/週、新規労作時呼吸困難、起座呼吸、PND、安静時動悸出現時は予約外受診を本人・妻に明確に説明。"
+  },
+
+  "reference_admission_summary": null,
+
+  "key_facts": {
+    "expected_triage": "外来継続",
+    "alternative_acceptable_triage": [],
+    "differential_diagnoses": [],
+    "must_not_miss": [
+      "fantastic four 漸増中の低血圧・徐脈・高 K・腎機能悪化",
+      "SGLT2-i に伴う性器感染・UTI・正常血糖糖尿病性ケトアシドーシス (euDKA)",
+      "DCM 進行に伴う再増悪・ICD/CRT 適応再評価のタイミング"
+    ],
+    "appropriate_next_tests": [
+      "採血 BNP/NT-proBNP・Cr/eGFR・電解質 (K)・HbA1c (再診時定期)",
+      "ECG (再診時定期)",
+      "経胸壁心エコー (症候時または 6-12 ヶ月後)",
+      "心肺運動負荷試験 CPX (3-6 ヶ月毎、運動耐容能評価)"
+    ],
+    "diagnoses_provisional": [],
+    "diagnoses": [
+      "慢性心不全 HFrEF (LVEF 32%、NYHA II 安定)",
+      "拡張型心筋症 (DCM)",
+      "2 型糖尿病",
+      "慢性腎臓病 stage 2-3"
+    ],
+    "medications_to_start": [],
+    "medications_to_continue": [
+      "サクビトリルバルサルタン 100mg×2/日 (次回 200mg×2/日 へ増量予定)",
+      "ビソプロロール 5mg/日 (次回 7.5mg/日 へ増量予定)",
+      "スピロノラクトン 25mg/日",
+      "ダパグリフロジン 10mg/日",
+      "フロセミド 20mg/日 (次回以降減量検討)",
+      "メトホルミン 500mg×2/日",
+      "アスピリン 100mg/日"
+    ],
+    "medications_to_stop": [],
+    "medications_to_consider": [
+      "ARNI 増量 (100mg×2 → 200mg×2/日)",
+      "β遮断薬増量 (ビソプロロール 5 → 7.5 → 10mg/日)",
+      "フロセミド減量 (20 → 10mg/日、うっ血改善持続時)"
+    ],
+    "vitals": {"BP_sys": 118, "BP_dia": 70, "HR": 64, "SpO2": 97, "RR": 16, "BT": 36.3},
+    "labs": {
+      "Hb": 13.2, "Cr": 1.05, "eGFR": 58, "Na": 140, "K": 4.4, "HbA1c": 6.5, "LDL_C": 78, "BNP": 142, "NT_proBNP": 580, "CRP": 0.05
+    },
+    "ecg_findings": ["洞調律 HR 64", "QRS 0.10 秒", "ST-T 異常なし", "前回比有意変化なし"],
+    "echo_findings": [
+      "LVEF 32% (前回 28% → 改善、reverse remodeling 進行中)",
+      "LVDd 58 mm (前回 62 → 縮小)",
+      "全周性 hypokinesis 軽度改善",
+      "functional MR 中等度 → 軽度〜中等度に改善",
+      "左房径 42 mm (前回 44 → 縮小)",
+      "GLS -10.5% (前回 -8.8% 改善)"
+    ],
+    "scores": {"NYHA": "II", "Nohria_Stevenson": "profile A (warm & dry)"},
+    "procedures": [],
+    "disposition": "外来継続 (2 週後再診、ARNI 増量予定)"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS 2017/2021 急性・慢性心不全診療ガイドライン (改訂 2024)", "section": "HFrEF 薬物療法", "key_point": "HFrEF (LVEF ≤ 40%) には fantastic four (ARNI/β遮断薬/MRA/SGLT2-i) を可能な限り早期に併用導入し、最大耐容量まで漸増することが死亡率・再入院率低減に推奨"},
+    {"guideline": "JCS 2017/2021 急性・慢性心不全診療ガイドライン (改訂 2024)", "section": "SGLT2 阻害薬", "key_point": "HFrEF + 2 型糖尿病 + CKD では SGLT2-i (ダパグリフロジン or エンパグリフロジン) を推奨、initial dip 後の腎機能は長期的に保護方向、HbA1c 改善も期待"},
+    {"guideline": "JCS 2017/2021 急性・慢性心不全診療ガイドライン (改訂 2024)", "section": "ICD/CRT 適応", "key_point": "一次予防 ICD は LVEF ≤ 35% かつ NYHA II-III かつ最適薬物療法 3 ヶ月以上後で評価。LVEF 改善時は再評価"},
+    {"guideline": "JCS 2021 不整脈非薬物治療ガイドライン", "section": "心臓リハビリテーション", "key_point": "HFrEF 患者には外来心臓リハビリ (週 1-3 回、5 ヶ月) を強く推奨、運動耐容能と QOL 改善、再入院率低下"}
+  ],
+
+  "is_negative_control": false,
+  "notes_for_reviewer": "HFrEF 安定期、fantastic four 段階的導入中の薬剤調整目的再診の典型例 (typical)。v2 で 2026-05-01 専門医レビュー (LESSONS_LEARNED.md) を反映済 — blood_type を null に、social_history は職業/運動/喫煙/飲酒で文を分割、過去喫煙表記、活気良好/苦悶様顔貌/橈骨/足背動脈触診/四肢冷感の再診時記載を削除、Plan を 8 項目に圧縮し A との重複削除、心エコーの 3 ヶ月毎を症候時 or 6-12 ヶ月後に変更、自宅でも運動習慣表現に統一。SLM 評価ポイント: (a) reverse remodeling の判定 (LVEF 28→32% + LVDd 縮小 + GLS 改善 + functional MR 改善 + BNP 改善 を統合的に評価できるか)、(b) ARNI/β遮断薬の漸増スケジュールを具体的に提示できるか (BP・HR・Cr・K の安全域確認込み)、(c) SGLT2-i の initial dip 解釈 (eGFR 62→58 を許容範囲と判定)、(d) MRA 継続条件 (K < 5.0、eGFR > 30) の言及、(e) フロセミドのうっ血改善時減量検討の言及、(f) 心臓リハビリ + 塩分 6g + 体重日記の生活指導維持、(g) ICD/CRT 適応の再評価タイミング (LVEF 改善時は保留妥当)、(h) Nohria-Stevenson profile A 判定。架空薬剤 (アプレキサン等) や根拠のない用量変更を出さないかも評価。"
+}

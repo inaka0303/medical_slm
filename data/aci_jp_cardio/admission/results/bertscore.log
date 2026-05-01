@@ -1,0 +1,31 @@
+Skipping import of cpp extensions due to incompatible torch version. Please upgrade to torch >= 2.11.0 (found 2.10.0+cu128).
+Loading bert_score and Japanese BERT model...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 29317.40it/s]
+[1mBertModel LOAD REPORT[0m from: cl-tohoku/bert-base-japanese-v3
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+bert.embeddings.position_ids               | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.decoder.bias               | UNEXPECTED |  | 
+cls.predictions.decoder.weight             | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Warning: Empty candidate sentence detected; setting raw BERTscores to 0.
+Model loaded on cuda.
+
+[results/baseline_4b_soap.json] target=soap computing BERTScore for 22 cases
+  wrote results/baseline_4b_soap.json
+  bertscore_f1 (mean): 0.6394
+  composite_score: 0.3891
+
+[results/baseline_9b_admission.json] target=admission computing BERTScore for 20 cases
+  wrote results/baseline_9b_admission.json
+  bertscore_f1 (mean): 0.6457
+  composite_score: 0.4152

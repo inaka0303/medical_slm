@@ -1,0 +1,97 @@
+{
+  "encounter_id": "JC-CHF-S",
+  "format": "structured",
+  "disease_label": "chronic_heart_failure",
+  "disease_label_jp": "慢性心不全 (HFrEF、外来 fantastic four 完成目的の短期入院)",
+
+  "patient": {
+    "age": 67,
+    "gender": "男性",
+    "blood_type": "B",
+    "comorbidities": ["拡張型心筋症 (DCM)", "2型糖尿病", "慢性腎臓病 stage 2-3 (eGFR 58)", "脂質異常症"],
+    "current_medications": [
+      "サクビトリルバルサルタン 100mg 2錠 朝夕食後",
+      "ビソプロロールフマル酸塩 5mg 1錠 朝食後",
+      "スピロノラクトン 25mg 1錠 朝食後",
+      "フロセミド 20mg 1錠 朝食後",
+      "メトホルミン 500mg 2錠 朝夕食後",
+      "アトルバスタチン 10mg 1錠 夕食後"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": ["父: 心不全 (70歳代死亡)", "兄: 拡張型心筋症"],
+    "social_history": "禁煙 5 年 (元 20 本×30 年、Brinkman 600)、機会飲酒のみ、職業: 元会社員、現在は妻と二人暮らし、ADL 自立"
+  },
+
+  "encounter": {
+    "department": "循環器内科",
+    "encounter_type": "外来定期通院→短期入院",
+    "chief_complaint": "SGLT2 阻害薬導入目的での予定入院",
+    "secondary_complaints": ["NYHA II 安定", "労作時息切れ軽度"],
+    "encounter_date": "2026-04-20",
+    "admission_date": "2026-04-20",
+    "discharge_date": null
+  },
+
+  "interview_text": {
+    "raw_text": "67 歳男性。3 年前に拡張型心筋症 + HFrEF (LVEF 30%) の診断で当科加療中。以後、サクビトリルバルサルタン (ARNI)・ビソプロロール・スピロノラクトン (MRA) の 3 剤を順次目標用量まで漸増し、現在は NYHA II で安定。フロセミド 20mg/日 でうっ血コントロール良好、過去 6 ヶ月間体重変動 ±1kg 以内、入院歴なし。\n直近 3 ヶ月の外来で BNP 280→245→220 pg/mL と緩徐に低下、心エコーで LVEF 30→32% と軽度改善傾向。本人より \"階段で少し息切れするが日常生活は問題なし\"。\n糖尿病は HbA1c 6.8% で良好、CKD は eGFR 58 で stage 2 後半-stage 3a 境界。\n本日、fantastic four の最後の 1 剤である SGLT2 阻害薬 (ダパグリフロジン) 新規導入目的で 1-2 日の予定入院。導入後 24 時間の腎機能モニタリングと、糖尿病合併ゆえ血糖変動 (特に euglycemic DKA リスク) を観察し、安定確認後に外来フォロー継続予定。\n本人は導入の意義を理解、妻も同席で説明済。",
+    "medication_list": "【お薬手帳より】\n・サクビトリルバルサルタンナトリウム水和物錠 100mg 2 錠 朝夕食後 (ARNI、目標 200mg×2/日 までは未到達)\n・ビソプロロールフマル酸塩錠 5mg 1 錠 朝食後 (β遮断薬、目標用量到達)\n・スピロノラクトン錠 25mg 1 錠 朝食後 (MRA、目標用量到達)\n・フロセミド錠 20mg 1 錠 朝食後 (ループ利尿薬)\n・メトホルミン塩酸塩錠 500mg 2 錠 朝夕食後 (糖尿病)\n・アトルバスタチンカルシウム錠 10mg 1 錠 夕食後 (脂質異常症)\n服薬コンプライアンス良好、自己管理。本日朝も内服済。",
+    "exam_findings": "意識清明、見た目年齢相応、苦悶なし。\nバイタル: BP 118/72 mmHg、HR 62/min 整、SpO2 97% (room air)、RR 16/min、BT 36.5℃、体重 68.4 kg (前回外来比 +0.3 kg)。\n胸部聴診: 心音 I/II 整、III 音 軽度聴取 (慢性的に同所見)、収縮期雑音なし、肺音清・ラ音なし。\n下腿浮腫なし、頸静脈怒張なし、肝頸静脈逆流なし。\n四肢冷感なし、橈骨動脈・足背動脈触知良好、左右差なし。",
+    "lab_results": "【心電図 (入院時)】\n洞調律 HR 62、QRS 0.10 秒 (左脚ブロックなし)、QTc 0.42 秒、ST-T 異常なし。\n\n【採血】\nWBC 6,400/μL、Hb 13.8 g/dL、Plt 21.0万/μL\nNa 139、K 4.4、Cl 103、BUN 22、Cr 1.18、eGFR 58\nGlucose 132 mg/dL、HbA1c 6.8%、LDL-C 88 mg/dL、HDL-C 48、TG 142\nBNP 220 pg/mL (3 ヶ月前 245)、トロポニン I 0.02 ng/mL (基準内)\nAST 28、ALT 24、ALP 78、CRP 0.1 mg/dL\n尿検査: 蛋白 (-)、糖 (-)、ケトン (-)\n\n【胸部 X-p】\nCTR 52%、肺うっ血なし、胸水なし。前回 (3 ヶ月前 CTR 53%) と著変なし。\n\n【経胸壁心エコー (入院時)】\nLVEF 32% (modified Simpson、3 ヶ月前 30% より軽度改善)、LVDd 62mm、LVDs 50mm、左室全体的 hypokinesis、僧帽弁逆流 軽度、三尖弁逆流軽度 (TRPG 28 mmHg)、下大静脈 14mm 呼吸性変動あり、心嚢液なし。"
+  },
+
+  "interview_text_voice": null,
+
+  "reference_soap": {
+    "S": "67 歳男性。3 年前に拡張型心筋症 + HFrEF (LVEF 30%) で当科加療開始。サクビトリルバルサルタン・ビソプロロール・スピロノラクトンを順次目標用量まで漸増、フロセミド 20mg でうっ血コントロール良好。NYHA II、過去 6 ヶ月体重変動 ±1kg 以内、入院歴なし。BNP 280→245→220 と緩徐低下、LVEF 30→32% と軽度改善傾向。糖尿病 (HbA1c 6.8%)、CKD stage 2-3 (eGFR 58)、脂質異常症併存。本日 fantastic four 最後の 1 剤 SGLT2 阻害薬 (ダパグリフロジン) 新規導入目的で 1-2 日の予定入院。本人・妻ともに導入の意義を理解。",
+    "O": "意識清明、苦悶なし。BP 118/72、HR 62 整、SpO2 97% RA、RR 16、BT 36.5、体重 68.4 kg (前回 +0.3)。心音 I/II 整、III 音軽度聴取 (慢性所見)、雑音なし。肺音清、下腿浮腫・頸静脈怒張なし。\n12 誘導心電図: 洞調律 HR 62、QRS 0.10 秒、ST-T 異常なし。\n採血: BNP 220 pg/mL (前回 245)、Cr 1.18 / eGFR 58、Na 139、K 4.4、Glucose 132、HbA1c 6.8、LDL 88、トロポニン I 0.02 (基準内)。尿: 蛋白・糖・ケトン (-)。\n胸部 X-p: CTR 52%、うっ血・胸水なし。\n心エコー: LVEF 32% (前回 30%)、LVDd 62/LVDs 50、全体的 hypokinesis、MR 軽度、TR 軽度 (TRPG 28)、IVC 14mm 呼吸性変動あり。",
+    "A": "拡張型心筋症に伴う HFrEF (LVEF 32%)、NYHA II、安定期。3 年間の至適薬物治療 (ARNI + β遮断薬 + MRA + ループ利尿薬) で BNP・LVEF・症状とも緩徐改善傾向。\nfantastic four 4 剤目の SGLT2 阻害薬未導入であり、本日 dapagliflozin 10mg/日 新規導入により予後改善 (DAPA-HF 試験) を期待。\n糖尿病合併ゆえ euglycemic DKA・尿路感染・volume depletion がリスク。CKD stage 2-3 (eGFR 58) で SGLT2-i 導入可 (eGFR ≥25 mL/min/1.73m² で適応)、初期に eGFR 軽度低下 (initial dip) は想定内、Cr モニタリングが必要。\n生命予後改善目的の至適薬物治療完成段階。",
+    "P": "1. ダパグリフロジン 10mg 1 錠/日 朝食後 新規導入 (HFrEF 適応、DAPA-HF/DELIVER 試験エビデンス)。\n2. 導入後 24-48 時間モニタリング:\n   - 腎機能: 入院時/24h/48h Cr・eGFR チェック (initial dip 10-15% までは想定内、>30% 低下なら一時中止検討)\n   - 血糖: 食前・食後、発熱時・体調不良時の sick day rule 説明 (euglycemic DKA 予防)\n   - 体重・尿量・血圧モニタリング (volume depletion 注意)\n3. 既存薬は全て継続:\n   - サクビトリルバルサルタン 100mg×2/日 (将来 200mg×2/日 へ漸増検討)\n   - ビソプロロール 5mg/日 (目標用量到達)\n   - スピロノラクトン 25mg/日 (K 4.4 で問題なし、SGLT2-i 導入で K 上昇に注意)\n   - フロセミド 20mg/日 (SGLT2-i の利尿効果で減量検討の余地あり、退院時判断)\n4. 糖尿病: メトホルミン継続 (Cr 1.18 / eGFR 58 で問題なし、ヨード造影予定なし)、HbA1c 6.8% で良好。\n5. 脂質異常症: アトルバスタチン継続 (LDL 88 で目標値 70 に近い)。\n6. 退院後: 2 週間後外来で Cr・BNP・体重・症状チェック、その後 1 ヶ月毎外来。\n7. 患者教育: sick day rule (発熱・嘔吐・下痢時は SGLT2-i 一時休薬)、塩分制限 (6g/日)、体重日記、心臓リハビリテーション継続、インフルエンザ・肺炎球菌ワクチン。\n8. 外来フォロー継続、6 ヶ月後に CRT-D 適応再評価 (現状 QRS 0.10 秒で未適応も今後の経過次第)。"
+  },
+
+  "reference_admission_summary": "【入院時サマリ】\n67 歳男性。3 年前に拡張型心筋症 + HFrEF (LVEF 30%) と診断、当科加療中。既往: 2 型糖尿病 (HbA1c 6.8%)、CKD stage 2-3 (eGFR 58)、脂質異常症。家族歴: 父に心不全、兄に DCM。禁煙 5 年。妻と二人暮らし、ADL 自立。\n至適薬物治療として ARNI (サクビトリルバルサルタン)、β遮断薬 (ビソプロロール)、MRA (スピロノラクトン)、ループ利尿薬 (フロセミド) を導入・漸増、現在 NYHA II 安定。BNP 280→245→220 と緩徐低下、LVEF 30→32% と軽度改善傾向。過去 6 ヶ月間入院歴なく、体重変動 ±1kg 以内。\n2026-04-20 外来で fantastic four 最後の 1 剤である SGLT2 阻害薬 (ダパグリフロジン) 新規導入目的で 1-2 日の予定入院。来院時 BP 118/72、HR 62、SpO2 97% RA、体重 68.4 kg、心音 III 音軽度のみ・うっ血所見なし。BNP 220、Cr 1.18 / eGFR 58、心エコー LVEF 32%。\n#1 拡張型心筋症 + HFrEF (LVEF 32%)、NYHA II 安定 — fantastic four 完成目的、ダパグリフロジン 10mg/日 導入。\n#2 2 型糖尿病 (HbA1c 6.8%) — メトホルミン継続、SGLT2-i 導入による euglycemic DKA リスクと sick day rule 教育。\n#3 CKD stage 2-3 (eGFR 58) — SGLT2-i 導入後 24-48 時間 Cr モニタリング、initial dip は想定内。\n#4 脂質異常症 — アトルバスタチン継続。\n治療方針: ダパグリフロジン 10mg/日 導入、既存 ARNI/β遮断/MRA/ループ利尿薬は全て継続、48 時間 Cr・血糖・体重モニタリング、sick day rule 教育、安定確認後退院、2 週間後外来フォロー。",
+
+  "key_facts": {
+    "diagnoses": ["拡張型心筋症", "慢性心不全 (HFrEF)", "LVEF 32%", "NYHA II", "2型糖尿病", "慢性腎臓病 stage 2-3"],
+    "medications_to_start": [
+      "ダパグリフロジン 10mg/日"
+    ],
+    "medications_to_continue": [
+      "サクビトリルバルサルタン 100mg×2/日",
+      "ビソプロロール 5mg/日",
+      "スピロノラクトン 25mg/日",
+      "フロセミド 20mg/日",
+      "メトホルミン 500mg×2/日",
+      "アトルバスタチン 10mg/日"
+    ],
+    "medications_to_stop": [],
+    "vitals": {"BP_sys": 118, "BP_dia": 72, "HR": 62, "SpO2": 97, "RR": 16, "BT": 36.5, "Weight": 68.4},
+    "labs": {
+      "BNP": 220,
+      "TnI": 0.02,
+      "Cr": 1.18,
+      "eGFR": 58,
+      "Na": 139,
+      "K": 4.4,
+      "Glucose": 132,
+      "HbA1c": 6.8,
+      "LDL_C": 88,
+      "CRP": 0.1
+    },
+    "ecg_findings": ["洞調律 HR 62", "QRS 0.10 秒", "ST-T 異常なし"],
+    "echo_findings": ["LVEF 32%", "LVDd 62mm", "LVDs 50mm", "全体的 hypokinesis", "MR 軽度", "TR 軽度 TRPG 28", "IVC 14mm 呼吸性変動あり"],
+    "scores": {"NYHA": 2, "LVEF": 32},
+    "procedures": ["SGLT2 阻害薬新規導入", "腎機能・血糖モニタリング"],
+    "disposition": "1-2 日の予定入院 → 退院後外来フォロー"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS 2017/2024 急性・慢性心不全診療ガイドライン", "section": "HFrEF 薬物治療 (fantastic four)", "key_point": "HFrEF (LVEF ≤40%) には ARNI/ACE-I/ARB + β遮断薬 + MRA + SGLT2 阻害薬の 4 剤を全例で導入することが推奨 (クラス I)"},
+    {"guideline": "JCS 2024 心不全 focus update", "section": "SGLT2 阻害薬", "key_point": "ダパグリフロジン・エンパグリフロジンは LVEF にかかわらず予後改善効果 (DAPA-HF/EMPEROR-Reduced/DELIVER 試験)、eGFR ≥20-25 mL/min/1.73m² で導入可"},
+    {"guideline": "日本糖尿病学会 SGLT2 阻害薬適正使用 Recommendation", "section": "副作用と sick day rule", "key_point": "発熱・嘔吐・下痢・脱水時は SGLT2-i を一時休薬し euglycemic DKA を予防、尿路感染・性器感染にも注意"}
+  ],
+
+  "format_pair_id": "JC-CHF-PAIR-01",
+  "is_negative_control": false,
+  "difficulty": "typical",
+  "notes_for_reviewer": "標準的な HFrEF 外来安定期の fantastic four 完成目的入院。評価ポイント: (1) ARNI + β遮断薬 + MRA + SGLT2-i の 4 剤を P に漏れなく挙げられるか、(2) HFrEF/HFpEF を区別して HFrEF と明示できるか、(3) ダパグリフロジン導入時の副作用 (euglycemic DKA、initial dip、volume depletion) と sick day rule に言及できるか、(4) CKD stage 2-3 で SGLT2-i 適応であることを正しく判断できるか、(5) 4B が架空の SGLT2 阻害薬名 (ダパグリンなど) を生成しないか。"
+}

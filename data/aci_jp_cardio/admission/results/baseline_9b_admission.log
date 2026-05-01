@@ -1,0 +1,43 @@
+2026-04-27 17:07:55,424 [INFO] === run config ===
+2026-04-27 17:07:55,424 [INFO]   cases: cases.jsonl
+2026-04-27 17:07:55,424 [INFO]   target: admission
+2026-04-27 17:07:55,424 [INFO]   model: 9b_admission (9B + admission LoRA) at http://localhost:8083
+2026-04-27 17:07:55,424 [INFO]   output: results/baseline_9b_admission.json
+2026-04-27 17:07:55,427 [INFO]   cases loaded: 22
+2026-04-27 17:08:10,884 [INFO] Using default tokenizer.
+2026-04-27 17:08:10,899 [INFO] [1/22] JC-AD-S: 14032ms  R-L=0.4862 drug_f1=0.0 diag_f1=0.5
+2026-04-27 17:08:18,966 [INFO] [2/22] JC-AD-V: 8059ms  R-L=0.1296 drug_f1=0.0 diag_f1=0.333
+2026-04-27 17:08:32,708 [INFO] [3/22] JC-AF-S: 13732ms  R-L=0.3689 drug_f1=0.571 diag_f1=0.4
+2026-04-27 17:08:44,782 [INFO] [4/22] JC-AF-V: 12061ms  R-L=0.3008 drug_f1=0.6 diag_f1=0.667
+2026-04-27 17:08:59,622 [INFO] [5/22] JC-AHF-S: 14812ms  R-L=0.305 drug_f1=0.333 diag_f1=0.588
+2026-04-27 17:09:10,565 [INFO] [6/22] JC-AHF-V: 10926ms  R-L=0.2025 drug_f1=0.25 diag_f1=0.0
+2026-04-27 17:09:21,466 [INFO] [7/22] JC-AMI-S: 10885ms  R-L=0.375 drug_f1=0.769 diag_f1=0.5
+2026-04-27 17:09:36,113 [INFO] [8/22] JC-AMI-V: 14630ms  R-L=0.2247 drug_f1=0.0 diag_f1=0.4
+2026-04-27 17:09:50,988 [INFO] [9/22] JC-AS-S: 14848ms  R-L=0.3333 drug_f1=0.667 diag_f1=0.444
+2026-04-27 17:10:05,906 [INFO] [10/22] JC-AS-V: 14898ms  R-L=0.2105 drug_f1=0.5 diag_f1=0.222
+2026-04-27 17:10:20,819 [INFO] [11/22] JC-CA-S: 14889ms  R-L=0.345 drug_f1=0.667 diag_f1=0.571
+2026-04-27 17:10:29,516 [INFO] [12/22] JC-CA-V: 8680ms  R-L=0.3006 drug_f1=0.5 diag_f1=0.4
+2026-04-27 17:10:44,351 [INFO] [13/22] JC-CHF-S: 14808ms  R-L=0.3143 drug_f1=1.0 diag_f1=0.4
+2026-04-27 17:10:54,236 [INFO] [14/22] JC-CHF-V: 9870ms  R-L=0.2239 drug_f1=0.769 diag_f1=0.462
+2026-04-27 17:11:09,127 [INFO] [15/22] JC-EA-S: 14866ms  R-L=0.3313 drug_f1=0.6 diag_f1=0.4
+2026-04-27 17:11:20,462 [INFO] [16/22] JC-EA-V: 11318ms  R-L=0.303 drug_f1=0.615 diag_f1=0.0
+2026-04-27 17:11:35,195 [INFO] [17/22] JC-PE-S: 14710ms  R-L=0.536 drug_f1=0.5 diag_f1=0.4
+2026-04-27 17:11:45,031 [INFO] [18/22] JC-PE-V: 9822ms  R-L=0.1316 drug_f1=0.4 diag_f1=0.444
+2026-04-27 17:11:45,031 [INFO] [19/22] JC-SCP-S: SKIP (negative control)
+2026-04-27 17:11:45,031 [INFO] [20/22] JC-SCP-V: SKIP (negative control)
+2026-04-27 17:11:59,463 [INFO] [21/22] JC-VSA-S: 14415ms  R-L=0.2857 drug_f1=0.571 diag_f1=0.286
+2026-04-27 17:12:10,093 [INFO] [22/22] JC-VSA-V: 10616ms  R-L=0.2653 drug_f1=0.0 diag_f1=0.0
+2026-04-27 17:12:10,093 [INFO] === aggregate ===
+2026-04-27 17:12:10,093 [INFO]   total_cases: 22
+2026-04-27 17:12:10,093 [INFO]   valid_evaluations: 20
+2026-04-27 17:12:10,093 [INFO]   rouge_l: 0.2987
+2026-04-27 17:12:10,094 [INFO]   bertscore_f1: None
+2026-04-27 17:12:10,094 [INFO]   drug_f1: 0.4656
+2026-04-27 17:12:10,094 [INFO]   drug_recall: 0.3971
+2026-04-27 17:12:10,094 [INFO]   drug_precision: 0.6217
+2026-04-27 17:12:10,094 [INFO]   diagnosis_f1: 0.3709
+2026-04-27 17:12:10,094 [INFO]   vitals_match_rate: 0.3252
+2026-04-27 17:12:10,094 [INFO]   mean_latency_ms: 12643
+2026-04-27 17:12:10,094 [INFO]   composite_score: 0.2921
+2026-04-27 17:12:10,094 [INFO]   by_format: {'structured': {'n': 10, 'rouge_l': 0.3681, 'drug_f1': 0.5678, 'diagnosis_f1': 0.4489}, 'voice': {'n': 10, 'rouge_l': 0.2293, 'drug_f1': 0.3634, 'diagnosis_f1': 0.2928}}
+2026-04-27 17:12:10,110 [INFO] wrote results/baseline_9b_admission.json

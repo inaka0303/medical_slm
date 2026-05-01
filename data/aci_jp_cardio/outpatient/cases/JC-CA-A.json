@@ -1,0 +1,151 @@
+{
+  "encounter_id": "JC-CA-A",
+  "scenario": "referral_or_revisit",
+  "disease_label": "cardiac_amyloidosis",
+  "disease_label_jp": "心アミロイドーシス (wt-ATTR-CA、tafamidis 導入後 3 ヶ月再診)",
+  "difficulty": "typical",
+  "version": "v2 (2026-05-01 専門医レビュー反映)",
+
+  "patient": {
+    "age": 78,
+    "gender": "男性",
+    "blood_type": null,
+    "comorbidities": [
+      "wt-ATTR 心アミロイドーシス (2026-01 PYP scintigraphy 陽性 grade 3 で確定、AL 除外済)",
+      "心不全 (HFpEF、NYHA II)",
+      "心房細動 (持続性、CHA2DS2-VASc 5 点)",
+      "両側手根管症候群 (5 年前両側手術歴)",
+      "腰部脊柱管狭窄症 (保存的加療中)"
+    ],
+    "current_medications": [
+      "タファミディスメグルミン 61mg 1錠 朝食後",
+      "アピキサバン 5mg 1錠 朝夕食後",
+      "フロセミド 20mg 1錠 朝食後 (低用量、前負荷依存性低血圧に注意)",
+      "アセトアミノフェン 500mg 頓用 (腰痛時)"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": [
+      "父: 80 歳代で心不全 (詳細不明)",
+      "母: 高血圧、85 歳で老衰",
+      "同胞: 特記なし",
+      "子: 特記なし"
+    ],
+    "social_history": "仕事は退職後 (元中学校教員)。妻と二人暮らし、ADL は自立しているが長距離歩行で息切れあり、屋内歩行は問題なし、転倒歴なし。喫煙は過去喫煙 (40 代で禁煙、Brinkman 約 600)、飲酒なし。"
+  },
+
+  "encounter": {
+    "type": "外来再診",
+    "department": "循環器内科",
+    "encounter_date": "2026-04-21",
+    "chief_complaint": "wt-ATTR-CA に対する tafamidis 導入後 3 ヶ月フォロー (副作用評価・心機能経過)",
+    "secondary_complaints": []
+  },
+
+  "reception_vitals": {
+    "BP_sys": 122, "BP_dia": 72, "HR": 68, "SpO2": 96, "RR": 16, "BT": 36.3
+  },
+
+  "input_pattern_A": {
+    "physician_summary": {
+      "raw_text": "78 歳男性、wt-ATTR 心アミロイドーシス確定後 (2026-01-18 確定診断) の tafamidis 導入後 3 ヶ月再診。\n\n【診断経緯】\n2025 年秋から労作時息切れ・両下腿浮腫が悪化、近医で HFpEF として加療されていたが BNP 高値持続 + 心エコーで concentric LVH (IVSd 16 mm、PWd 15 mm) + 左室流入波形 restrictive pattern + apical sparing pattern を指摘され、当院アミロイドーシス専門外来紹介。心電図で低電位 + 偽梗塞パターン (V1-V3 poor R progression)、両側手根管症候群既往 (5 年前手術)、腰部脊柱管狭窄症既往の red flag を認め、AL 除外検査 (M タンパク同定電気泳動陰性、免疫固定陰性、血清遊離軽鎖比 1.2 で正常範囲) 後に PYP scintigraphy を実施。Heart-to-contralateral lung ratio (H/CL) 1.7、Perugia visual grade 3 で wt-ATTR-CA 確定。TTR 遺伝子検査は陰性 (野生型)。\n\n【治療開始】\n2026-01-21 よりタファミディスメグルミン 61mg/日を導入。心房細動 (持続性、CHA2DS2-VASc 5 点) に対しアピキサバン 5mg 1日2回継続、HFpEF symptom control にフロセミド 20mg/日 (前負荷依存性低血圧に配慮し低用量維持)。\n\n【導入後経過】\nタファミディス導入から本日まで約 3 ヶ月。消化器症状 (悪心・下痢・食欲不振) なし、肝機能異常なし、皮疹なし、副作用なく服薬継続中。NYHA II 維持、自宅では妻と外出 (週 1 回スーパーへの徒歩 800m) 可能、息切れ増悪なし、夜間発作性呼吸困難なし、新規不整脈・失神なし、両下腿浮腫は軽度 +1 で安定 (フロセミド低用量維持)。腰痛・両手のしびれ症状は自制内、新規 ADL 低下なし。家庭血圧 110-120/65-75、起立性低血圧の自覚なし。自宅でも運動習慣として日中の屋内歩行は維持されている。\n\n【本日】副作用評価および心機能経過確認、BNP・トロポニン・腎機能フォロー、心エコー再評価。",
+      "medication_list": "【お薬手帳より】\n・タファミディスメグルミン カプセル 61mg 1錠 朝食後 (2026-01-21 開始)\n・アピキサバン錠 5mg 1錠 朝夕食後 (DOAC、AF 抗凝固)\n・フロセミド錠 20mg 1錠 朝食後 (低用量、前負荷依存性低血圧に注意)\n・アセトアミノフェン錠 500mg 頓用 (腰痛時、月数回)\n服薬カレンダー使用、妻が確認、自己中断なし、副作用 (悪心・下痢・皮疹) なし。",
+      "exam_findings": "意識清明。\n聴診: 心音 I/II やや減弱、過剰心音 (S3/S4) 明らかでなし、収縮期雑音 grade 2/6 (僧帽弁領域)、肺音清。\n下腿浮腫 +1 (軽度、左右対称)、頸静脈怒張なし。\n両手の手根管領域 (Tinel 陽性軽度残存)、しびれは自制内。\n体重 56.0 kg (前回 55.8 kg、ほぼ変化なし)。",
+      "lab_results": "【今回採血 (本日朝)】\nWBC 5,800/μL、Hb 12.4 g/dL、Plt 18.5 万/μL\nAST 24 / ALT 22 / γ-GTP 32 / ALP 78 (肝機能正常範囲)、Cr 1.08 / eGFR 52 (前回 1.05/53、安定)\nNa 138、K 4.4、Cl 102\nGlucose 102 mg/dL、HbA1c 5.6%\nLDL-C 92、HDL-C 50、TG 118\nBNP 320 pg/mL (前回 380、改善傾向)\nhs トロポニン T 0.045 ng/mL (前回 0.052、軽度低下)\nCRP 0.12 mg/dL\n血清遊離軽鎖比 (κ/λ) 1.2 (前回同様、AL rule-out 維持)\n\n【ECG (本日)】\n心房細動、HR 68 (洞調律でなく f 波)、QRS 0.10 秒\n低電位 (肢誘導 R+S < 5 mm)、V1-V3 偽梗塞パターン (poor R progression)\n前回と比較して新規変化なし\n\n【経胸壁心エコー (本日)】\nLVEF 58% (Simpson 法、前回 56%、維持)、IVSd 16 mm / PWd 15 mm (concentric LVH 維持)\nApical sparing pattern (longitudinal strain 評価で apex 保持、basal-mid 低下) 持続\nLA 径 48 mm (拡大持続)、E/A 評価不可 (AF)、E/e' 18 (上昇持続)\n僧帽弁逆流軽度、TR 軽度、IVC 16 mm (軽度拡張、呼吸性変動あり)\n心嚢液なし、apical thrombus なし\n前回と比較して LVEF・壁厚に有意変化なし、apical sparing pattern 維持"
+    }
+  },
+
+  "input_pattern_B": null,
+
+  "reference_soap": {
+    "S": "78 歳男性、2026-01-18 に PYP scintigraphy grade 3 / H/CL 1.7、AL 除外検査陰性で wt-ATTR 心アミロイドーシス確定、2026-01-21 よりタファミディスメグルミン 61mg/日導入、本日導入後 3 ヶ月の定期再診。\n服薬継続中、消化器症状 (悪心・下痢・食欲不振)・肝機能異常・皮疹なく、副作用なく経過。NYHA II 維持、長距離歩行で息切れあるが自宅 ADL 自立、週 1 回外出 (徒歩 800m) 可能。夜間発作性呼吸困難・新規失神・新規不整脈なし。両下腿浮腫 +1 で安定 (フロセミド 20mg/日 低用量維持)、家庭血圧 110-120/65-75 で起立性低血圧の自覚なし。腰痛・両手のしびれは自制内。自宅でも運動習慣として屋内歩行は維持されている。妻と二人暮らし、服薬カレンダー使用で自己中断なし。\n既往: 両側手根管症候群 (5 年前両側手術)、腰部脊柱管狭窄症、心房細動 (持続性、CHA2DS2-VASc 5 点)。家族歴: 父が 80 歳代で心不全 (詳細不明、hereditary ATTR の可能性は低いが TTR 遺伝子検査は本人陰性)。",
+    "O": "受付バイタル: BP 122/72 mmHg、HR 68/min (AF)、SpO2 96% (RA)、RR 16、BT 36.3℃。意識清明、体重 56.0 kg (前回 55.8 kg、維持)。\n聴診: 心音 I/II やや減弱、明らかな S3/S4 なし、収縮期雑音 grade 2/6 (僧帽弁領域)、肺音清。下腿浮腫 +1 (左右対称、軽度)、頸静脈怒張なし。\n\n採血: Hb 12.4、Cr 1.08 / eGFR 52 (前回比安定)、Na 138 / K 4.4、AST 24 / ALT 22 / ALP 78 (肝機能正常)、BNP 320 (前回 380、改善傾向)、hs-TnT 0.045 (前回 0.052、軽度低下)、HbA1c 5.6%、血清遊離軽鎖比 1.2 (AL rule-out 維持)、CRP 0.12。\n\n本日 ECG: AF rhythm、HR 68、低電位 (肢誘導 R+S<5 mm)、V1-V3 偽梗塞パターン、前回比新規変化なし。\n本日心エコー: LVEF 58% (前回 56%、維持)、IVSd 16 mm / PWd 15 mm (concentric LVH 維持)、apical sparing pattern 持続、LA 48 mm 拡大持続、E/e' 18 上昇、IVC 16 mm 軽度拡張、僧帽弁逆流軽度、心嚢液・apical thrombus なし、前回比有意変化なし。",
+    "A": "# 1. wt-ATTR 心アミロイドーシス (2026-01 PYP grade 3 / H/CL 1.7 で確定、AL 除外済) — タファミディス 61mg/日 導入後 3 ヶ月、副作用なく経過良好\n  - 心エコーで LVEF・壁厚 維持、apical sparing pattern 持続、明らかな進行所見なし\n  - BNP・hs-TnT ともに軽度改善傾向 (BNP 380→320、hs-TnT 0.052→0.045)\n  - NYHA II 維持、ADL 自立、新規症状出現なし\n  - 肝機能正常、消化器症状なし、皮疹なし → タファミディス継続適応\n# 2. 心不全 (HFpEF) — NYHA II 維持、両下腿浮腫 +1 で安定、フロセミド 20mg/日 低用量維持で症状コントロール良好。前負荷依存性低血圧のリスク (CA 特有) に配慮し低用量継続中\n# 3. 心房細動 (持続性、CHA2DS2-VASc 5 点) — アピキサバン 5mg×2/日継続中、apical thrombus なし、出血合併症なし\n# 4. 両側手根管症候群既往 — 自制内、新規神経症状なし\n# 5. 腰部脊柱管狭窄症 — 保存的加療継続、アセトアミノフェン頓用で自制内\n# 注意点: ACE 阻害薬・ARB・β遮断薬は CA で前負荷依存性低血圧および伝導障害リスクのため慎重投与が原則 (本症例は HTN 既往なく現状未投与で問題なし)、ジゴキシンはアミロイド線維結合で中毒リスク・ベラパミル/ジルチアゼムは CA で禁忌",
+    "P": "1. **タファミディスメグルミン 61mg/日 継続**: 副作用なく経過良好、ATTR-ACT 試験ベースで wt-ATTR-CA に対する disease-modifying therapy として継続。次回再診まで 6 ヶ月分処方。\n2. **副作用モニター継続**: 消化器症状 (悪心・下痢・食欲不振)、肝機能、皮疹を毎回チェック。\n3. **アピキサバン 5mg 1 日 2 回継続**: AF 抗凝固、CHA2DS2-VASc 5 点で適応継続。腎機能 (eGFR 52) で 5mg 維持可、出血リスク評価継続。\n4. **フロセミド 20mg/日 継続 (低用量維持)**: HFpEF symptom control、前負荷依存性低血圧リスクに配慮し増量せず。家庭血圧・両下腿浮腫が安定しているため現用量維持。\n5. **次回外来 (6 ヶ月後)**: BNP・hs トロポニン T・腎機能・肝機能・血清遊離軽鎖比 (AL 再否定確認)、ECG、経胸壁心エコー (apical sparing pattern・LVEF・壁厚の経時変化評価)。\n6. **家族の遺伝相談**: 本人 TTR 遺伝子陰性 (野生型) のため家族の hereditary ATTR risk は低いと説明済。父の心不全エピソード (詳細不明) については「家族歴として記録、現時点で家族の遺伝検査は推奨せず」と本人・妻に説明。\n7. **症状増悪時 (息切れ増悪・新規失神・両下肢浮腫の急激増悪・新規不整脈の自覚) は予約外受診**するよう本人・妻に再確認。"
+  },
+
+  "reference_admission_summary": null,
+
+  "key_facts": {
+    "expected_triage": "外来継続",
+    "alternative_acceptable_triage": [],
+    "differential_diagnoses": [],
+    "must_not_miss": [
+      "タファミディス副作用 (消化器症状・肝機能異常)",
+      "AF 抗凝固下の出血合併症",
+      "前負荷依存性低血圧 (利尿薬過剰)",
+      "心室性不整脈・新規伝導障害",
+      "AL アミロイドーシスの再評価 (血清遊離軽鎖比定期確認)"
+    ],
+    "appropriate_next_tests": [
+      "BNP",
+      "hs トロポニン T",
+      "腎機能 (Cr/eGFR)",
+      "肝機能 (AST/ALT/ALP)",
+      "血清遊離軽鎖比 (AL rule-out 維持)",
+      "ECG",
+      "経胸壁心エコー (apical sparing pattern・LVEF・壁厚評価、6 ヶ月後)"
+    ],
+    "diagnoses_provisional": [],
+    "diagnoses": [
+      "wt-ATTR 心アミロイドーシス (2026-01 PYP grade 3 で確定)",
+      "心不全 (HFpEF、NYHA II)",
+      "心房細動 (持続性、CHA2DS2-VASc 5 点)",
+      "両側手根管症候群 (既往)",
+      "腰部脊柱管狭窄症 (保存的加療中)"
+    ],
+    "medications_to_start": [],
+    "medications_to_continue": [
+      "タファミディスメグルミン 61mg/日",
+      "アピキサバン 5mg×2/日",
+      "フロセミド 20mg/日 (低用量維持)",
+      "アセトアミノフェン 500mg 頓用"
+    ],
+    "medications_to_stop": [],
+    "medications_to_consider": [
+      "パチシラン・ブトリシラン (将来的な選択肢として SDM、現状保険適応外)"
+    ],
+    "medications_to_avoid": [
+      "ACE 阻害薬 / ARB (前負荷依存性低血圧リスク、慎重投与)",
+      "β遮断薬 (伝導障害・低血圧リスク、慎重投与)",
+      "ジゴキシン (アミロイド線維と結合し中毒リスク)",
+      "ベラパミル・ジルチアゼム (CA で禁忌、低血圧・伝導障害)"
+    ],
+    "vitals": {"BP_sys": 122, "BP_dia": 72, "HR": 68, "SpO2": 96, "RR": 16, "BT": 36.3},
+    "labs": {
+      "Hb": 12.4, "Cr": 1.08, "eGFR": 52, "BNP": 320, "hs_TnT": 0.045, "HbA1c": 5.6, "FLC_ratio": 1.2, "CRP": 0.12
+    },
+    "ecg_findings": [
+      "AF rhythm HR 68",
+      "低電位 (肢誘導 R+S<5 mm)",
+      "V1-V3 偽梗塞パターン (poor R progression)",
+      "前回比新規変化なし"
+    ],
+    "echo_findings": [
+      "LVEF 58% 維持",
+      "IVSd 16 mm / PWd 15 mm (concentric LVH 維持)",
+      "apical sparing pattern 持続",
+      "LA 48 mm 拡大持続",
+      "E/e' 18 上昇",
+      "IVC 16 mm 軽度拡張",
+      "心嚢液・apical thrombus なし"
+    ],
+    "scores": {
+      "CHA2DS2_VASc": 5,
+      "NYHA": 2,
+      "PYP_Perugia_grade": 3,
+      "H_CL_ratio": 1.7
+    },
+    "procedures": [],
+    "disposition": "外来継続 (6 ヶ月後再診)"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS 2020 心アミロイドーシス診療ガイドライン", "section": "wt-ATTR-CA の診断基準", "key_point": "PYP scintigraphy で Perugia grade 2-3 かつ AL 除外 (M タンパク同定電気泳動・免疫固定・血清遊離軽鎖比) があれば心生検なしで wt-ATTR-CA 確定診断可"},
+    {"guideline": "JCS 2020 心アミロイドーシス診療ガイドライン", "section": "薬物療法", "key_point": "wt-ATTR-CA に対しタファミディスメグルミン 61mg/日 (または 80mg/日) は ATTR-ACT 試験で死亡・心血管入院を有意に減少。導入後は副作用 (消化器・肝機能・皮疹) と心機能経過を定期評価"},
+    {"guideline": "JCS 2020 心アミロイドーシス診療ガイドライン", "section": "禁忌・慎重投与薬", "key_point": "心アミロイドーシスでは ACE 阻害薬・ARB・β遮断薬は前負荷依存性低血圧と伝導障害リスクで慎重投与、ジゴキシンはアミロイド線維結合で中毒リスク、ベラパミル・ジルチアゼムは禁忌"},
+    {"guideline": "JCS 2020 不整脈薬物治療ガイドライン", "section": "AF 抗凝固", "key_point": "CHA2DS2-VASc ≥2 点 (男性) では DOAC を第一選択、腎機能で用量調整 (アピキサバン: 5mg×2、ただし 80 歳以上 + Cr ≥1.5 + 体重 ≤60 kg のうち 2 項目で 2.5mg×2 へ減量)"}
+  ],
+
+  "is_negative_control": false,
+  "notes_for_reviewer": "wt-ATTR 心アミロイドーシス確定後 tafamidis 導入後 3 ヶ月再診の typical case (シナリオ A)。v2 で 2026-05-01 専門医レビュー [u]-[ag] および LESSONS_LEARNED.md を反映済 (blood_type=null、社会歴で職業と運動習慣を文分割、再診の活気・橈骨動脈触診削除、自宅でも運動習慣表現、心エコーは 6 ヶ月後へ間隔延長、過去喫煙表現、Plan は 7 項目で A との重複削除、CA 特有の β遮断薬・ACE 阻害薬・ARB・ジゴキシン・ベラパミル類を medications_to_avoid に明記)。SLM 評価ポイント: (a) タファミディス継続判断 (副作用なし・心機能維持で継続が妥当)、(b) 副作用モニター項目 (消化器・肝機能・皮疹) の P 言及、(c) CA で禁忌・慎重投与となる薬剤群 (ACE 阻害薬・ARB・β遮断薬・ジゴキシン・ベラパミル/ジルチアゼム) の認識、(d) 利尿薬は前負荷依存性低血圧に注意して低用量維持の判断、(e) AL rule-out 維持のため血清遊離軽鎖比定期確認、(f) AF 抗凝固 (アピキサバン) 継続と用量妥当性、(g) 心エコーで apical sparing pattern・LVEF・壁厚の経時変化を確認する次回検査計画 (3 ヶ月毎ではなく 6 ヶ月毎)、(h) 家族の遺伝相談 (本人 TTR 遺伝子陰性で hereditary ATTR risk 低と説明)、(i) Plan 冗長性回避 (5-8 項目以内、A との重複なし)。ハルシネーション (架空の薬剤名、不正確な PYP grade 解釈、CA で禁忌薬の処方) を入れていないかも評価。"
+}

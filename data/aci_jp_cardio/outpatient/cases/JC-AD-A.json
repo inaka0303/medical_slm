@@ -1,0 +1,118 @@
+{
+  "encounter_id": "JC-AD-A",
+  "scenario": "referral_or_revisit",
+  "disease_label": "aortic_dissection",
+  "disease_label_jp": "大動脈解離 (Stanford B 慢性期、薬物管理 1 年フォロー再診)",
+  "difficulty": "typical",
+  "version": "v2 (2026-05-01 専門医レビュー反映)",
+
+  "patient": {
+    "age": 75,
+    "gender": "男性",
+    "blood_type": null,
+    "comorbidities": [
+      "Stanford B 型急性大動脈解離 (DeBakey IIIb、2025-04 発症、保存的治療で慢性期へ移行)",
+      "高血圧 (15 年来加療)",
+      "脂質異常症",
+      "慢性腎臓病 G3a (eGFR 50 前後)"
+    ],
+    "current_medications": [
+      "テルミサルタン 40mg 1錠 朝食後",
+      "アムロジピン 5mg 1錠 朝食後",
+      "ビソプロロール 5mg 1錠 朝食後",
+      "アトルバスタチン 10mg 1錠 夕食後",
+      "アスピリン 100mg 1錠 朝食後 (一次予防、低用量)"
+    ],
+    "allergies": ["特記なし"],
+    "family_history": ["父: 高血圧、脳出血 (70 歳代発症)", "母: 高血圧"],
+    "social_history": "退職 (元自営業)。運動習慣として自宅周辺の散歩を 30 分/日継続。喫煙は過去喫煙 (Stanford B 発症を機に完全禁煙、それ以前は 25 本/日 × 40 年で Brinkman 1000)。飲酒は機会飲酒 (発症後ほぼ断酒)。家族と同居、塩分制限 (6g/日目標) を継続。"
+  },
+
+  "encounter": {
+    "type": "外来再診",
+    "department": "循環器内科",
+    "encounter_date": "2026-04-20",
+    "chief_complaint": "Stanford B 慢性期 1 年フォロー (定期再診、無症状)",
+    "secondary_complaints": []
+  },
+
+  "reception_vitals": {
+    "BP_sys": 118, "BP_dia": 72, "HR": 60, "SpO2": 98, "RR": 16, "BT": 36.3
+  },
+
+  "input_pattern_A": {
+    "physician_summary": {
+      "raw_text": "75 歳男性、2025-04-12 に突然の胸背部痛で当院救急搬送、造影 CT にて Stanford B 型急性大動脈解離 (DeBakey IIIb、entry は左鎖骨下動脈分岐部直下、解離は腹腔動脈分岐部手前まで、最大大動脈径 42mm、合併症なし) と診断。Uncomplicated AD として ICU で厳格降圧 (ニカルジピン+ランジオロール持続静注) → 内服移行で慢性期へ。本日 1 年フォロー外来。\n\n発症後経過: 3 ヶ月毎の外来再診を継続。胸背部痛・腹痛・四肢乏血症状・対麻痺・嗄声・血痰など再解離・aneurysmal change を疑う症状なし。労作時息切れ・浮腫もなし。日常生活は完全自立、自宅周辺 30 分散歩を毎日継続、無症状。\n\n服薬コンプライアンス良好、自己中断なし、副作用 (めまい・徐脈・腎機能悪化) なし。家庭血圧手帳: 朝 110-120/70-78、夕 115-125/72-80 で推移、SBP 平均 116 で降圧目標 <120 達成継続。HR は安静時 58-65 で推移。\n\n発症後完全禁煙継続、飲酒もほぼ断酒、塩分制限 6g/日目標を家族と継続。仕事のストレスは退職済で軽減。\n\n本日採血 + ECG + 単純胸部 X-p に加え、年 1 回の造影 CT (大動脈径フォロー) を実施予定で同日午後に予約済。",
+      "medication_list": "【お薬手帳より】\n・テルミサルタン錠 40mg 1錠 朝食後 (ARB)\n・アムロジピンベシル酸塩錠 5mg 1錠 朝食後 (Ca 拮抗薬)\n・ビソプロロールフマル酸塩錠 5mg 1錠 朝食後 (β遮断薬、心拍数調節 + 大動脈壁ストレス低減)\n・アトルバスタチンカルシウム錠 10mg 1錠 夕食後\n・アスピリン錠 100mg 1錠 朝食後 (一次予防)\n服薬カレンダー使用、自己中断なし、副作用なし、お薬手帳・残薬一致。",
+      "exam_findings": "意識清明。\n聴診: 心音 I/II 整、過剰心音なし、AR 様雑音なし。肺音清。\n両上肢血圧差なし (右 118/72、左 116/70)。\n下腿浮腫・頸静脈怒張なし。\n対麻痺・脊髄虚血を疑う神経学的異常なし。",
+      "lab_results": "【今回採血 (本日朝)】\nWBC 6,200/μL、Hb 13.2 g/dL、Plt 21.5 万/μL\nAST 24 / ALT 20 / γ-GTP 32、Cr 1.32 / eGFR 48 (前回 50、横ばい)\nNa 141、K 4.4、Cl 103\nGlucose 102 mg/dL、HbA1c 5.8%\nLDL-C 92 mg/dL (前回 96、AD では <100 を目標)、HDL-C 52、TG 138\nBNP 38 pg/mL、CRP 0.06 mg/dL\nD-dimer 0.7 μg/mL (再解離示唆なし)\n\n【ECG (本日)】\n洞調律、HR 60、PR 172 ms、QRS 0.08 秒、QT 0.42 秒\n虚血性変化なし、左室肥大所見なし、前回比有意変化なし\n\n【胸部 X-p (本日)】\nCTR 48%、上縦隔陰影拡大なし、肺野清、横隔膜挙上なし。前回比有意変化なし。\n\n【造影 CT (前回 2026-01、年 1 回フォロー、本日午後再撮影予定)】\n下行大動脈最大径 43mm (発症時 42mm、3 ヶ月前 43mm、aneurysmal change ≦5mm/year で進行緩徐)、false lumen 部分血栓化、entry / re-entry 同一、合併症なし。"
+    }
+  },
+
+  "input_pattern_B": null,
+
+  "reference_soap": {
+    "S": "75 歳男性。2025-04 に Stanford B 型急性大動脈解離 (DeBakey IIIb、最大径 42mm、uncomplicated) を発症、ICU で厳格降圧 (ニカルジピン+ランジオロール) → 内服移行で慢性期管理。本日 1 年フォロー再診。\n発症後経過: 3 ヶ月毎の外来継続、胸背部痛・腹痛・四肢乏血・対麻痺・嗄声・血痰等の再解離 / aneurysmal change を疑う症状なし。労作時息切れ・浮腫なし。自宅周辺 30 分散歩を毎日継続、無症状。\n服薬コンプライアンス良好、自己中断・副作用なし。家庭血圧手帳: 朝 110-120/70-78、夕 115-125/72-80 で推移、SBP 平均 116 で <120 mmHg 厳格降圧目標達成継続。HR 58-65 で推移。\n発症後完全禁煙・ほぼ断酒継続、塩分制限 6g/日目標継続。",
+    "O": "受付バイタル: BP 118/72 mmHg、HR 60/min、SpO2 98% (RA)、RR 16、BT 36.3℃。意識清明。\n両上肢血圧差なし (右 118/72、左 116/70)。\n聴診: 心音 I/II 整、AR 様拡張期雑音なし、肺音清。下腿浮腫・頸静脈怒張なし、対麻痺・神経学的異常なし。\n\n採血: WBC 6,200、Hb 13.2、Cr 1.32 / eGFR 48 (前回 50、横ばい)、K 4.4、HbA1c 5.8%、LDL-C 92 (目標 <100 達成)、BNP 38、CRP 0.06、D-dimer 0.7 (再解離示唆なし)。\n本日 ECG: 洞調律 HR 60、虚血性変化なし、前回比有意変化なし。胸部 X-p: CTR 48%、上縦隔陰影拡大なし、前回比有意変化なし。\n前回 (2026-01) 造影 CT: 下行大動脈最大径 43mm (発症時 42mm、進行緩徐)、false lumen 部分血栓化、合併症なし。本日午後 1 年フォロー造影 CT 予定。",
+    "A": "# 1. Stanford B 型 (DeBakey IIIb) 大動脈解離 — 発症 1 年、慢性期 (>90 日)、uncomplicated、薬物管理良好\n  - 再解離 / aneurysmal change を疑う症状・身体所見・採血所見なし (D-dimer 0.7、BNP 38、両上肢血圧差なし)\n  - 大動脈径進行緩徐 (1 年で 42→43mm、≦5mm/year の保存的管理継続適応)\n  - SBP <120 mmHg 厳格降圧目標達成継続 (家庭血圧平均 116、本日 118/72)、HR 60-65 達成\n# 2. 高血圧 — Stanford B 慢性期管理として ARB+Ca 拮抗薬+β遮断薬の三剤併用で良好コントロール、降圧目標 <120/80 達成\n# 3. 脂質異常症 — LDL-C 92 mg/dL、AD 慢性期目標 <100 達成、アトルバスタチン継続適応\n# 4. CKD G3a — eGFR 48 で前回比横ばい、ARB+Ca 拮抗薬による腎保護継続要、造影 CT 撮影前後の十分な飲水と造影剤量最小化を要請\n# 5. 一次予防 — アスピリン 100mg/日、出血リスク (高齢 + CKD) 評価して継続妥当",
+    "P": "1. **降圧三剤併用継続**: テルミサルタン 40mg/日 + アムロジピン 5mg/日 + ビソプロロール 5mg/日。SBP <120 mmHg、HR 60-80/min を厳格に目標継続。家庭血圧手帳・脈拍記録の徹底を継続。SBP 130 を超える日が頻発した場合はアムロジピン 5→10mg 増量を検討。\n2. **β遮断薬は中断厳禁**: ビソプロロールは大動脈壁ストレス (dP/dt) 低減目的で AD 慢性期管理の中核薬、徐脈 (<50) や倦怠感が出ない限り継続。アトルバスタチン 10mg、アスピリン 100mg も現状量で継続。\n3. **本日午後 造影 CT (年 1 回フォロー)**: 下行大動脈最大径、false lumen 状態、entry/re-entry、合併症 (renal/visceral malperfusion、distal extension) を評価。最大径 ≧55mm or 進行 ≧10mm/year なら TEVAR (胸部ステントグラフト内挿術) の適応評価で心臓血管外科コンサルト。\n4. **造影 CT 前後の腎保護**: 撮影前後の十分な飲水を指示、造影剤量最小化を放射線科に依頼。\n5. **Red flag 再教育**: 突然の胸背部痛 (再解離示唆)、腹痛・対麻痺・四肢冷感 (malperfusion)、嗄声・血痰 (大動脈気管支瘻 / 反回神経麻痺) が出現したらただちに救急要請するよう本人・家族に再度説明。完全禁煙継続、塩分制限 6g/日目標、力み・重量挙げ・怒責回避、急激な温度変化 (入浴・寒冷曝露) 回避を再確認。\n6. **次回外来**: 3 ヶ月後 (2026-07-20)。本日造影 CT で進行性 aneurysmal change ありの場合は間隔短縮 + 心臓血管外科コンサルトを検討。次回造影 CT は最大径 <50mm 安定なら年 1 回維持。"
+  },
+
+  "reference_admission_summary": null,
+
+  "key_facts": {
+    "expected_triage": "外来継続",
+    "alternative_acceptable_triage": ["心臓血管外科コンサルト (CT 結果で最大径 ≧55mm or 進行性 aneurysmal change 時)"],
+    "differential_diagnoses": [],
+    "must_not_miss": [
+      "再解離 (新規発症の胸背部痛)",
+      "aneurysmal change の進行 (最大径 ≧55mm)",
+      "malperfusion 合併症 (腹痛・対麻痺・四肢虚血)",
+      "大動脈破裂",
+      "β遮断薬の自己中断 (壁ストレス制御不能化)"
+    ],
+    "appropriate_next_tests": [
+      "造影 CT (年 1 回、大動脈径フォロー)",
+      "ECG (再診時定期)",
+      "採血 (D-dimer、BNP、Cr/eGFR、LDL-C)",
+      "胸部 X-p (上縦隔陰影評価)",
+      "両上肢血圧差測定",
+      "家庭血圧手帳の確認"
+    ],
+    "diagnoses_provisional": [],
+    "diagnoses": [
+      "Stanford B 型 (DeBakey IIIb) 大動脈解離 慢性期 (uncomplicated)",
+      "高血圧",
+      "脂質異常症",
+      "慢性腎臓病 G3a"
+    ],
+    "medications_to_start": [],
+    "medications_to_continue": [
+      "テルミサルタン 40mg/日 (ARB)",
+      "アムロジピン 5mg/日 (Ca 拮抗薬)",
+      "ビソプロロール 5mg/日 (β遮断薬、中断厳禁)",
+      "アトルバスタチン 10mg/日",
+      "アスピリン 100mg/日"
+    ],
+    "medications_to_stop": [],
+    "medications_to_consider": ["アムロジピン増量 (5→10mg、SBP 130 超日が頻発した場合)"],
+    "vitals": {"BP_sys": 118, "BP_dia": 72, "HR": 60, "SpO2": 98, "RR": 16, "BT": 36.3},
+    "labs": {
+      "Hb": 13.2, "Cr": 1.32, "eGFR": 48, "HbA1c": 5.8, "LDL_C": 92, "BNP": 38, "CRP": 0.06, "D_dimer": 0.7
+    },
+    "ecg_findings": ["洞調律 HR 60", "虚血性変化なし", "前回比有意変化なし"],
+    "echo_findings": null,
+    "scores": null,
+    "procedures": ["造影 CT (本日午後、年 1 回フォロー)"],
+    "disposition": "外来継続 (3 ヶ月後再診、CT 結果次第で間隔調整)"
+  },
+
+  "rag_citations": [
+    {"guideline": "JCS 2020 大動脈瘤・大動脈解離診療ガイドライン", "section": "Stanford B 型慢性期管理", "key_point": "uncomplicated Stanford B AD では SBP <120 mmHg、HR 60-80/min を目標とした厳格降圧が標準。ARB / Ca 拮抗薬 / β遮断薬の併用が推奨、特に β遮断薬は壁ストレス低減目的で中断厳禁"},
+    {"guideline": "JCS 2020 大動脈瘤・大動脈解離診療ガイドライン", "section": "画像フォロー間隔", "key_point": "慢性期は造影 CT 年 1 回が標準、最大径 ≧50mm or 進行性 aneurysmal change (≧5mm/year) では 6 ヶ月毎に短縮、最大径 ≧55mm で TEVAR 適応評価"},
+    {"guideline": "JCS 2020 大動脈瘤・大動脈解離診療ガイドライン", "section": "再解離 / 破裂の患者教育", "key_point": "突然の胸背部痛、腹痛・対麻痺・四肢冷感 (malperfusion)、嗄声・血痰は再解離 / 破裂 / 合併症を疑う症状、即救急要請を再三指導"}
+  ],
+
+  "is_negative_control": false,
+  "notes_for_reviewer": "Stanford B 慢性期 1 年フォローの紹介状/再診シナリオ A の典型例。v2 で 2026-05-01 専門医レビュー (LESSONS_LEARNED.md) 反映済 (blood_type=null、過去喫煙表記、社会歴を職業/運動/喫煙/飲酒で文分割、活気良好・苦悶様顔貌なし・両下肢動脈触知良好を再診所見から削除、CKD は G3a 表記、eGFR 48 を「軽度低下」と書かず「前回比横ばい」、Plan を 11 項目から 6 項目へ集約、A との重複削除)。SLM 評価ポイント: (a) SBP <120 mmHg と HR 60-80/min の厳格降圧目標を P で明示できるか、(b) ARB+Ca 拮抗薬+β遮断薬の三剤併用継続の妥当性を A で評価できるか、(c) β遮断薬中断厳禁という慢性期 AD 管理の中核を P で強調できるか、(d) 年 1 回造影 CT による大動脈径フォローの位置付けを記載できるか、(e) 最大径 ≧55mm or 進行 ≧10mm/year で TEVAR 適応評価という閾値を意識できるか、(f) 再解離・破裂・malperfusion の Red flag 教育を P に明記しているか、(g) CKD G3a で造影剤腎症対策 (飲水・最小化) を入れられるか (N-アセチルシステインは出さない)、(h) 過剰所見記載 (再診で活気・両足背動脈触知・苦悶様顔貌の有無を毎回書かない) を避けているか。"
+}
