@@ -1,8 +1,46 @@
 # 医療特化SLM プロジェクト
 
-> **最終更新: 2026-04-24（M3 field notes 即効策実装 / KV q4_0 + flash-attn / warmup script / meta-filter v2）**  
+> **最終更新: 2026-04-27（次タスク候補議論 - 着手前、コード変更なし）**  
 > /clear 後はこの CLAUDE.md と `/home/junkanki/naka/results_v6/` および `docs/M3_FIELD_NOTES.md` を読めば状況復帰できる。
 > 作業中のサービス稼働状況は下記「現在のサービス」セクション参照。
+
+## 🚦 2026-04-27 引き継ぎメモ（/clear 後はここから読む）
+
+### 現状
+
+- **コード変更なし**。2026-04-24 に実装した 5 commits (emr 77cf96d..7c7bbb2) + 1 commit (medical_slm dd16104) で push 済、両 GitHub に反映済。
+- **稼働サービス確認済**: 4 月 24 日起動した llama-server / emr-server / RAG / vite が 3 日間ずっと走っている (PID 2629395 など)。
+- **/home が 99% 使用** (7.5G 残)、`/data2` 89% (415G 残)。`/` は 38% で余裕。
+  - 危険水域なので新たに大きいログファイル / モデル成果物を `/home` に出さないこと。
+- **llama-server LCP cache** は 3 日アイドルなので LRU で多くのエントリが落ちている可能性あり。次回作業時は `scripts/warmup_demo.sh` を再実行して予熱推奨。
+
+### 議論中: 次に着手するタスク (論文関連は除外、優先順)
+
+ユーザーが "論文検討以外の次のタスクは？" と尋ねた回答として 6 候補提示済み:
+
+| # | タスク | 所要 | 依存 | 価値 |
+|---|---|---|---|---|
+| **A** | **frontend SSE 再接続 UI** | 1-2h | H100 のみ | 2026-04-24 backend SSE fix を UX として完成。S 編集後に自動 GET /soap-draft で O/A/P 取得する動線 |
+| **B** | **短入力 SFT データ合成 (degeneration 根本解決)** | 一晩 subagent | H100 | meta-filter で糊塗した問題を訓練側で根本解決 |
+| **C** | **SOAP 4B LoRA 再訓練 (薬剤グラウンド強化)** | ~1h GPU | H100 | 4B 薬剤ハルシネ (アプレキサン等) 根絶。RAG 部分改善に上乗せ |
+| **D** | **デモ台本 + 安全患者リスト明文化** (`docs/demo_script.md`) | 30min-1h | - | 学会本番用。音声花子=確実、山本隆=限界提示など |
+| **E** | **M3 実機での効果検証** | 1-2h | **M3 + 先生が M3 触れる** | 2026-04-24 改善が現場体感でどれだけ効くか |
+| **F** | **RAG DB 再構築 (title/year 改良反映)** | 1-2h GPU | H100 | build_rag_v2.py コード改良済、DB 再構築は未実行 |
+
+### 現時点の推奨 (2026-04-24 時点で提示済)
+
+1. **A (frontend SSE 再接続 UI) を先に**: 今日の SSE fix が backend だけで止まっておりUX 未完成。1-2h で完結し、デモ時に S 却下→O/A/P 消失の再発を防げる。
+2. **次に B (短入力 SFT データ合成)**: 夜間 subagent で走らせる案。今日の meta-filter は「empty 返却」という消極的対処、訓練で根本解決すれば「短くても妥当な続き」を出せる。
+
+**ユーザーがどれから着手するかまだ未決定**。次回 /clear 後はこの選択をユーザーに確認するところから。
+
+### サービス再開チェックリスト（必要な場合のみ）
+
+- [ ] 全 5 ポート (8080/8081/8082/8083/5173) 疎通確認 → `ss -tlnp | grep -E ":808[0-9]|:5173"`
+- [ ] emr-server バイナリは `/tmp/emr-server-v2` のまま（再起動するなら `cd emr/backend && go build -o /tmp/emr-server-v2 ./cmd/server/`）
+- [ ] llama-server LCP cache 予熱: `/home/junkanki/naka/scripts/warmup_demo.sh`
+
+---
 
 ## 目的
 日本語電子カルテ向け医療特化SLM（Small Language Model）の開発。
