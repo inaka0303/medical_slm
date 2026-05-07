@@ -1,10 +1,100 @@
 # 医療特化SLM プロジェクト
 
-> **最終更新: 2026-04-27（次タスク候補議論 - 着手前、コード変更なし）**  
-> /clear 後はこの CLAUDE.md と `/home/junkanki/naka/results_v6/` および `docs/M3_FIELD_NOTES.md` を読めば状況復帰できる。
-> 作業中のサービス稼働状況は下記「現在のサービス」セクション参照。
+> **最終更新: 2026-05-01 (ACI-JP-Cardio outpatient v2 完成、9B HF Hub 公開、専門医再レビュー依頼書送付待ち)**
+> /clear 後はこの CLAUDE.md の **🚦 2026-05-01 引き継ぎメモ** から読めば状況復帰できる。
 
-## 🚦 2026-04-27 引き継ぎメモ（/clear 後はここから読む）
+## 🚦 2026-05-01 引き継ぎメモ (/clear 後は最初にここを読む)
+
+### 直近 5 日 (4-27 → 5-1) で完成したもの
+
+| 何 | 場所 | 状態 |
+|---|---|---|
+| **ACI-JP-Cardio admission ベンチマーク** | `data/aci_jp_cardio/admission/` (22 例) | 完成 + ベースライン測定済 (4B SOAP / 9B admission / 4B admission fallback の 3 構成) |
+| **ACI-JP-Cardio outpatient ベンチマーク v2** | `data/aci_jp_cardio/outpatient/` (22 例) | 専門医 v1 レビュー (33 件 [a]-[bg]) を反映済 |
+| **教訓メモ** | `data/aci_jp_cardio/outpatient/LESSONS_LEARNED.md` | カルテ表現/患者向け会話/Plan構造/家族歴定義/検査オーダー の do/don't 体系化 |
+| **専門医再レビュー依頼書 v2** | `data/aci_jp_cardio/outpatient/review_request_for_specialist_v2.docx` (135 KB) | 全 22 例 + 評価指標説明 + 採点メトリクス対応付き、**先生送付待ち** |
+| **9B LoRA を HF Hub 公開** | `inaka0303/medical-slm-loras` の `9b/` 配下 (private) | suggest/SOAP/admission の 3 LoRA、4B と並立 |
+| **M3 9B セットアップ手順書** | `docs/SETUP_LAPTOP_9B.md` | 9B 単独 ~12GB / 4B+9B 並列 17GB→swap 警告 等 |
+| **2026-05-01 振り返りまとめ** | `diary/20260501.md` | Google Docs 共有用、10 セクション 247 行 |
+
+### 重要な発見 (admission ベースライン測定から)
+
+- **9B admission > 4B admission** を定量で確認 (composite 0.415 vs 0.380、drug F1 0.46 vs 0.35)
+- **音声 STT 形式は構造化の半分以下** (4B SOAP voice ROUGE-L 0.140 vs structured 0.383)
+- **production parser に追加すべきマーカー**: `【S:` (半角コロン) と `【S - Subjective(...)` (parenthesized) → emr/backend/internal/slm/parser.go の更新候補
+- **共通 missed**: ビソプロロール、Killip分類、NYHA、CCS 等のスコアリング詳細
+- **4B SOAP のハルシネーション** が voice 形式で顕在化
+
+### 専門医レビューから得た主要教訓 (LESSONS_LEARNED.md 抜粋)
+
+| カテゴリ | 主要修正 |
+|---|---|
+| カルテ表現 | 「即時/軽度低下/やや低め/活気/全身状態/苦悶様顔貌なし」を削除、「強疑時」→「を強く疑う場合」、「持続的に出現」→「持続」 |
+| 患者向け会話 | 「12 誘導心電図」→「心電図」、「簡単な聴診」→「胸の音を聞かせてもらいます」、「お願いします」→「させていただきます」、「診察します」→「お話をお聞かせください」、「早死にした親族」→「若くして亡くなられた親族の方」 |
+| Plan 構造 | 全例 5-9 項目に圧縮、Assessment との重複病態解説を削除 |
+| 家族歴定義 | 配偶者は血縁でないので家族歴ではなく社会歴 |
+| 検査オーダー | 連続採血・3 ヶ月毎心エコー・橈骨/足背動脈触診・V3R/V4R ルーチン化・N-アセチルシステイン を全削除 |
+
+### git 直近 commit (medical_slm リポ)
+
+```
+f5f6215 docs: v2 レビュー依頼書を全 22 例化 + 採点指標説明を key_facts 内に展開
+3520238 docs: v2 レビュー依頼書に評価指標の説明を追加
+29b23f5 docs: outpatient v2 専門医再レビュー依頼書
+91f85d7 docs: 2026-05-01 振り返りまとめ (Google Docs 共有用)
+280fcae docs: 2026-04-27〜2026-05-01 作業ログ
+ed9a3e1 feat: ACI-JP-Cardio 循環器カルテ生成ベンチマーク (44 例)
+33c2c70 docs: M3 9B 3-LoRA hot-swap setup guide
+```
+
+### サービス稼働状況 (2026-05-01 14:00 確認)
+
+- 8081 (4B llama-server) / 8082 (RAG) / 8083 (9B llama-server) / 8080 (EMR backend): 稼働中の想定
+- **5173 はもともと vite だったが、現在 `python3 -m http.server` (review.html 配信用) に置き換え中**。元の vite に戻すには:
+  ```
+  lsof -ti:5173 | xargs -r kill
+  cd /home/junkanki/naka/emr/frontend
+  nohup npm run dev -- --host 0.0.0.0 --port 5173 > /data2/junkanki/naka/logs/vite_dev.log 2>&1 &
+  ```
+
+### 次にやることの選択肢 (優先度別、5-1 時点で議論中の状態)
+
+#### A. ベンチマーク関連 (主要)
+
+| # | タスク | 工数 |
+|---|---|---|
+| **A1** | **outpatient v2 を専門医に再レビュー依頼** (`review_request_for_specialist_v2.docx` をメール送付) | 先生レビュー次第 |
+| A2 | outpatient eval runner 実装 (triage F1 / must-not-miss recall / differential recall の新メトリクス追加) | 1-2h |
+| A3 | outpatient ベースライン測定 (4B SOAP / 9B admission / +RAG) | 半日 |
+| A4 | Opus-as-judge 実行 (admission + outpatient 両 track) | 数時間 + Opus subagent |
+
+#### B. プロジェクト本体 (2026-04-27 議論時の 6 候補、未着手)
+
+| # | タスク | 工数 |
+|---|---|---|
+| B1 | frontend SSE 再接続 UI | 1-2h |
+| B2 | 短入力 SFT データ合成 (voice degeneration 根本解決) | 一晩 subagent |
+| B3 | SOAP 4B LoRA 再訓練 (薬剤ハルシネ根絶) | ~1h GPU |
+| B4 | デモ台本 + 安全患者リスト明文化 | 30min-1h |
+| B5 | M3 実機での 9B 動作検証 (`docs/SETUP_LAPTOP_9B.md` 通り、HF Hub から DL) | 1-2h |
+| B6 | RAG DB 再構築 (build_rag_v2.py 改良反映) | 1-2h GPU |
+
+#### C. 中期計画 (中断中)
+
+- C1: 論文方針議論再開 (Nature Sci Data 単発 vs 開発+臨床試験 2 本立て)
+- C2: 循環器学会発表設計
+
+### /clear 後の推奨 quick start
+
+1. この CLAUDE.md セクションを読む (現在地)
+2. `data/aci_jp_cardio/outpatient/SPEC.md` を流し読み (新スキーマ)
+3. `data/aci_jp_cardio/outpatient/LESSONS_LEARNED.md` を流し読み (専門医レビュー教訓)
+4. `diary/20260501.md` を読む (5 日間の総まとめ)
+5. ユーザーに「先生から v2 レビュー戻ってきた?」または「次は A1-A4 / B1-B6 のどれから?」を確認
+
+---
+
+## 🚦 2026-04-27 引き継ぎメモ (履歴、参考用)
 
 ### 現状
 
